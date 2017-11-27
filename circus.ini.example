@@ -1,0 +1,13 @@
+[watcher:laevus]
+cmd = laevus --chaussette-fd $(circus.sockets.laevus)
+use_sockets = True
+numprocesses = 3
+copy_env = True
+virtualenv = /opt/laevus
+
+[socket:laevus]
+host = 0.0.0.0
+port = 5000
+
+[env:laevus]
+LAEVUS_CONF = /opt/laevus/etc/laevus/laevus.ini
