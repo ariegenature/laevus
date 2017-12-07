@@ -20,15 +20,14 @@ Homepage
     [Setup]    Start Virtual Display    1024    768
     Given user is anonymous
     When user browses to application homepage
-    Then 'Muneris homepage' text should be shown
-    Page Should Contain    Muneris homepage
+    Then Page Should Contain    laevus homepage
     [Teardown]    Close All Browsers
 
 
 *** Keywords ***
 
 Start Application
-    ${handle}=    Start Process    muneris
+    ${handle}=    Start Process    laevus
     Set Suite Variable    ${HANDLE}    ${handle}
 
 Stop Application
@@ -39,6 +38,3 @@ User Is Anonymous
 
 User Browses To Application Homepage
     Go To    ${SERVER_URL}
-
-'${text}' text should be shown
-    Page Should Contain    ${text}
