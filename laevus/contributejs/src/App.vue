@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <main class="section">
+    <div class="container">
+      <router-view/>
+    </div>
+    </main>
   </div>
 </template>
 
