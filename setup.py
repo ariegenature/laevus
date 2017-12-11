@@ -88,6 +88,7 @@ setup(
             'coverage',
             'check-manifest',
             'flake8',
+            'mock',
             'pytest',
             'pytest-cov',
             'readme_renderer',
