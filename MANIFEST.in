@@ -1,4 +1,31 @@
 include laevus/VERSION
 include *.rst
 include .coveragerc
+include laevus/contributejs/.babelrc
+include laevus/contributejs/.editorconfig
+include laevus/contributejs/.eslintignore
+include laevus/contributejs/.eslintrc.js
+include laevus/contributejs/.gitignore
+include laevus/contributejs/.postcssrc.js
+include laevus/contributejs/README.md
+include laevus/contributejs/index.html
+include laevus/contributejs/package.json
+include laevus/contributejs/package-lock.json
+include laevus/contributejs/build/build.js
+include laevus/contributejs/build/check-versions.js
+include laevus/contributejs/build/utils.js
+include laevus/contributejs/build/vue-loader.conf.js
+include laevus/contributejs/build/webpack.base.conf.js
+include laevus/contributejs/build/webpack.dev.conf.js
+include laevus/contributejs/build/webpack.prod.conf.js
+include laevus/contributejs/build/logo.png
+include laevus/contributejs/config/dev.env.js
+include laevus/contributejs/config/index.js
+include laevus/contributejs/config/prod.env.js
+include laevus/contributejs/config/test.env.js
+include laevus/contributejs/static/.gitkeep
+include laevus/contributejs/test/unit/.eslintrc
 recursive-include atests *.robot *.rst *.html *.txt
+recursive-include laevus/contributejs/src *.vue *.js *.png
+recursive-include laevus/contributejs/test *.js
+prune laevus/contributejs/test/unit/coverage

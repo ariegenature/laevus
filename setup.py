@@ -16,6 +16,19 @@ with open(os.path.join(root_path, project_slug, 'VERSION'),
 with open(os.path.join(root_path, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Collect package data to be installed (and in particular JS client)
+package_data = [
+    'VERSION',
+]
+for root, dirs, fnames in os.walk(os.path.join(project_slug, 'contributejs')):
+    for fname in fnames:
+        package_data.append(os.path.join(root.replace('{0}/'.format(project_slug), '', 1), fname))
+    if 'node_modules' in dirs:
+        dirs.remove('node_modules')
+    if 'coverage' in dirs:
+        dirs.remove('coverage')
+
+
 setup(
     name=project_slug,
     version=version,
@@ -85,7 +98,7 @@ setup(
         ],
     },
     package_data={
-        project_slug: ['VERSION'],
+        project_slug: package_data,
     },
     data_files=[
         ('examples', [
