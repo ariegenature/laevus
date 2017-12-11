@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """laevus main package."""
 
 import os
@@ -21,6 +23,18 @@ _DEFAULT_CONFIG = {
     'LOG_LEVEL': 'warning',
     'LOG_FILENAME': None,
 }
+
+
+class VueFlask(Flask):
+    jinja_options = Flask.jinja_options.copy()
+    jinja_options.update({
+        'block_start_string': '«%',
+        'block_end_string': '%»',
+        'comment_start_string': '«#',
+        'comment_end_string': '#»',
+        'variable_start_string': '««',
+        'variable_end_string': '»»',
+    })
 
 
 def path_to_venv():
@@ -83,7 +97,7 @@ def create_app(config):
     local_configs = []
     if config:
         local_configs.append(config.get_map('laevus'))
-    app = Flask(__name__)
+    app = VueFlask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.update(_DEFAULT_CONFIG)
     for config in local_configs:
