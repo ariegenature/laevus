@@ -3,10 +3,15 @@
 import App from './App'
 import Buefy from 'buefy'
 import Vue from 'vue'
+import Vue2Leaflet from 'vue2-leaflet'
 import router from './router'
 import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
+
+Vue.component('v-map', Vue2Leaflet.Map)
+Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+Vue.component('v-marker', Vue2Leaflet.Marker)
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
