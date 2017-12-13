@@ -4,6 +4,7 @@ import App from './App'
 import Buefy from 'buefy'
 import Vue from 'vue'
 import Vue2Leaflet from 'vue2-leaflet'
+import VueFormWizard from 'vue-form-wizard'
 import router from './router'
 import 'buefy/lib/buefy.css'
 
@@ -16,6 +17,7 @@ Vue.component('v-marker', Vue2Leaflet.Marker)
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
+Vue.use(VueFormWizard)
 
 /* eslint-disable no-new */
 new Vue({
