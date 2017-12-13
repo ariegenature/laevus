@@ -3,6 +3,7 @@ branch = True
 omit =
     laevus/__init__.py
     laevus/__main__.py
+    laevus/flask_cli.py
 
 [report]
 # Regexes for lines to exclude from consideration
