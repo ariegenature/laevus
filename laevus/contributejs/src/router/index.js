@@ -8,9 +8,13 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/contribute',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/',
+      redirect: '/contribute'
     }
   ]
 })
