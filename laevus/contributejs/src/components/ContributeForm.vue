@@ -1,12 +1,12 @@
 <template>
   <form-wizard @on-complete="$parent.close()" title="" subtitle="" step-size="xs">
-    <tab-content title="Personal details">
+    <tab-content title="Date et heure">
       My first tab content
     </tab-content>
-    <tab-content title="Additional Info">
+    <tab-content title="Identification grossière">
       My second tab content
     </tab-content>
-    <tab-content title="Last step">
+    <tab-content title="Coordonnées">
       Yuhuuu! This seems pretty damn simple
     </tab-content>
   </form-wizard>
