@@ -6,6 +6,9 @@
     <tab-content title="Identification grossière">
       My second tab content
     </tab-content>
+    <tab-content title="Identification précise">
+      My third tab content
+    </tab-content>
     <tab-content title="Coordonnées">
       Yuhuuu! This seems pretty damn simple
     </tab-content>
