@@ -1,5 +1,5 @@
 <template>
-  <form-wizard @on-complete="$parent.close()" title="" subtitle="" step-size="xs">
+  <form-wizard ref="wizard" @on-complete="$parent.close()" title="" subtitle="" step-size="xs">
     <tab-content title="Date et heure">
       <b-field label="Date">
         <b-datepicker placeholder="Cliquer pour choisir une date"
@@ -11,7 +11,16 @@
       </b-field>
     </tab-content>
     <tab-content title="Identification grossière">
-      My second tab content
+      <div class="columns is-centered">
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Grands herbivores" src="../assets/deer.png">
+            </figure>
+            <p class="is-size-7">Grands herbivores</p>
+          </a>
+        </div>
+      </div>
     </tab-content>
     <tab-content title="Identification précise">
       My third tab content
@@ -35,6 +44,19 @@ export default {
   data () {
     return {
     }
+  },
+  methods: {
+    nextTab (ev) {
+      this.$refs.wizard.nextTab()
+    }
   }
 }
 </script>
+
+<style>
+.block-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
