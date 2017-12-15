@@ -3,7 +3,8 @@
     <div id="hero-map" class="hero-body">
       <div id="container-map" class="container">
         <div id="map">
-          <v-map :zoom="13" :center="[47.413220, -1.219482]" @l-click="handleMapClick">
+          <v-map :zoom="13" :center="[47.413220, -1.219482]" @l-click="handleMapClick"
+             class="locate">
             <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                          attribution="OpenStreetMap contributors"></v-tilelayer>
             <v-marker :lat-lng="[47.413220, -1.219482]"></v-marker>
@@ -50,5 +51,8 @@ export default {
 }
 .modal-content {
   background-color: rgba(245, 245, 245, 1);
+}
+.leaflet-container.locate {
+  cursor: crosshair;
 }
 </style>
