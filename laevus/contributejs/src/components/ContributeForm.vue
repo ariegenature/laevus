@@ -90,7 +90,17 @@
       </b-field>
     </tab-content>
     <tab-content title="Coordonnées">
-      Yuhuuu! This seems pretty damn simple
+      <b-field grouped group-multiline>
+        <b-field label="Votre nom" expanded>
+          <b-field>
+            <b-input expanded placeholder="Prénom"></b-input>
+            <b-input expanded placeholder="Nom"></b-input>
+          </b-field>
+        </b-field>
+      </b-field>
+      <b-field label="Votre adresse électronique" expanded>
+        <b-input type="email "placeholder="prenom.nom@example.org"></b-input>
+      </b-field>
     </tab-content>
   </form-wizard>
 </template>
