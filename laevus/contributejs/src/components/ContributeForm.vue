@@ -20,6 +20,48 @@
             <p class="is-size-7">Grands herbivores</p>
           </a>
         </div>
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Petits mammifères" src="../assets/rabbit.png">
+            </figure>
+            <p class="is-size-7">Petits mammifères</p>
+          </a>
+        </div>
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Reptiles" src="../assets/snake.png">
+            </figure>
+            <p class="is-size-7">Reptiles</p>
+          </a>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Amphibiens" src="../assets/frog.png">
+            </figure>
+            <p class="is-size-7">Amphibiens</p>
+          </a>
+        </div>
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Chauves-souris" src="../assets/bat.png">
+            </figure>
+            <p class="is-size-7">Chauves-souris</p>
+          </a>
+        </div>
+        <div class="column is-one-third has-text-centered">
+          <a href="#" @click="nextTab">
+            <figure class="image is-64x64 block-center">
+              <img alt="Oiseaux" src="../assets/bird.png">
+            </figure>
+            <p class="is-size-7">Oiseaux</p>
+          </a>
+        </div>
       </div>
     </tab-content>
     <tab-content title="Identification précise">
