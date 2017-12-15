@@ -18,13 +18,13 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 export default {
   name: 'ContributeForm',
-  data () {
-    return {
-    }
-  },
   components: {
     FormWizard,
     TabContent
+  },
+  data () {
+    return {
+    }
   }
 }
 </script>
