@@ -65,7 +65,29 @@
       </div>
     </tab-content>
     <tab-content title="Identification précise">
-      My third tab content
+      <b-field label="Espèce">
+        <b-input icon="magnify" type="search" placeholder="Commencer à écrire pour chercher"></b-input>
+      </b-field>
+      <b-field grouped group-multiline>
+        <b-field label="Nombre d'individus" expanded>
+          <b-field>
+            <b-select>
+              <option>=</option>
+              <option>&cong;</option>
+              <option>&ge;</option>
+            </b-select>
+            <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"></b-input>
+          </b-field>
+        </b-field>
+        <b-field label="Vivant ou mort ?">
+          <b-switch true-value="Vivant" false-value="Mort">
+            Vivant ?
+          </b-switch>
+        </b-field>
+      </b-field>
+      <b-field label="Commentaires">
+        <b-input type="textarea" placeholder="Vous pouvez apporter des précisions ou des remarques"></b-input>
+      </b-field>
     </tab-content>
     <tab-content title="Coordonnées">
       Yuhuuu! This seems pretty damn simple
