@@ -133,4 +133,13 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
+@media screen and (max-width: 767px) {
+  .vue-form-wizard .wizard-nav-pills li,
+  .wizard-progress-with-circle {
+    display: none
+  }
+  .vue-form-wizard .wizard-nav-pills li.active {
+    display: block
+  }
+}
 </style>
