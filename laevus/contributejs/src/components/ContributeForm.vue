@@ -95,11 +95,11 @@
             </tab-content>
             <tab-content title="Coordonnées">
               <b-field grouped group-multiline>
+                <b-field label="Votre prénom" expanded>
+                  <b-input expanded></b-input>
+                </b-field>
                 <b-field label="Votre nom" expanded>
-                  <b-field>
-                    <b-input expanded placeholder="Prénom"></b-input>
-                    <b-input expanded placeholder="Nom"></b-input>
-                  </b-field>
+                  <b-input expanded></b-input>
                 </b-field>
               </b-field>
               <b-field label="Votre adresse électronique" expanded>
