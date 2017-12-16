@@ -5,13 +5,15 @@
         <form action="">
           <form-wizard ref="wizard" @on-complete="$parent.close()" title="" subtitle="" step-size="xs">
             <tab-content title="Date et heure">
-              <b-field label="Date">
-                <b-datepicker placeholder="Cliquer pour choisir une date"
-                              icon="calendar" :readonly="false"></b-datepicker>
-              </b-field>
-              <b-field label="Heure">
-                <b-timepicker placeholder="Cliquer pour indiquer un horaire"
-                              icon="clock-o" :readonly="false"></b-timepicker>
+              <b-field grouped group-multiline>
+                <b-field label="Date">
+                  <b-datepicker placeholder="Cliquer pour choisir une date"
+                                icon="calendar" :readonly="false"></b-datepicker>
+                </b-field>
+                <b-field label="Heure">
+                  <b-timepicker placeholder="Cliquer pour indiquer un horaire"
+                                icon="clock-o" :readonly="false"></b-timepicker>
+                </b-field>
               </b-field>
             </tab-content>
             <tab-content title="Identification grossière">
