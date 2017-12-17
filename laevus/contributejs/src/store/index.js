@@ -6,4 +6,7 @@ import contribution from './contribution'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    contribution
+  }
 })
