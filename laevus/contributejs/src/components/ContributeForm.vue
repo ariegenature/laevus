@@ -8,11 +8,13 @@
               <b-field grouped group-multiline>
                 <b-field label="Date">
                   <b-datepicker placeholder="Cliquer pour choisir une date"
-                                icon="calendar" :readonly="false"></b-datepicker>
+                                icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
+                                v-model="selectedDate"></b-datepicker>
                 </b-field>
                 <b-field label="Heure">
                   <b-timepicker placeholder="Cliquer pour indiquer un horaire"
-                                icon="clock-o" :readonly="false"></b-timepicker>
+                                icon="clock-o" :readonly="false"
+                                v-model="selectedTime"></b-timepicker>
                 </b-field>
               </b-field>
             </tab-content>
@@ -117,6 +119,7 @@
 
 <script>
 import {FormWizard, TabContent} from 'vue-form-wizard'
+import {mapActions, mapGetters} from 'vuex'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 export default {
@@ -127,12 +130,54 @@ export default {
   },
   data () {
     return {
+      selectedDate: null,
+      selectedTime: null
     }
   },
+  computed: mapGetters('contribution', [
+    'date',
+    'time',
+    'groupId',
+    'specieId',
+    'count',
+    'isAlive',
+    'comments',
+    'firstName',
+    'surname',
+    'email'
+  ]),
   methods: {
     nextTab (ev) {
       this.$refs.wizard.nextTab()
+    },
+    parseFrenchDate (strValue) {
+      var dateArray = strValue.split('/').reverse()
+      return new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+    },
+    ...mapActions('contribution', [
+      'updateDateTimeDate',
+      'updateDateTimeTime',
+      'updateGroupId',
+      'updateSpecieId',
+      'updateCount',
+      'toggleAlive',
+      'updateComments',
+      'updateFirstName',
+      'updateSurname',
+      'updateEmail'
+    ])
+  },
+  watch: {
+    selectedDate: function (value) {
+      this.updateDateTimeDate(value)
+    },
+    selectedTime: function (value) {
+      this.updateDateTimeTime(value)
     }
+  },
+  mounted () {
+    this.selectedDate = new Date()
+    this.selectedTime = new Date()
   }
 }
 </script>
