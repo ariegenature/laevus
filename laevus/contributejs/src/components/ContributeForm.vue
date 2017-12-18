@@ -56,7 +56,9 @@
                 </b-field>
               </b-field>
               <b-field label="Commentaires">
-                <b-input type="textarea" placeholder="Vous pouvez apporter des précisions ou des remarques"></b-input>
+                <b-input type="textarea"
+                         placeholder="Vous pouvez apporter des précisions ou des remarques"
+                         :value="comments" @input="updateComments"></b-input>
               </b-field>
             </tab-content>
             <tab-content title="Coordonnées">
