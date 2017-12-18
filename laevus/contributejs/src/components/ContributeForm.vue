@@ -177,8 +177,8 @@ export default {
     }
   },
   mounted () {
-    this.selectedDate = new Date()
-    this.selectedTime = new Date()
+    this.selectedDate = this.date ? this.date : new Date()
+    this.selectedTime = this.time ? this.time : new Date()
     this.updateSpeciesList(this.groupId)
     this.updateInputSpecies(this.specieId)
   }
