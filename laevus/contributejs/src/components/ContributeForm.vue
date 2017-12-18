@@ -37,7 +37,7 @@
             <tab-content title="Identification précise">
               <b-field label="Espèce">
                 <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
-                                placeholder="Commencer à écrire pour chercher"
+                                placeholder="Commencer à écrire pour chercher" keep-first
                                 v-model="inputSpecies" :data="filteredSpecies" field="name"
                                 @select="selectSpecies"></b-autocomplete>
               </b-field>
