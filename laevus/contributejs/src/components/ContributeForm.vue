@@ -24,12 +24,13 @@
             <tab-content title="Identification grossière">
               <div class="columns is-centered">
                 <div class="column has-text-centered" v-for="group in groups">
-                  <a href="#" @click="nextTab(group.id)">
+                  <b-radio href="#" :value="groupId" @input="nextTab(group.id)"
+                           size="is-small" :native-value="group.id">
                     <figure class="image is-64x64 block-center">
                       <img :alt="group.name" :src="group.icon">
                     </figure>
                     <p class="is-size-7">{{ group.name }}</p>
-                  </a>
+                  </b-radio>
                 </div>
               </div>
             </tab-content>
