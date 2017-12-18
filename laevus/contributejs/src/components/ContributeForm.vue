@@ -122,10 +122,12 @@ export default {
   },
   methods: {
     nextTab (groupId) {
-      this.updateGroupId(groupId)
-      this.updateSpecieId(null)
-      this.updateInputSpecies('')
-      this.updateSpeciesList(groupId)
+      if (groupId !== this.groupId) {
+        this.updateGroupId(groupId)
+        this.updateSpecieId(null)
+        this.updateInputSpecies('')
+        this.updateSpeciesList(groupId)
+      }
       this.$refs.wizard.nextTab()
     },
     parseFrenchDate (strValue) {
