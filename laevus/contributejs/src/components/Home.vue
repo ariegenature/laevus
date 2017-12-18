@@ -47,7 +47,7 @@ export default {
   height: 90%;
 }
 .modal {
-  z-index: 1000;
+  z-index: 1000 !important;
 }
 .modal-content {
   background-color: rgba(245, 245, 245, 1);

@@ -6,6 +6,7 @@ export default {
       dateTime: null,
       groupId: null,
       specieId: null,
+      countAccuracyId: '=',
       count: 1,
       isAlive: false,
       comments: null,
@@ -19,6 +20,7 @@ export default {
     time: (state) => state.dateTime,
     groupId: state => state.groupId,
     specieId: state => state.specieId,
+    countAccuracyId: state => state.countAccuracyId,
     count: state => state.count,
     isAlive: state => state.isAlive,
     comments: state => state.comments,
@@ -35,6 +37,9 @@ export default {
     },
     specieId: (state, specieId) => {
       state.specieId = specieId
+    },
+    countAccuracyId: (state, accuracyId) => {
+      state.countAccuracyId = accuracyId
     },
     count: (state, count) => {
       state.count = Number(count)
@@ -79,6 +84,9 @@ export default {
     },
     updateSpecieId: ({ commit }, specieId) => {
       commit('specieId', specieId)
+    },
+    updateCountAccuracyId: ({ commit }, accuracyId) => {
+      commit('countAccuracyId', accuracyId)
     },
     updateCount: ({ commit }, count) => {
       commit('count', count)

@@ -38,9 +38,9 @@
                                 @select="selectSpecies"></b-autocomplete>
               </b-field>
               <b-field grouped group-multiline>
-                <b-field label="Nombre d'individus" expanded>
+                <b-field label="Nombre d'individus" :message="selectedAccuracy" expanded>
                   <b-field>
-                    <b-select>
+                    <b-select :value="countAccuracyId" @input="updateCountAccuracy">
                       <option v-for="accuracy in accuracies"
                               :value="accuracy.id" :key="accuracy.id"
                               v-html="accuracy.id">
@@ -99,6 +99,7 @@ export default {
       selectedDate: null,
       selectedTime: null,
       selectedAlive: false,
+      selectedAccuracy: '',
       inputSpecies: '',
       species: []
     }
@@ -117,6 +118,7 @@ export default {
       'time',
       'groupId',
       'specieId',
+      'countAccuracyId',
       'count',
       'isAlive',
       'comments',
@@ -160,6 +162,14 @@ export default {
         this.inputSpecies = ''
       }
     },
+    updateSelectedAccuracy (accuracyId) {
+      var accuracies = this.accuracies.filter(obj => obj.id === accuracyId)
+      this.selectedAccuracy = accuracies ? accuracies[0].title : ''
+    },
+    updateCountAccuracy (accuracyId) {
+      this.updateSelectedAccuracy(accuracyId)
+      this.updateCountAccuracyId(accuracyId)
+    },
     selectSpecies (value) {
       if (value) {
         this.updateSpecieId(value.taxrefId)
@@ -170,6 +180,7 @@ export default {
       'updateDateTimeTime',
       'updateGroupId',
       'updateSpecieId',
+      'updateCountAccuracyId',
       'updateCount',
       'toggleAlive',
       'updateComments',
@@ -194,6 +205,7 @@ export default {
     this.selectedTime = this.time ? this.time : new Date()
     this.updateSpeciesList(this.groupId)
     this.updateInputSpecies(this.specieId)
+    this.updateSelectedAccuracy(this.countAccuracyId)
     this.selectedAlive = this.isAlive
   }
 }
