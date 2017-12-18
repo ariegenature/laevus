@@ -45,7 +45,8 @@
                       <option>&cong;</option>
                       <option>&ge;</option>
                     </b-select>
-                    <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"></b-input>
+                    <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"
+                      :value="count" @input="updateCount"></b-input>
                   </b-field>
                 </b-field>
                 <b-field label="Vivant ou mort ?">
