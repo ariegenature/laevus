@@ -3,13 +3,14 @@
     <div class="hero-body">
       <div class="container">
         <form action="">
-          <form-wizard ref="wizard" @on-complete="$parent.close()" title="" subtitle=""
-                       step-size="xs" next-button-text="Suivant" back-button-text="Retour"
+          <form-wizard ref="wizard" @on-complete="$parent.close()" @on-change="handleStepChange"
+                       title="" subtitle="" step-size="xs"
+                       next-button-text="Suivant" back-button-text="Retour"
                        finish-button-text="Terminer">
             <tab-content title="Date et heure">
               <b-field grouped group-multiline>
                 <b-field label="Date">
-                  <b-datepicker placeholder="Cliquer pour choisir une date"
+                  <b-datepicker ref="firstFieldInTab0" placeholder="Cliquer pour choisir une date"
                                 icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
                                 v-model="selectedDate"></b-datepicker>
                 </b-field>
@@ -34,7 +35,7 @@
             </tab-content>
             <tab-content title="Identification précise">
               <b-field label="Espèce">
-                <b-autocomplete expanded icon="magnify"
+                <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
                                 placeholder="Commencer à écrire pour chercher"
                                 v-model="inputSpecies" :data="filteredSpecies" field="name"
                                 @select="selectSpecies"></b-autocomplete>
@@ -67,7 +68,8 @@
             <tab-content title="Coordonnées">
               <b-field grouped group-multiline>
                 <b-field label="Votre prénom" expanded>
-                  <b-input expanded :value="firstName" @input="updateFirstName"></b-input>
+                  <b-input expanded :value="firstName" @input="updateFirstName"
+                    ref="firstFieldInTab3"></b-input>
                 </b-field>
                 <b-field label="Votre nom" expanded>
                   <b-input expanded :value="surname" @input="updateSurname"></b-input>
@@ -148,6 +150,15 @@ export default {
       var dateArray = strValue.split('/').reverse()
       return new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
     },
+    handleStepChange (prevIndex, nextIndex) {
+      this.giveFocusToFirstField(nextIndex)
+    },
+    giveFocusToFirstField (tabIndex) {
+      var firstField = this.$refs[`firstFieldInTab${tabIndex}`]
+      if (firstField && firstField.hasOwnProperty('focus')) {
+        firstField.focus()
+      }
+    },
     updateSpeciesList (groupId) {
       if (groupId) {
         var speciesGroup = this.speciesGroups.filter(obj => obj.groupId === groupId)
@@ -209,6 +220,7 @@ export default {
     this.updateInputSpecies(this.specieId)
     this.updateSelectedAccuracy(this.countAccuracyId)
     this.selectedAlive = this.isAlive
+    this.giveFocusToFirstField(0)
   }
 }
 </script>
