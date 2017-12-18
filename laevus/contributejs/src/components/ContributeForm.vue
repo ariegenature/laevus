@@ -64,14 +64,15 @@
             <tab-content title="Coordonnées">
               <b-field grouped group-multiline>
                 <b-field label="Votre prénom" expanded>
-                  <b-input expanded></b-input>
+                  <b-input expanded :value="firstName" @input="updateFirstName"></b-input>
                 </b-field>
                 <b-field label="Votre nom" expanded>
-                  <b-input expanded></b-input>
+                  <b-input expanded :value="surname" @input="updateSurname"></b-input>
                 </b-field>
               </b-field>
               <b-field label="Votre adresse électronique" expanded>
-                <b-input type="email "placeholder="prenom.nom@example.org"></b-input>
+                <b-input type="email "placeholder="prenom.nom@example.org"
+                         :value="email" @input="updateEmail"></b-input>
               </b-field>
             </tab-content>
           </form-wizard>
