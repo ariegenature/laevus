@@ -41,9 +41,10 @@
                 <b-field label="Nombre d'individus" expanded>
                   <b-field>
                     <b-select>
-                      <option>=</option>
-                      <option>&cong;</option>
-                      <option>&ge;</option>
+                      <option v-for="accuracy in accuracies"
+                              :value="accuracy.id" :key="accuracy.id"
+                              v-html="accuracy.id">
+                      </option>
                     </b-select>
                     <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"
                       :value="count" @input="updateCount"></b-input>
@@ -125,7 +126,8 @@ export default {
     ]),
     ...mapGetters([
       'groups',
-      'speciesGroups'
+      'speciesGroups',
+      'accuracies'
     ])
   },
   methods: {

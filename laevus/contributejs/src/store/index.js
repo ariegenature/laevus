@@ -8,6 +8,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state () {
     return {
+      accuracies: [
+        {
+          id: '=',
+          title: 'exactement'
+        },
+        {
+          id: '&cong;',
+          title: 'environ'
+        },
+        {
+          id: '&ge;',
+          title: 'au moins'
+        }
+      ],
       groups: [
         {
           id: 'large-mammal',
@@ -104,7 +118,8 @@ export default new Vuex.Store({
   },
   getters: {
     groups: (state) => state.groups,
-    speciesGroups: (state) => state.speciesGroups
+    speciesGroups: (state) => state.speciesGroups,
+    accuracies: (state) => state.accuracies
   },
   modules: {
     contribution
