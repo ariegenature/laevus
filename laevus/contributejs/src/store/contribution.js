@@ -37,7 +37,7 @@ export default {
       state.specieId = specieId
     },
     count: (state, count) => {
-      state.count = count
+      state.count = Number(count)
     },
     toggleAlive: (state) => {
       state.isAlive = !state.isAlive
