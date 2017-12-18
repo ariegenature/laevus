@@ -32,7 +32,10 @@
             </tab-content>
             <tab-content title="Identification précise">
               <b-field label="Espèce">
-                <b-input icon="magnify" type="search" placeholder="Commencer à écrire pour chercher"></b-input>
+                <b-autocomplete expanded icon="magnify"
+                                placeholder="Commencer à écrire pour chercher"
+                                v-model="inputSpecies" :data="filteredSpecies" field="name"
+                                @select="selectSpecies"></b-autocomplete>
               </b-field>
               <b-field grouped group-multiline>
                 <b-field label="Nombre d'individus" expanded>
@@ -89,10 +92,17 @@ export default {
   data () {
     return {
       selectedDate: null,
-      selectedTime: null
+      selectedTime: null,
+      inputSpecies: '',
+      species: []
     }
   },
   computed: {
+    filteredSpecies () {
+      return this.species.filter((obj) => {
+        return obj.name.toString().toLowerCase().indexOf(this.inputSpecies.toLowerCase()) >= 0
+      })
+    },
     ...mapGetters('contribution', [
       'date',
       'time',
@@ -106,17 +116,42 @@ export default {
       'email'
     ]),
     ...mapGetters([
-      'groups'
+      'groups',
+      'speciesGroups'
     ])
   },
   methods: {
     nextTab (groupId) {
       this.updateGroupId(groupId)
+      this.updateSpecieId(null)
+      this.updateInputSpecies('')
+      this.updateSpeciesList(groupId)
       this.$refs.wizard.nextTab()
     },
     parseFrenchDate (strValue) {
       var dateArray = strValue.split('/').reverse()
       return new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+    },
+    updateSpeciesList (groupId) {
+      if (groupId) {
+        var speciesGroup = this.speciesGroups.filter(obj => obj.groupId === groupId)
+        this.species = speciesGroup ? speciesGroup[0].species : []
+      } else {
+        this.species = []
+      }
+    },
+    updateInputSpecies (specieId) {
+      if (specieId) {
+        var species = this.species.filter(obj => obj.taxrefId === this.specieId)
+        this.inputSpecies = species ? species[0].name : ''
+      } else {
+        this.inputSpecies = ''
+      }
+    },
+    selectSpecies (value) {
+      if (value) {
+        this.updateSpecieId(value.taxrefId)
+      }
     },
     ...mapActions('contribution', [
       'updateDateTimeDate',
@@ -142,6 +177,8 @@ export default {
   mounted () {
     this.selectedDate = new Date()
     this.selectedTime = new Date()
+    this.updateSpeciesList(this.groupId)
+    this.updateInputSpecies(this.specieId)
   }
 }
 </script>
