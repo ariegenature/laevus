@@ -3,7 +3,9 @@
     <div class="hero-body">
       <div class="container">
         <form action="">
-          <form-wizard ref="wizard" @on-complete="$parent.close()" title="" subtitle="" step-size="xs">
+          <form-wizard ref="wizard" @on-complete="$parent.close()" title="" subtitle=""
+                       step-size="xs" next-button-text="Suivant" back-button-text="Retour"
+                       finish-button-text="Terminer">
             <tab-content title="Date et heure">
               <b-field grouped group-multiline>
                 <b-field label="Date">
