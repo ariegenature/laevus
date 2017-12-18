@@ -50,8 +50,8 @@
                   </b-field>
                 </b-field>
                 <b-field label="Vivant ou mort ?">
-                  <b-switch true-value="Vivant" false-value="Mort">
-                    Vivant ?
+                  <b-switch true-value="Vivant" false-value="Mort" v-model="selectedAlive">
+                    {{ aliveString }}
                   </b-switch>
                 </b-field>
               </b-field>
@@ -94,6 +94,7 @@ export default {
     return {
       selectedDate: null,
       selectedTime: null,
+      selectedAlive: false,
       inputSpecies: '',
       species: []
     }
@@ -103,6 +104,9 @@ export default {
       return this.species.filter((obj) => {
         return obj.name.toString().toLowerCase().indexOf(this.inputSpecies.toLowerCase()) >= 0
       })
+    },
+    aliveString () {
+      return this.isAlive ? 'Vivant' : 'Mort'
     },
     ...mapGetters('contribution', [
       'date',
@@ -175,6 +179,9 @@ export default {
     },
     selectedTime: function (value) {
       this.updateDateTimeTime(value)
+    },
+    selectedAlive: function (value) {
+      this.toggleAlive()
     }
   },
   mounted () {
@@ -182,6 +189,7 @@ export default {
     this.selectedTime = this.time ? this.time : new Date()
     this.updateSpeciesList(this.groupId)
     this.updateInputSpecies(this.specieId)
+    this.selectedAlive = this.isAlive
   }
 }
 </script>
