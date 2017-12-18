@@ -31,27 +31,27 @@ export default new Vuex.Store({
         {
           id: 'small-mammal',
           name: 'Petit mammifère',
-          icon: 'assets/deer.png'
+          icon: 'static/rabbit.png'
         },
         {
           id: 'reptile',
           name: 'Reptile',
-          icon: 'assets/deer.png'
+          icon: 'static/snake.png'
         },
         {
           id: 'amphibian',
           name: 'Amphibien',
-          icon: 'assets/deer.png'
+          icon: 'static/frog.png'
         },
         {
           id: 'bat',
           name: 'Chauve-souris',
-          icon: 'assets/deer.png'
+          icon: 'static/bat.png'
         },
         {
           id: 'bird',
           name: 'Oiseau',
-          icon: 'assets/deer.png'
+          icon: 'static/bird.png'
         }
       ],
       speciesGroups: [
