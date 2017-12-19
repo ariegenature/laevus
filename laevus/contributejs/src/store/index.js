@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state () {
     return {
+      perimeterUrl: window.location.origin + '/static/perimetre_pnr.geojson',
       accuracies: [
         {
           id: '=',
@@ -118,6 +119,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    perimeterUrl: (state) => state.perimeterUrl,
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies

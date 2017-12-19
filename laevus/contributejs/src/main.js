@@ -14,6 +14,7 @@ Vue.config.productionTip = false
 Vue.component('v-map', Vue2Leaflet.Map)
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
 Vue.component('v-marker', Vue2Leaflet.Marker)
+Vue.component('v-geojson-layer', Vue2Leaflet.GeoJSON)
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa'

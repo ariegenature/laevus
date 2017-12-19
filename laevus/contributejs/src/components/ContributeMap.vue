@@ -3,7 +3,7 @@
     class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-marker :lat-lng="[47.413220, -1.219482]"></v-marker>
+    <v-geojson-layer :geojson="perimeter" :options="options"></v-geojson-layer>
   </v-map>
 </template>
 
@@ -14,12 +14,29 @@ export default {
   name: 'ContributeMap',
   data () {
     return {
+      perimeter: null,
+      options: {
+        style: function () {
+          return {
+            weight: 2,
+            color: '#ECEFF1',
+            opacity: 1,
+            fillColor: '#e4ce7f',
+            fillOpacity: 1
+          }
+        }
+      }
     }
   },
-  computed: mapGetters('map', [
-    'center',
-    'zoom'
-  ]),
+  computed: {
+    ...mapGetters('map', [
+      'center',
+      'zoom'
+    ]),
+    ...mapGetters([
+      'perimeterUrl'
+    ])
+  },
   methods: {
     transmitClick (ev) {
       this.$emit('l-click')
@@ -28,6 +45,18 @@ export default {
       'updateCenter',
       'updateZoom'
     ])
+  },
+  async created () {
+    try {
+      const response = await fetch(this.perimeterUrl)
+      if (response.ok) {
+        this.perimeter = await response.json()
+      } else {
+        throw new Error('Cannot fetch data perimeter')
+      }
+    } catch (e) {
+      this.error = e
+    }
   }
 }
 </script>
