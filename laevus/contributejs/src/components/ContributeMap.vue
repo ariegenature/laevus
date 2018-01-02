@@ -41,7 +41,9 @@ export default {
   },
   methods: {
     transmitClick (ev) {
-      this.$emit('l-click')
+      if (ev.originalEvent.target.classList.contains('perimeter')) {
+        this.$emit('l-click')
+      }
     },
     zoomOnPerimeter (ev) {
       if (this.isReady) return
