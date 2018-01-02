@@ -1,9 +1,9 @@
 <template>
-  <v-map :zoom="zoom" :center="center" @l-click="transmitClick"
-    class="locate">
+  <v-map ref="map" :zoom="zoom" :center="center" @l-click="transmitClick"
+         @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-geojson-layer :geojson="perimeter" :options="options"></v-geojson-layer>
+    <v-geojson-layer ref="perimeter" :geojson="perimeter" :options="options"></v-geojson-layer>
   </v-map>
 </template>
 
@@ -14,6 +14,7 @@ export default {
   name: 'ContributeMap',
   data () {
     return {
+      isReady: false,
       perimeter: null,
       options: {
         style: function () {
@@ -40,6 +41,14 @@ export default {
   methods: {
     transmitClick (ev) {
       this.$emit('l-click')
+    },
+    zoomOnPerimeter (ev) {
+      if (this.isReady) return
+      const perimeterBounds = this.$refs.perimeter.getBounds()
+      if (perimeterBounds.hasOwnProperty('_southWest')) {
+        this.$refs.map.fitBounds(perimeterBounds)
+        this.isReady = true
+      }
     },
     ...mapActions('map', [
       'updateCenter',
