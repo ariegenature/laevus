@@ -23,7 +23,8 @@ export default {
             color: '#ECEFF1',
             opacity: 1,
             fillColor: '#e4ce7f',
-            fillOpacity: 1
+            fillOpacity: 1,
+            className: 'perimeter'
           }
         }
       }
@@ -72,6 +73,9 @@ export default {
 
 <style>
 .leaflet-container.locate {
+  cursor: not-allowed;
+}
+.perimeter {
   cursor: crosshair;
 }
 </style>
