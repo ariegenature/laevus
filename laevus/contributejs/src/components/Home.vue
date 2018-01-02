@@ -3,7 +3,7 @@
     <div id="hero-map" class="hero-body">
       <div id="container-map" class="container">
         <div id="map">
-          <contribute-map @l-click="handleMapClick"></contribute-map>
+          <contribute-map @perimeter-click="handleMapClick"></contribute-map>
         </div>
       </div>
     </div>
