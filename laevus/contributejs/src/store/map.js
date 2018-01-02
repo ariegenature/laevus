@@ -3,10 +3,10 @@ export default {
   state () {
     return {
       center: {
-        lat: -1.219482,
-        lng: 47.413220
+        lat: 0,
+        lng: 0
       },
-      zoom: 13
+      zoom: 1
     }
   },
   getters: {
