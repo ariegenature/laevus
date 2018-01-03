@@ -14,7 +14,7 @@
               <h2 class="is-size-6">Ajouter une observation</h2>
               <p class="is-size-7"><b-taglist attached>
                 <b-tag class="is-dark">niveau de zoom</b-tag>
-                <b-tag class="is-danger">insuffisant (-13)</b-tag>
+                <b-tag :class="[tagClass]">{{ tagText }}</b-tag>
               </b-taglist>
               <p class="is-size-7">Pour saisir une nouvelle observation, il suffit de cliquer à
               l'endroit où vous avez observé un animal.</p>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import ContributeForm from './ContributeForm'
 import ContributeMap from './ContributeMap'
 
@@ -50,6 +52,15 @@ export default {
     return {
       isFormActive: false
     }
+  },
+  computed: {
+    tagClass () {
+      return this.zoom >= 14 ? 'is-success' : 'is-danger'
+    },
+    tagText () {
+      return this.zoom >= 14 ? 'suffisant' : `insuffisant (${this.zoom - 14})`
+    },
+    ...mapGetters('map', ['zoom'])
   },
   methods: {
     handleMapClick (ev) {
