@@ -42,7 +42,8 @@ export default {
   },
   methods: {
     transmitClick (ev) {
-      if (ev.originalEvent.target.classList.contains('perimeter')) {
+      if (ev.originalEvent.target.classList.contains('perimeter') &&
+        this.zoom >= 14) {
         this.$emit('perimeter-click')
       }
     },
