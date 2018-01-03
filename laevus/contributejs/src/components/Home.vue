@@ -2,8 +2,31 @@
   <section class="hero is-fullheight">
     <div id="hero-map" class="hero-body">
       <div id="container-map" class="container">
-        <div id="map">
-          <contribute-map @perimeter-click="handleMapClick"></contribute-map>
+        <div id="columns-map" class="columns">
+          <div  id="column-map"class="column is-four-fifths">
+            <div id="map">
+              <contribute-map @perimeter-click="handleMapClick"></contribute-map>
+            </div>
+          </div>
+          <div class="column">
+            <div class="content">
+              <h3 class="is-size-5">Comment utiliser la carte ?</h3>
+              <h2 class="is-size-6">Ajouter une observation</h2>
+              <p class="is-size-7"><b-taglist attached>
+                <b-tag class="is-dark">niveau de zoom</b-tag>
+                <b-tag class="is-danger">insuffisant (-13)</b-tag>
+              </b-taglist>
+              <p class="is-size-7">Pour saisir une nouvelle observation, il suffit de cliquer à
+              l'endroit où vous avez observé un animal.</p>
+              <p class="is-size-7">Afin de garantir un minimum de précision, le niveau de zoom de
+              la carte doit être suffisant.</p>
+              </p>
+              <h2 class="is-size-6">Voir les observations</h2>
+              <p class="is-size-7">Sur la carte apparaissent les observations
+              <em>déjà saisies</em> sour forme de points.</p>
+              <p class="is-size-7">Cliquez sur un point pour voir le détail.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -37,7 +60,7 @@ export default {
 </script>
 
 <style>
-#hero-map, #container-map {
+#hero-map, #container-map, #columns-map, #column-map {
   height: 100%;
 }
 #map {
