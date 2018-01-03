@@ -1,5 +1,6 @@
 <template>
   <v-map ref="map" :zoom="zoom" :center="center" @l-click="transmitClick"
+         @l-zoom="updateZoomAndCenter" @l-move="updateZoomAndCenter"
          @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
@@ -52,6 +53,10 @@ export default {
         this.$refs.map.fitBounds(perimeterBounds)
         this.isReady = true
       }
+    },
+    updateZoomAndCenter (ev) {
+      this.updateZoom(this.$refs.map.mapObject.getZoom())
+      this.updateCenter(this.$refs.map.mapObject.getCenter())
     },
     ...mapActions('map', [
       'updateCenter',
