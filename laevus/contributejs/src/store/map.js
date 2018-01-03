@@ -11,7 +11,7 @@ export default {
   },
   getters: {
     center: (state) => {
-      return [state.center.lng, state.center.lat]
+      return [state.center.lat, state.center.lng]
     },
     zoom: (state) => state.zoom
   },
