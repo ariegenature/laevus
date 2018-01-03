@@ -1,7 +1,6 @@
 <template>
   <v-map ref="map" :zoom="zoom" :center="center" @l-click="transmitClick"
-         @l-zoom="updateZoomAndCenter" @l-move="updateZoomAndCenter"
-         @l-layeradd="zoomOnPerimeter" class="locate">
+         @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
     <v-geojson-layer ref="perimeter" :geojson="perimeter" :options="options"></v-geojson-layer>
@@ -55,12 +54,10 @@ export default {
         this.isReady = true
       }
     },
-    updateZoomAndCenter (ev) {
+    updateZoomFromMap (ev) {
       this.updateZoom(this.$refs.map.mapObject.getZoom())
-      this.updateCenter(this.$refs.map.mapObject.getCenter())
     },
     ...mapActions('map', [
-      'updateCenter',
       'updateZoom'
     ])
   },
