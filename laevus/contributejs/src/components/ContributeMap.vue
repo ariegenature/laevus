@@ -20,10 +20,10 @@ export default {
         style: function () {
           return {
             weight: 2,
-            color: '#ECEFF1',
+            color: '#4C5D71',
             opacity: 1,
-            fillColor: '#e4ce7f',
-            fillOpacity: 1,
+            fillColor: '#FFFFFF',
+            fillOpacity: 0,
             className: 'perimeter'
           }
         }
