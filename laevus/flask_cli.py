@@ -20,7 +20,17 @@
 # then you can simply run `flask run`. See <http://flask.pocoo.org/docs/0.12/cli/> for more
 # information.
 
+import click
+
 from laevus import create_app, read_config
+from laevus.model import db
 
 config = read_config()
 app = create_app(config)
+
+
+@app.cli.command()
+def initdb():
+    click.echo('-> Initializing database...')
+    db.create_all()
+    click.echo('-> Database initialized.')
