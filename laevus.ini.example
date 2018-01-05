@@ -4,3 +4,5 @@ SERVER_NAME = localhost:5000
 LOG_LEVEL = warning
 LOG_FILENAME =
 SECRET_KEY = <random string for CSRF protection>
+SQLALCHEMY_DATABASE_URI = <uri of PostgreSQL w/ Postgis database>
+SQLALCHEMY_TRACK_MODIFICATIONS = false
