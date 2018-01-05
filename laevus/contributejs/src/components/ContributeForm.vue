@@ -2,11 +2,11 @@
   <div class="hero">
     <div class="hero-body">
       <div class="container">
-        <form action="">
+        <form id="contribute-form" method="POST" accept-charset="UTF-8">
           <form-wizard ref="wizard" @on-complete="$parent.close()" @on-change="handleStepChange"
                        title="" subtitle="" step-size="xs"
                        next-button-text="Suivant" back-button-text="Retour"
-                       finish-button-text="Terminer">
+                       finish-button-text="Terminer" @on-complete="submitForm">
             <tab-content title="Date et heure">
               <b-field grouped group-multiline>
                 <b-field label="Date">
@@ -80,6 +80,11 @@
                 <b-input type="email "placeholder="prenom.nom@example.org"
                          :value="email" @input="updateEmail"></b-input>
               </b-field>
+              <div class="field">
+                <div class="control">
+                  <input type="hidden" name="csrf_token" value="«« csrf_token() »»">
+                </div>
+              </div>
             </tab-content>
           </form-wizard>
         </form>
@@ -89,6 +94,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import {mapActions, mapGetters} from 'vuex'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
@@ -119,6 +125,7 @@ export default {
       return this.isAlive ? 'Vivant' : 'Mort'
     },
     ...mapGetters('contribution', [
+      'latLng',
       'date',
       'time',
       'groupId',
@@ -188,6 +195,25 @@ export default {
       if (value) {
         this.updateSpecieId(value.taxrefId)
       }
+    },
+    async submitForm (ev) {
+      var contributeData = new FormData()
+      contributeData.append('geometry', `SRID=4326;POINT(${this.latLng.lng} ${this.latLng.lat})`)
+      contributeData.append('date_time', this.date.toISOString())
+      contributeData.append('group_id', this.groupId ? this.groupId : '')
+      contributeData.append('specie_id', this.specieId ? this.specieId : '')
+      contributeData.append('count_accuracy_id', this.countAccuracyId)
+      contributeData.append('count', this.count)
+      contributeData.append('is_alive', this.isAlive)
+      contributeData.append('comments', this.comments ? this.comments : '')
+      contributeData.append('first_name', this.firstName ? this.firstName : '')
+      contributeData.append('surname', this.surname ? this.surname : '')
+      contributeData.append('email', this.email ? this.email : '')
+      await axios.post('', contributeData, {
+        headers: {
+          'X-CSRFToken': '«« csrf_token() »»'
+        }
+      })
     },
     ...mapActions('contribution', [
       'updateDateTimeDate',
