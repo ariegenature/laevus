@@ -16,6 +16,7 @@ export default {
     }
   },
   getters: {
+    latLng: (state) => state.latLng,
     date: (state) => state.dateTime,
     time: (state) => state.dateTime,
     groupId: state => state.groupId,
@@ -29,6 +30,9 @@ export default {
     email: state => state.email
   },
   mutations: {
+    latLng: (state, latLng) => {
+      state.latLng = latLng
+    },
     dateTime: (state, dt) => {
       state.dateTime = dt
     },
@@ -61,6 +65,9 @@ export default {
     }
   },
   actions: {
+    updateLatLng: ({ commit, state }, latLng) => {
+      commit('latLng', latLng)
+    },
     updateDateTimeDate: ({ commit, state }, date) => {
       var dt = state.dateTime ? state.dateTime : new Date()
       var year = date.getFullYear()
