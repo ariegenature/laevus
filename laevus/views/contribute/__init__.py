@@ -18,14 +18,38 @@
 import mimetypes
 
 from flask import Blueprint, make_response, render_template
+from flask_wtf import FlaskForm
+from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
+                     TextField)
+from wtforms.validators import DataRequired, Email
 
 
 contribute_bp = Blueprint('contribute', __name__, static_folder='templates/static',
                           template_folder='templates')
 
 
-@contribute_bp.route('/contribute')
+class ContributeForm(FlaskForm):
+    """Flask contribution form."""
+
+    date_time = DateTimeField('Date and time', format='%Y-%m-%dT%H:%M:%S.%fZ',
+                              validators=[DataRequired()])
+    group_id = StringField('Group', validators=[DataRequired()])
+    specie_id = IntegerField('Species', validators=[DataRequired()])
+    count_accuracy_id = StringField('Accuracy', validators=[DataRequired()])
+    count = IntegerField('Count', validators=[DataRequired()])
+    is_alive = BooleanField('Is Alive ?')
+    comments = TextField('Comments')
+    first_name = StringField('First name', validators=[DataRequired()])
+    surname = StringField('Surname', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    geometry = StringField('Point', validators=[DataRequired()])
+
+
+@contribute_bp.route('/contribute', methods=['GET', 'POST'])
 def index():
+    form = ContributeForm()
+    if form.validate_on_submit():
+        return 'TODO'
     return render_template('vue/index.html')
 
 
