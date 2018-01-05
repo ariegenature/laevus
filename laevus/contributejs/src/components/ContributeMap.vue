@@ -43,6 +43,7 @@ export default {
     transmitClick (ev) {
       if (ev.originalEvent.target.classList.contains('perimeter') &&
         this.zoom >= 14) {
+        this.updateLatLng(ev.latlng)
         this.$emit('perimeter-click')
       }
     },
@@ -57,6 +58,9 @@ export default {
     updateZoomFromMap (ev) {
       this.updateZoom(this.$refs.map.mapObject.getZoom())
     },
+    ...mapActions('contribution', [
+      'updateLatLng'
+    ]),
     ...mapActions('map', [
       'updateZoom'
     ])
