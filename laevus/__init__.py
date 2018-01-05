@@ -12,6 +12,7 @@ from six import PY2, integer_types
 from werkzeug.contrib.fixers import ProxyFix
 from xdg import XDG_CONFIG_HOME
 
+from laevus.extensions import csrf
 from laevus.views import (
     blueprints,
     home as home_view,
@@ -106,4 +107,5 @@ def create_app(config):
         app.register_blueprint(blueprint)
     # Register views, handlers and cli commands
     app.route('/')(home_view)
+    csrf.init_app(app)
     return app
