@@ -22,12 +22,13 @@
 
 from contextlib import contextmanager
 import csv
+import io
 import os
 
 import click
 
 from laevus import create_app, read_config
-from laevus.model import db
+from laevus.model import WildLifeGroup, db
 
 
 config = read_config()
@@ -69,3 +70,49 @@ def import_groups(src):
             with cnx.cursor() as cur:
                 cur.copy_from(f, 'public.group', sep=dialect.delimiter, null='')
     click.echo('-> Groups imported.')
+
+
+@app.cli.command()
+@click.option('--src', prompt='Taxons CSV file',
+              help=('Path to the CSV file containing taxons, their identifiers, their groups, '
+                    'and their names'))
+def import_taxons(src):
+    srcpath = os.path.abspath(os.path.expanduser(src))
+    click.echo('-> Importing taxons from file {0}...'.format(srcpath))
+    group_name2id = dict((group.name, group.id) for group in WildLifeGroup.query.all())
+    if not group_name2id:
+        raise RuntimeError('Empty group table. Please import groups first using the '
+                           '`import_groups` command')
+    with open(srcpath) as f:
+        dialect = csv.Sniffer().sniff(f.readline())
+    # First pass reading file to import only taxon table
+    taxons_csv = io.StringIO()  # in-memory file that will be COPY FROM into db
+    taxons_writer = csv.writer(taxons_csv, delimiter='\t')
+    with open(srcpath) as f:
+        dict_reader = csv.DictReader(f, dialect=dialect)
+        for row_dict in dict_reader:
+            taxons_writer.writerow([row_dict['taxref_id'], group_name2id[row_dict['group']]])
+    # Second pass reading file to import names
+    scientific_names_csv = io.StringIO()
+    common_names_csv = io.StringIO()
+    scientific_names_writer = csv.writer(scientific_names_csv, delimiter='\t')
+    common_names_writer = csv.writer(common_names_csv, delimiter='\t')
+    with open(srcpath) as f:
+        dict_reader = csv.DictReader(f, dialect=dialect)
+        for row_dict in dict_reader:
+            taxref_id = row_dict['taxref_id']
+            scientific_names_writer.writerow([row_dict['main_name'], True, taxref_id])
+            for scientific_name in row_dict['scientific_names'].split(';'):
+                scientific_names_writer.writerow([scientific_name, False, taxref_id])
+            for common_name in row_dict['common_names'].split(';'):
+                common_names_writer.writerow([common_name, taxref_id])
+    taxons_csv.seek(0)
+    scientific_names_csv.seek(0)
+    common_names_csv.seek(0)
+    with sqla_raw_conn() as cnx:
+        with cnx.cursor() as cur:
+            cur.copy_from(taxons_csv, 'public.taxon', columns=('id', 'group_id'))
+            cur.copy_from(scientific_names_csv, 'public.scientific_name',
+                          columns=('value', 'is_preferred', 'taxon_id'))
+            cur.copy_from(common_names_csv, 'public.common_name', columns=('value', 'taxon_id'))
+    click.echo('-> Taxons successfully imported.')
