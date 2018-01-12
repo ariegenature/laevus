@@ -12,7 +12,7 @@ from six import PY2, integer_types
 from werkzeug.contrib.fixers import ProxyFix
 from xdg import XDG_CONFIG_HOME
 
-from laevus.extensions import db, csrf
+from laevus.extensions import db, csrf, rest_api
 from laevus.views import (
     blueprints,
     home as home_view,
@@ -109,4 +109,5 @@ def create_app(config):
     app.route('/')(home_view)
     csrf.init_app(app)
     db.init_app(app)
+    rest_api.init_app(app)
     return app

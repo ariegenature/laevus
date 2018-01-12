@@ -63,6 +63,7 @@ setup(
     packages=find_packages(exclude=['docs', 'tests', 'atests']),
     py_modules=['laevus_app'],
     install_requires=[
+        'Flask-RESTful',
         'Flask-SQLAlchemy',
         'Flask-WTF',
         'GeoAlchemy2',
