@@ -111,6 +111,7 @@ def create_app(config):
     csrf.init_app(app)
     db.init_app(app)
     rest_api.add_resource(ChildGroupAPI,
-                          '/api/child-group')
+                          '/api/child-group',
+                          '/api/child-group/<parent_id>')
     rest_api.init_app(app)
     return app
