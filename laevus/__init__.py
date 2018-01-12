@@ -17,6 +17,7 @@ from laevus.views import (
     blueprints,
     home as home_view,
 )
+from laevus.views.api import ChildGroupAPI
 
 
 _DEFAULT_CONFIG = {
@@ -109,5 +110,7 @@ def create_app(config):
     app.route('/')(home_view)
     csrf.init_app(app)
     db.init_app(app)
+    rest_api.add_resource(ChildGroupAPI,
+                          '/api/child-group')
     rest_api.init_app(app)
     return app
