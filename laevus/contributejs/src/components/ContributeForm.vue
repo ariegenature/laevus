@@ -145,14 +145,24 @@ export default {
     ])
   },
   methods: {
-    browseGroups (groupId) {
+    async browseGroups (groupId) {
       if (groupId !== this.groupId) {
         this.updateGroupId(groupId)
         this.updateSpecieId(null)
         this.updateInputSpecies('')
-        this.updateSpeciesList(groupId)
+        this.updateSpeciesList(null)
+        try {
+          const childGroups = await axios.get(`api/child-group/${groupId}`)
+          if (childGroups.data && childGroups.data.length) {
+            this.setGroups(childGroups.data)
+          } else {
+            this.updateSpeciesList(groupId)
+            this.$refs.wizard.nextTab()
+          }
+        } catch (e) {
+          console.log(e)
+        }
       }
-      this.$refs.wizard.nextTab()
     },
     parseFrenchDate (strValue) {
       var dateArray = strValue.split('/').reverse()
@@ -167,10 +177,14 @@ export default {
         firstField.focus()
       }
     },
-    updateSpeciesList (groupId) {
+    async updateSpeciesList (groupId) {
       if (groupId) {
-        var speciesGroup = this.speciesGroups.filter(obj => obj.groupId === groupId)
-        this.species = speciesGroup ? speciesGroup[0].species : []
+        try {
+          const species = await axios.get(`api/taxon/${groupId}`)
+          this.species = species.data.species ? species.data.species : []
+        } catch (e) {
+          console.log(e)
+        }
       } else {
         this.species = []
       }
@@ -227,7 +241,8 @@ export default {
       'updateFirstName',
       'updateSurname',
       'updateEmail'
-    ])
+    ]),
+    ...mapActions(['setGroups'])
   },
   watch: {
     selectedDate: function (value) {

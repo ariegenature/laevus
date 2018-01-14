@@ -25,66 +25,7 @@ export default new Vuex.Store({
         }
       ],
       groups: [],
-      speciesGroups: [
-        {
-          groupId: 'large-mammal',
-          species: [
-            {
-              taxrefId: 60981,
-              name: 'Sanglier [Sus scrofa Linnaeus, 1758]'
-            },
-            {
-              taxrefId: 61057,
-              name: 'Chevreuil européen [Capreolus capreolus (Linnaeus, 1758)]'
-            },
-            {
-              taxrefId: 61057,
-              name: 'Chevreuil européen [Capreolus capreolus (Linnaeus, 1758)]'
-            },
-            {
-              taxrefId: 61000,
-              name: 'Cerf élaphe [Cervus elaphus Linnaeus, 1758]'
-            },
-            {
-              taxrefId: 61128,
-              name: 'Isard [Rupicapra pyrenaica Bonaparte, 1845]'
-            },
-            {
-              taxrefId: 61028,
-              name: 'Daim européen [Rupicapra pyrenaica Bonaparte, 1845]'
-            },
-            {
-              taxrefId: 199194,
-              name: 'Mouflon [Ovis gmelinii musimon (Pallas, 1811)]'
-            }
-          ]
-        },
-        {
-          groupId: 'small-mammal',
-          species: [
-          ]
-        },
-        {
-          groupId: 'reptile',
-          species: [
-          ]
-        },
-        {
-          groupId: 'amphibian',
-          species: [
-          ]
-        },
-        {
-          groupId: 'bat',
-          species: [
-          ]
-        },
-        {
-          groupId: 'bird',
-          species: [
-          ]
-        }
-      ]
+      speciesGroups: []
     }
   },
   getters: {
