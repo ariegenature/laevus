@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container">
         <form id="contribute-form" method="POST" accept-charset="UTF-8">
-          <form-wizard ref="wizard" @on-complete="$parent.close()" @on-change="handleStepChange"
+          <form-wizard ref="wizard" @on-change="handleStepChange"
                        title="" subtitle="" step-size="xs"
                        next-button-text="Suivant" back-button-text="Retour"
                        finish-button-text="Terminer" @on-complete="submitForm">
