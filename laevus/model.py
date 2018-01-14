@@ -35,7 +35,7 @@ class WildLifeGroup(db.Model):
 
     id = db.Column(db.Text, primary_key=True)
     order = db.Column(db.Integer, CheckConstraint('"order" >= 0'))
-    name = db.Column(db.Text, nullable=False)
+    name = db.Column(db.Text, nullable=False, index=True, unique=True)
     parent_id = db.Column(db.Text, db.ForeignKey('group.id'))
     icon_fname = db.Column(db.Text)
     parent = db.relationship('WildLifeGroup', backref='children', foreign_keys=[parent_id],
@@ -59,7 +59,7 @@ class ScientificName(db.Model):
     __tablename__ = 'scientific_name'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    value = db.Column(db.Text, nullable=False)
+    value = db.Column(db.Text, nullable=False, index=True)
     is_preferred = db.Column(db.Boolean, nullable=False, default=False)
     taxon_id = db.Column(db.Integer, db.ForeignKey('taxon.id'), nullable=False)
     taxon = db.relationship('Taxon', backref='binomial_names', foreign_keys=[taxon_id])
@@ -71,6 +71,6 @@ class CommonName(db.Model):
     __tablename__ = 'common_name'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    value = db.Column(db.Text, nullable=False)
+    value = db.Column(db.Text, nullable=False, index=True)
     taxon_id = db.Column(db.Integer, db.ForeignKey('taxon.id'), nullable=False)
     taxon = db.relationship('Taxon', backref='common_names', foreign_keys=[taxon_id])
