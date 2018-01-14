@@ -24,8 +24,8 @@ export default new Vuex.Store({
           title: 'au moins'
         }
       ],
-      groups: [],
-      speciesGroups: []
+      groups: null,
+      speciesGroups: null
     }
   },
   getters: {
