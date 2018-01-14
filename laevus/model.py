@@ -37,6 +37,7 @@ class WildLifeGroup(db.Model):
     order = db.Column(db.Integer, CheckConstraint('"order" >= 0'))
     name = db.Column(db.Text, nullable=False)
     parent_id = db.Column(db.Text, db.ForeignKey('group.id'))
+    icon_fname = db.Column(db.Text)
     parent = db.relationship('WildLifeGroup', backref='children', foreign_keys=[parent_id],
                              remote_side='WildLifeGroup.id')
 
