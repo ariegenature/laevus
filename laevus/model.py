@@ -62,7 +62,7 @@ class ScientificName(db.Model):
     value = db.Column(db.Text, nullable=False, index=True)
     is_preferred = db.Column(db.Boolean, nullable=False, default=False)
     taxon_id = db.Column(db.Integer, db.ForeignKey('taxon.id'), nullable=False)
-    taxon = db.relationship('Taxon', backref='binomial_names', foreign_keys=[taxon_id])
+    taxon = db.relationship('Taxon', backref='scientific_names', foreign_keys=[taxon_id])
 
 
 class CommonName(db.Model):
