@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 
 import ContributeForm from './ContributeForm'
 import ContributeMap from './ContributeMap'
@@ -65,6 +66,15 @@ export default {
   methods: {
     handleMapClick (ev) {
       this.isFormActive = true
+    },
+    ...mapActions(['setGroups'])
+  },
+  async created () {
+    try {
+      const response = await axios.get('api/child-group')
+      this.setGroups(response.data)
+    } catch (e) {
+      console.log(e)
     }
   }
 }

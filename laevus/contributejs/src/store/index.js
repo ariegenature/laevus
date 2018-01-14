@@ -24,38 +24,7 @@ export default new Vuex.Store({
           title: 'au moins'
         }
       ],
-      groups: [
-        {
-          id: 'large-mammal',
-          name: 'Grand mammifère',
-          icon: 'static/deer.png'
-        },
-        {
-          id: 'small-mammal',
-          name: 'Petit mammifère',
-          icon: 'static/rabbit.png'
-        },
-        {
-          id: 'reptile',
-          name: 'Reptile',
-          icon: 'static/snake.png'
-        },
-        {
-          id: 'amphibian',
-          name: 'Amphibien',
-          icon: 'static/frog.png'
-        },
-        {
-          id: 'bat',
-          name: 'Chauve-souris',
-          icon: 'static/bat.png'
-        },
-        {
-          id: 'bird',
-          name: 'Oiseau',
-          icon: 'static/bird.png'
-        }
-      ],
+      groups: [],
       speciesGroups: [
         {
           groupId: 'large-mammal',
@@ -123,6 +92,16 @@ export default new Vuex.Store({
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies
+  },
+  mutations: {
+    groups: (state, groups) => {
+      state.groups = groups
+    }
+  },
+  actions: {
+    setGroups: ({ commit, state }, groups) => {
+      commit('groups', groups)
+    }
   },
   modules: {
     contribution,
