@@ -3,7 +3,7 @@
 from flask import Blueprint
 from flask_restful import Resource, fields, marshal_with
 
-from laevus.model import WildLifeGroup
+from laevus.model import CommonName, ScientificName, Taxon, WildLifeGroup, db
 
 
 api_bp = Blueprint('api', __name__)
@@ -31,3 +31,20 @@ class ChildGroupAPI(Resource):
                 filter_by(parent_id=parent_id).
                 order_by(WildLifeGroup.order).
                 all())
+
+
+class TaxonAPI(Resource):
+
+    def get(self, group_id):
+        res = {'groupId': group_id, 'species': []}
+        species = res['species']
+        cname_query = (db.session.query(CommonName.value, Taxon.id).
+                       join('taxon').
+                       filter_by(group_id=group_id))
+        sciname_query = (db.session.query(ScientificName.value, Taxon.id).
+                         join('taxon').
+                         filter_by(group_id=group_id))
+        rows = cname_query.union(sciname_query).all()
+        for name, taxref_id in rows:
+            species.append({'taxrefId': taxref_id, 'name': name})
+        return res
