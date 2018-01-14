@@ -24,7 +24,7 @@
             <tab-content title="Identification grossière">
               <div class="columns is-centered">
                 <div class="column has-text-centered" v-for="group in groups">
-                  <b-radio href="#" :value="groupId" @input="nextTab(group.id)"
+                  <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
                            size="is-small" :native-value="group.id">
                     <figure class="image is-64x64 block-center">
                       <img :alt="group.name" :src="group.icon">
@@ -145,7 +145,7 @@ export default {
     ])
   },
   methods: {
-    nextTab (groupId) {
+    browseGroups (groupId) {
       if (groupId !== this.groupId) {
         this.updateGroupId(groupId)
         this.updateSpecieId(null)
