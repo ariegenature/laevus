@@ -103,9 +103,11 @@ def import_taxons(src):
             taxref_id = row_dict['taxref_id']
             scientific_names_writer.writerow([row_dict['main_name'], True, taxref_id])
             for scientific_name in row_dict['scientific_names'].split(';'):
-                scientific_names_writer.writerow([scientific_name, False, taxref_id])
+                if scientific_name:
+                    scientific_names_writer.writerow([scientific_name, False, taxref_id])
             for common_name in row_dict['common_names'].split(';'):
-                common_names_writer.writerow([common_name, taxref_id])
+                if common_name:
+                    common_names_writer.writerow([common_name, taxref_id])
     taxons_csv.seek(0)
     scientific_names_csv.seek(0)
     common_names_csv.seek(0)
