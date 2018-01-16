@@ -21,7 +21,7 @@ class Contribution(db.Model):
     first_name = db.Column(db.Text, nullable=False)
     surname = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
-    geometry = db.Column(geo_types.Geometry(geometry_type='POINT', srid=2154),
+    geometry = db.Column(geo_types.Geometry(geometry_type='POINT', srid=4326),
                          nullable=False)
     group = db.relationship('WildLifeGroup', backref='observed_in', foreign_keys=[group_id])
     specie = db.relationship('Taxon', backref='observed_in', foreign_keys=[specie_id])
