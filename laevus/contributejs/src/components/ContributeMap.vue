@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -67,14 +68,10 @@ export default {
   },
   async created () {
     try {
-      const response = await fetch(this.perimeterUrl)
-      if (response.ok) {
-        this.perimeter = await response.json()
-      } else {
-        throw new Error('Cannot fetch data perimeter')
-      }
+      const response = await axios.get(this.perimeterUrl)
+      this.perimeter = response.data
     } catch (e) {
-      this.error = e
+      console.log(e)
     }
   }
 }
