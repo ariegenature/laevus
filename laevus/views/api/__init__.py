@@ -1,9 +1,12 @@
 """Laevus API blueprint."""
 
+import json
+
 from flask import Blueprint
 from flask_restful import Resource, fields, marshal_with
+from sqlalchemy import func
 
-from laevus.model import CommonName, ScientificName, Taxon, WildLifeGroup, db
+from laevus.model import CommonName, Contribution, ScientificName, Taxon, WildLifeGroup, db
 
 
 api_bp = Blueprint('api', __name__)
@@ -47,4 +50,38 @@ class TaxonAPI(Resource):
         rows = cname_query.union(sciname_query).all()
         for name, taxref_id in rows:
             species.append({'taxrefId': taxref_id, 'name': name})
+        return res
+
+
+class ContributionAPI(Resource):
+
+    def get(self):
+        res = {
+            'type': 'FeatureCollection',
+            'features': []
+        }
+        features = res['features']
+        rows = (db.session.query(Contribution.id,
+                                 Contribution.date_time,
+                                 WildLifeGroup.name,
+                                 Contribution.count_accuracy_id,
+                                 Contribution.count,
+                                 Contribution.is_alive,
+                                 func.ST_AsGeoJSON(Contribution.geometry).label('geojson')).
+                join('group').
+                order_by(Contribution.date_time).
+                all())
+        for row in rows:
+            features.append({
+                'type': 'Feature',
+                'id': row.id,
+                'properties': {
+                    'date_time': row.date_time.strftime('%Y-%m-%d'),
+                    'group': row.name,
+                    'accuracy': row.count_accuracy_id,
+                    'count': row.count,
+                    'is_alive': row.is_alive,
+                },
+                'geometry': json.loads(row.geojson)
+            })
         return res
