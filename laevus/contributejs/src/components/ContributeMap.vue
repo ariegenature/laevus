@@ -3,11 +3,15 @@
          @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-geojson-layer ref="perimeter" :geojson="perimeter" :options="options"></v-geojson-layer>
+    <v-geojson-layer ref="contribution" :geojson="contributions"
+                     :options="contributionOptions"></v-geojson-layer>
+    <v-geojson-layer ref="perimeter" :geojson="perimeter"
+                     :options="perimeterOptions"></v-geojson-layer>
   </v-map>
 </template>
 
 <script>
+import L from 'leaflet'
 import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
 
@@ -17,7 +21,8 @@ export default {
     return {
       isReady: false,
       perimeter: null,
-      options: {
+      contributions: null,
+      perimeterOptions: {
         style: function () {
           return {
             weight: 2,
@@ -27,6 +32,38 @@ export default {
             fillOpacity: 0,
             className: 'perimeter'
           }
+        }
+      },
+      contributionOptions: {
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 4,
+            weight: 1,
+            color: '#7A3432',
+            opacity: 1,
+            fillColor: '#FA6B67',
+            fillOpacity: 1,
+            className: 'contribution'
+          })
+        },
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(`<div class="media">
+            <div class="media-content">
+            <div class="content">
+            <p>
+            <strong>${feature.properties.group}</strong>
+            <br>
+            <small>
+            <span class="has-text-info">${feature.properties.date_time}&nbsp;</span>
+            <span class="has-text-grey">&ndash;&nbsp;</span>
+            <span class="has-text-grey">nombre&nbsp;:&nbsp;</span>
+            <span class="has-text-info">
+            ${feature.properties.accuracy}&nbsp;${feature.properties.count}
+            </span>
+            </p>
+            </div>
+            </div>
+            </div>`)
         }
       }
     }
@@ -70,6 +107,12 @@ export default {
     try {
       const response = await axios.get(this.perimeterUrl)
       this.perimeter = response.data
+    } catch (e) {
+      console.log(e)
+    }
+    try {
+      const response = await axios.get('api/contribution')
+      this.contributions = response.data
     } catch (e) {
       console.log(e)
     }
