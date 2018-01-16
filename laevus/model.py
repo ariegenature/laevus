@@ -13,7 +13,8 @@ class Contribution(db.Model):
     date_time = db.Column(db.DateTime, nullable=False)
     group_id = db.Column(db.Text, db.ForeignKey('group.id'), nullable=False)
     specie_id = db.Column(db.Integer, db.ForeignKey('taxon.id'))
-    count_accuracy_id = db.Column(db.Integer, nullable=False)
+    count_accuracy_id = db.Column(db.Enum('=', '&cong;', '&ge;', name='count_accuracy_type'),
+                                  nullable=False)
     count = db.Column(db.Integer, nullable=False)
     is_alive = db.Column(db.Boolean, nullable=False)
     comments = db.Column(db.Text)
