@@ -228,6 +228,12 @@ export default {
           'X-CSRFToken': '«« csrf_token() »»'
         }
       })
+      try {
+        const response = await axios.get('api/contribution')
+        this.setContributions(response.data)
+      } catch (e) {
+        console.log(e)
+      }
       this.$parent.close()
     },
     ...mapActions('contribution', [
@@ -243,7 +249,7 @@ export default {
       'updateSurname',
       'updateEmail'
     ]),
-    ...mapActions(['setGroups'])
+    ...mapActions(['setGroups', 'setContributions'])
   },
   watch: {
     selectedDate: function (value) {
