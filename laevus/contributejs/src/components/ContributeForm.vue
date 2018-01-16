@@ -228,6 +228,7 @@ export default {
           'X-CSRFToken': '«« csrf_token() »»'
         }
       })
+      this.$parent.close()
     },
     ...mapActions('contribution', [
       'updateDateTimeDate',
