@@ -25,23 +25,31 @@ export default new Vuex.Store({
         }
       ],
       groups: null,
-      speciesGroups: null
+      speciesGroups: null,
+      contributions: null
     }
   },
   getters: {
     perimeterUrl: (state) => state.perimeterUrl,
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
-    accuracies: (state) => state.accuracies
+    accuracies: (state) => state.accuracies,
+    contributions: (state) => state.contributions
   },
   mutations: {
     groups: (state, groups) => {
       state.groups = groups
+    },
+    contributions: (state, contributions) => {
+      state.contributions = contributions
     }
   },
   actions: {
     setGroups: ({ commit, state }, groups) => {
       commit('groups', groups)
+    },
+    setContributions: ({ commit, state }, contributions) => {
+      commit('contributions', contributions)
     }
   },
   modules: {

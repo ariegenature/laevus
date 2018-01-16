@@ -21,7 +21,6 @@ export default {
     return {
       isReady: false,
       perimeter: null,
-      contributions: null,
       perimeterOptions: {
         style: function () {
           return {
@@ -74,7 +73,8 @@ export default {
       'zoom'
     ]),
     ...mapGetters([
-      'perimeterUrl'
+      'perimeterUrl',
+      'contributions'
     ])
   },
   methods: {
@@ -96,6 +96,9 @@ export default {
     updateZoomFromMap (ev) {
       this.updateZoom(this.$refs.map.mapObject.getZoom())
     },
+    ...mapActions([
+      'setContributions'
+    ]),
     ...mapActions('contribution', [
       'updateLatLng'
     ]),
@@ -112,7 +115,7 @@ export default {
     }
     try {
       const response = await axios.get('api/contribution')
-      this.contributions = response.data
+      this.setContributions(response.data)
     } catch (e) {
       console.log(e)
     }
