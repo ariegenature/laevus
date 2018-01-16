@@ -17,11 +17,13 @@
 
 import mimetypes
 
-from flask import Blueprint, make_response, render_template
+from flask import Blueprint, jsonify, make_response, render_template
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
 from wtforms.validators import DataRequired, Email
+
+from laevus.model import Contribution, db
 
 
 contribute_bp = Blueprint('contribute', __name__, static_folder='templates/static',
@@ -49,7 +51,11 @@ class ContributeForm(FlaskForm):
 def index():
     form = ContributeForm()
     if form.validate_on_submit():
-        return 'TODO'
+        contribution = Contribution()
+        form.populate_obj(contribution)
+        db.session.add(contribution)
+        db.session.commit()
+        return jsonify({'id': contribution.id}), 201
     return render_template('vue/index.html')
 
 
