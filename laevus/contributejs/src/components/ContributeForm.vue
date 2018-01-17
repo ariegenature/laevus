@@ -200,6 +200,9 @@ export default {
         }
       } else if (groupId === null && this.groupId !== null) {
         this.updateGroupId(this.parentGroupId ? this.parentGroupId : this.groupId)
+        this.updateSpecieId(null)
+        this.updateInputSpecies('')
+        this.updateSpeciesList(null)
         this.$refs.wizard.nextTab()
       }
     },
