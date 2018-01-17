@@ -83,6 +83,13 @@ export default {
         this.zoom >= 14) {
         this.updateLatLng(ev.latlng)
         this.$emit('perimeter-click')
+      } else if (ev.originalEvent.target.classList.contains('perimeter') &&
+        this.zoom < 14) {
+        this.$toast.open({
+          duration: 3000,
+          message: 'Zoom insuffisant',
+          type: 'is-danger'
+        })
       }
     },
     zoomOnPerimeter (ev) {
