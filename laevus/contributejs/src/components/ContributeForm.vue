@@ -22,8 +22,8 @@
               </b-field>
             </tab-content>
             <tab-content title="Identification grossière">
-              <div class="columns is-centered">
-                <div class="column has-text-centered" v-for="group in groups">
+              <div class="columns is-multiline is-centered">
+                <div class="column is-one-third has-text-centered" v-for="group in groups">
                   <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
                            size="is-small" :native-value="group.id">
                     <figure class="image is-64x64 block-center">
