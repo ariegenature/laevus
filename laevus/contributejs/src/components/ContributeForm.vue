@@ -53,7 +53,12 @@
               </div>
             </tab-content>
             <tab-content title="Identification précise">
-              <b-field label="Espèce">
+              <b-field label="Espèce" v-if="hasOneSpecies">
+                <div class="control">
+                  <input class="input is-static" :value="oneSpecies" readonly></input>
+                </div>
+              </b-field>
+              <b-field label="Espèce" v-if="hasMultipleSpecies">
                 <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
                                 placeholder="Commencer à écrire pour chercher" keep-first
                                 v-model="inputSpecies" :data="filteredSpecies" field="name"
@@ -143,6 +148,15 @@ export default {
     },
     aliveString () {
       return this.isAlive ? 'Vivant' : 'Mort'
+    },
+    hasOneSpecies () {
+      return this.species.length === 1
+    },
+    oneSpecies () {
+      return this.species.length === 1 ? this.species[0] : null
+    },
+    hasMultipleSpecies () {
+      return this.species.length > 1
     },
     ...mapGetters('contribution', [
       'latLng',
