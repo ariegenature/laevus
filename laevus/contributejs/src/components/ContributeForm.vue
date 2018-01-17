@@ -2,7 +2,8 @@
   <div class="hero">
     <div class="hero-body">
       <div class="container">
-        <form id="contribute-form" method="POST" accept-charset="UTF-8">
+        <form id="contribute-form" method="POST" accept-charset="UTF-8"
+              v-on:submit.prevent>
           <form-wizard ref="wizard" @on-change="handleStepChange"
                        title="" subtitle="" step-size="xs"
                        next-button-text="Suivant" back-button-text="Retour"
@@ -22,6 +23,14 @@
               </b-field>
             </tab-content>
             <tab-content title="Identification grossière">
+              <b-field v-if="hasParent">
+                <div class="control">
+                  <button class="button is-small" @click="resetGroups">
+                    <b-icon icon="level-up"></b-icon>
+                    <span>Remonter</span>
+                  </button>
+                </div>
+              </b-field>
               <div class="columns is-multiline is-centered">
                 <div class="column is-one-third has-text-centered" v-for="group in groups">
                   <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
@@ -30,6 +39,15 @@
                       <img :alt="group.name" :src="group.icon">
                     </figure>
                     <p class="is-size-7">{{ group.name }}</p>
+                  </b-radio>
+                </div>
+                <div class="column is-one-third has-text-centered" v-if="hasParent">
+                  <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
+                           native-value="unknown">
+                    <figure class="image is-64x64 block-center">
+                      <img alt="Intérrogation" src="static/question.png">
+                    </figure>
+                    <p class="is-size-7">Je ne sais pas</p>
                   </b-radio>
                 </div>
               </div>
@@ -112,7 +130,9 @@ export default {
       selectedAlive: false,
       selectedAccuracy: '',
       inputSpecies: '',
-      species: []
+      species: [],
+      parentGroupId: null,
+      hasParent: false
     }
   },
   computed: {
@@ -146,7 +166,8 @@ export default {
   },
   methods: {
     async browseGroups (groupId) {
-      if (groupId !== this.groupId) {
+      if (groupId && groupId !== this.groupId) {
+        this.parentGroupId = this.groupId
         this.updateGroupId(groupId)
         this.updateSpecieId(null)
         this.updateInputSpecies('')
@@ -155,6 +176,7 @@ export default {
           const childGroups = await axios.get(`api/child-group/${groupId}`)
           if (childGroups.data && childGroups.data.length) {
             this.setGroups(childGroups.data)
+            this.hasParent = true
           } else {
             this.updateSpeciesList(groupId)
             this.$refs.wizard.nextTab()
@@ -162,6 +184,23 @@ export default {
         } catch (e) {
           console.log(e)
         }
+      } else if (groupId === null && this.groupId !== null) {
+        this.updateGroupId(this.parentGroupId ? this.parentGroupId : this.groupId)
+        this.$refs.wizard.nextTab()
+      }
+    },
+    async resetGroups () {
+      this.parentGroupId = null
+      this.updateGroupId(null)
+      this.updateSpecieId(null)
+      this.updateInputSpecies('')
+      this.updateSpeciesList(null)
+      this.hasParent = false
+      try {
+        const childGroups = await axios.get(`api/child-group`)
+        this.setGroups(childGroups.data)
+      } catch (e) {
+        console.log(e)
       }
     },
     parseFrenchDate (strValue) {
