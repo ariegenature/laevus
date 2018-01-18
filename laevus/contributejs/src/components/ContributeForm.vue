@@ -89,7 +89,7 @@
                          :value="comments" @input="updateComments"></b-input>
               </b-field>
             </tab-content>
-            <tab-content title="Coordonnées">
+            <tab-content title="Coordonnées" :before-change="checkCompleteContact">
               <b-message title="Erreur" type="is-danger" :active.sync="hasServerErrors">
                 {{ errorMsg }}
               </b-message>
@@ -140,7 +140,8 @@ export default {
       inputSpecies: '',
       species: [],
       parentGroupId: null,
-      errorMsg: ''
+      errorMsg: '',
+      emailRegExp: /^([a-zA-Z0-9.+-]+@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)+)$/
     }
   },
   computed: {
@@ -239,6 +240,24 @@ export default {
           type: 'is-danger'
         })
         return false
+      } else {
+        return true
+      }
+    },
+    checkCompleteContact () {
+      if (!this.firstName || !this.surname || !this.email) {
+        this.$toast.open({
+          message: 'Veuillez saisir tous les champs',
+          duration: 3000,
+          type: 'is-danger'
+        })
+        return false
+      } else if (!this.email.match(this.emailRegExp)) {
+        this.$toast.open({
+          message: 'Veuillez saisir une adresse électronique valide',
+          duration: 3000,
+          type: 'is-danger'
+        })
       } else {
         return true
       }
