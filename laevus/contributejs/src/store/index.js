@@ -46,11 +46,9 @@ export default new Vuex.Store({
       state.contributions = contributions
     },
     loading: (state) => {
-      console.log('loading')
       state.isLoading = true
     },
     ready: (state) => {
-      console.log('ready')
       state.isLoading = false
     }
   },
