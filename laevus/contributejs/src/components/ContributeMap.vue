@@ -3,7 +3,7 @@
          @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-marker :lat-lng="latLng" v-if="hasLatLng"></v-marker>
+    <v-marker :lat-lng="latLng" v-if="hasLatLng" @l-click="reEmitClick"></v-marker>
     <v-geojson-layer ref="contribution" :geojson="contributions"
                      :options="contributionOptions"></v-geojson-layer>
     <v-geojson-layer ref="perimeter" :geojson="perimeter"
@@ -98,6 +98,9 @@ export default {
           type: 'is-danger'
         })
       }
+    },
+    reEmitClick (ev) {
+      this.$emit('perimeter-click')
     },
     zoomOnPerimeter (ev) {
       if (this.isReady) return
