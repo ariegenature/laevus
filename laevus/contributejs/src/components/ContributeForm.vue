@@ -103,7 +103,7 @@
                 </b-field>
               </b-field>
               <b-field label="Votre adresse électronique" expanded>
-                <b-input type="email "placeholder="prenom.nom@example.org"
+                <b-input type="email" placeholder="prenom.nom@example.org"
                          :value="email" @input="updateEmail"></b-input>
               </b-field>
               <div class="field">
