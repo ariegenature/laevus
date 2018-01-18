@@ -22,7 +22,8 @@
                 </b-field>
               </b-field>
             </tab-content>
-            <tab-content title="Identification grossière">
+            <tab-content title="Identification grossière" :before-change="checkGroupNotNull"
+                         >
               <b-field v-if="hasParent">
                 <div class="control">
                   <button class="button is-small" @click="resetGroups">
@@ -218,6 +219,18 @@ export default {
         this.setGroups(childGroups.data)
       } catch (e) {
         console.log(e)
+      }
+    },
+    checkGroupNotNull () {
+      if (this.groupId === null) {
+        this.$toast.open({
+          message: 'Veuillez choisir une catégorie',
+          duration: 3000,
+          type: 'is-danger'
+        })
+        return false
+      } else {
+        return true
       }
     },
     parseFrenchDate (strValue) {
