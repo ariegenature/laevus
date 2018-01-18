@@ -37,7 +37,7 @@ class ContributeForm(FlaskForm):
     date_time = DateTimeField('Date and time', format='%Y-%m-%dT%H:%M:%S.%fZ',
                               validators=[DataRequired()])
     group_id = StringField('Group', validators=[DataRequired()])
-    specie_id = IntegerField('Species', validators=[DataRequired()])
+    specie_id = IntegerField('Species')
     count_accuracy_id = StringField('Accuracy', validators=[DataRequired()])
     count = IntegerField('Count', validators=[DataRequired()])
     is_alive = BooleanField('Is Alive ?')
