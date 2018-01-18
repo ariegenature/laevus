@@ -305,6 +305,7 @@ export default {
             'X-CSRFToken': '«« csrf_token() »»'
           }
         })
+        this.$parent.close()
       } catch (e) {
         this.errorMsg = e.response.data.message
       }
@@ -314,7 +315,6 @@ export default {
       } catch (e) {
         console.log(e)
       }
-      this.$parent.close()
     },
     ...mapActions('contribution', [
       'updateDateTimeDate',
