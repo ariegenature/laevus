@@ -22,8 +22,7 @@
                 </b-field>
               </b-field>
             </tab-content>
-            <tab-content title="Identification grossière" :before-change="checkGroupNotNull"
-                         >
+            <tab-content title="Identification grossière" :before-change="checkGroupNotNull">
               <b-field v-if="groupHasParent">
                 <div class="control">
                   <button class="button is-small" @click="resetGroups">
