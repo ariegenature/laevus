@@ -33,6 +33,7 @@
     <b-modal :active.sync="isFormActive">
         <contribute-form></contribute-form>
     </b-modal>
+    <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
   </section>
 </template>
 
@@ -61,21 +62,24 @@ export default {
     tagText () {
       return this.zoom >= 14 ? 'suffisant' : `insuffisant (${this.zoom - 14})`
     },
-    ...mapGetters('map', ['zoom'])
+    ...mapGetters('map', ['zoom']),
+    ...mapGetters(['isLoading'])
   },
   methods: {
     handleMapClick (ev) {
       this.isFormActive = true
     },
-    ...mapActions(['setGroups'])
+    ...mapActions(['setGroups', 'setPageLoading', 'setPageReady'])
   },
   async created () {
+    this.setPageLoading()
     try {
       const response = await axios.get('api/child-group')
       this.setGroups(response.data)
     } catch (e) {
       console.log(e)
     }
+    this.setPageReady()
   }
 }
 </script>
@@ -89,6 +93,9 @@ export default {
 }
 .modal {
   z-index: 1000 !important;
+}
+.loading-overlay {
+  z-index: 2000 !important;
 }
 .modal-content {
   background-color: rgba(245, 245, 245, 1);

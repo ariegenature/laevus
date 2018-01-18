@@ -194,6 +194,7 @@ export default {
         this.updateSpecieId(null)
         this.updateInputSpecies('')
         this.updateSpeciesList(null)
+        this.setPageLoading()
         try {
           const childGroups = await axios.get(`api/child-group/${groupId}`)
           if (childGroups.data && childGroups.data.length) {
@@ -206,6 +207,7 @@ export default {
         } catch (e) {
           console.log(e)
         }
+        this.setPageReady()
       } else if (groupId === null && this.groupId !== null) {
         this.updateGroupId(this.parentGroupId ? this.parentGroupId : this.groupId)
         this.updateSpecieId(null)
@@ -221,12 +223,14 @@ export default {
       this.updateInputSpecies('')
       this.updateSpeciesList(null)
       this.updateGroupHasParent(false)
+      this.setPageLoading()
       try {
         const childGroups = await axios.get(`api/child-group`)
         this.setGroups(childGroups.data)
       } catch (e) {
         console.log(e)
       }
+      this.setPageReady()
     },
     checkGroupNotNull () {
       if (this.groupId === null) {
@@ -255,12 +259,14 @@ export default {
     },
     async updateSpeciesList (groupId) {
       if (groupId) {
+        this.setPageLoading()
         try {
           const species = await axios.get(`api/taxon/${groupId}`)
           this.species = species.data.species ? species.data.species : []
         } catch (e) {
           console.log(e)
         }
+        this.setPageReady()
       } else {
         this.species = []
       }
@@ -301,6 +307,7 @@ export default {
       contributeData.append('first_name', this.firstName ? this.firstName : '')
       contributeData.append('surname', this.surname ? this.surname : '')
       contributeData.append('email', this.email ? this.email : '')
+      this.setPageLoading()
       try {
         await axios.post('', contributeData, {
           headers: {
@@ -313,12 +320,15 @@ export default {
       } catch (e) {
         this.errorMsg = e.response.data.message
       }
+      this.setPageReady()
+      this.setPageLoading()
       try {
         const response = await axios.get('api/contribution')
         this.setContributions(response.data)
       } catch (e) {
         console.log(e)
       }
+      this.setPageReady()
     },
     ...mapActions('contribution', [
       'updateLatLng',
@@ -335,7 +345,12 @@ export default {
       'updateSurname',
       'updateEmail'
     ]),
-    ...mapActions(['setGroups', 'setContributions'])
+    ...mapActions([
+      'setGroups',
+      'setContributions',
+      'setPageLoading',
+      'setPageReady'
+    ])
   },
   watch: {
     selectedDate: function (value) {

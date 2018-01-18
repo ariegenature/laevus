@@ -26,7 +26,8 @@ export default new Vuex.Store({
       ],
       groups: null,
       speciesGroups: null,
-      contributions: null
+      contributions: null,
+      isLoading: false
     }
   },
   getters: {
@@ -34,7 +35,8 @@ export default new Vuex.Store({
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies,
-    contributions: (state) => state.contributions
+    contributions: (state) => state.contributions,
+    isLoading: (state) => state.isLoading
   },
   mutations: {
     groups: (state, groups) => {
@@ -42,6 +44,14 @@ export default new Vuex.Store({
     },
     contributions: (state, contributions) => {
       state.contributions = contributions
+    },
+    loading: (state) => {
+      console.log('loading')
+      state.isLoading = true
+    },
+    ready: (state) => {
+      console.log('ready')
+      state.isLoading = false
     }
   },
   actions: {
@@ -50,6 +60,12 @@ export default new Vuex.Store({
     },
     setContributions: ({ commit, state }, contributions) => {
       commit('contributions', contributions)
+    },
+    setPageLoading: ({ commit }) => {
+      commit('loading')
+    },
+    setPageReady: ({ commit }) => {
+      commit('ready')
     }
   },
   modules: {
