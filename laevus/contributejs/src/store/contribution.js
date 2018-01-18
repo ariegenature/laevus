@@ -5,6 +5,7 @@ export default {
       latLng: null,
       dateTime: null,
       groupId: null,
+      groupHasParent: false,
       specieId: null,
       countAccuracyId: '=',
       count: 1,
@@ -20,6 +21,7 @@ export default {
     date: (state) => state.dateTime,
     time: (state) => state.dateTime,
     groupId: state => state.groupId,
+    groupHasParent: state => state.groupHasParent,
     specieId: state => state.specieId,
     countAccuracyId: state => state.countAccuracyId,
     count: state => state.count,
@@ -38,6 +40,9 @@ export default {
     },
     groupId: (state, groupId) => {
       state.groupId = groupId
+    },
+    groupHasParent: (state, groupHasParent) => {
+      state.groupHasParent = groupHasParent
     },
     specieId: (state, specieId) => {
       state.specieId = specieId
@@ -88,6 +93,9 @@ export default {
     },
     updateGroupId: ({ commit }, groupId) => {
       commit('groupId', groupId)
+    },
+    updateGroupHasParent: ({ commit }, groupHasParent) => {
+      commit('groupHasParent', groupHasParent)
     },
     updateSpecieId: ({ commit }, specieId) => {
       commit('specieId', specieId)

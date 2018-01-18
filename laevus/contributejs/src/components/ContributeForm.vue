@@ -24,7 +24,7 @@
             </tab-content>
             <tab-content title="Identification grossière" :before-change="checkGroupNotNull"
                          >
-              <b-field v-if="hasParent">
+              <b-field v-if="groupHasParent">
                 <div class="control">
                   <button class="button is-small" @click="resetGroups">
                     <b-icon icon="level-up"></b-icon>
@@ -42,7 +42,7 @@
                     <p class="is-size-7">{{ group.name }}</p>
                   </b-radio>
                 </div>
-                <div class="column is-one-third has-text-centered" v-if="hasParent">
+                <div class="column is-one-third has-text-centered" v-if="groupHasParent">
                   <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
                            native-value="unknown">
                     <figure class="image is-64x64 block-center">
@@ -141,7 +141,6 @@ export default {
       inputSpecies: '',
       species: [],
       parentGroupId: null,
-      hasParent: false,
       errorMsg: ''
     }
   },
@@ -171,6 +170,7 @@ export default {
       'date',
       'time',
       'groupId',
+      'groupHasParent',
       'specieId',
       'countAccuracyId',
       'count',
@@ -198,7 +198,7 @@ export default {
           const childGroups = await axios.get(`api/child-group/${groupId}`)
           if (childGroups.data && childGroups.data.length) {
             this.setGroups(childGroups.data)
-            this.hasParent = true
+            this.updateGroupHasParent(true)
           } else {
             this.updateSpeciesList(groupId)
             this.$refs.wizard.nextTab()
@@ -220,7 +220,7 @@ export default {
       this.updateSpecieId(null)
       this.updateInputSpecies('')
       this.updateSpeciesList(null)
-      this.hasParent = false
+      this.updateGroupHasParent(false)
       try {
         const childGroups = await axios.get(`api/child-group`)
         this.setGroups(childGroups.data)
@@ -325,6 +325,7 @@ export default {
       'updateDateTimeDate',
       'updateDateTimeTime',
       'updateGroupId',
+      'updateGroupHasParent',
       'updateSpecieId',
       'updateCountAccuracyId',
       'updateCount',
