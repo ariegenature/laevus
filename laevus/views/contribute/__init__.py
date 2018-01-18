@@ -22,7 +22,7 @@ from flask_wtf import FlaskForm
 from six import text_type
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired, Email, NumberRange
 
 from laevus.model import Contribution, db
 
@@ -39,7 +39,7 @@ class ContributeForm(FlaskForm):
     group_id = StringField('Group', validators=[DataRequired()])
     specie_id = IntegerField('Species')
     count_accuracy_id = StringField('Accuracy', validators=[DataRequired()])
-    count = IntegerField('Count', validators=[DataRequired()])
+    count = IntegerField('Count', validators=[DataRequired(), NumberRange(min=1)])
     is_alive = BooleanField('Is Alive ?')
     comments = TextField('Comments')
     first_name = StringField('First name', validators=[DataRequired()])

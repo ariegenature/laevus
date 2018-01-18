@@ -52,7 +52,7 @@
                 </div>
               </div>
             </tab-content>
-            <tab-content title="Identification précise">
+            <tab-content title="Identification précise" :before-change="checkCount">
               <b-field label="Espèce" v-if="hasOneSpecies">
                 <div class="control">
                   <input class="input is-static" :value="oneSpecies" readonly></input>
@@ -74,7 +74,7 @@
                       </option>
                     </b-select>
                     <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"
-                      :value="count" @input="updateCount"></b-input>
+                      :value="count" @input="updateCount" min="1"></b-input>
                   </b-field>
                 </b-field>
                 <b-field label="Vivant ou mort ?">
@@ -258,6 +258,18 @@ export default {
           duration: 3000,
           type: 'is-danger'
         })
+      } else {
+        return true
+      }
+    },
+    checkCount () {
+      if (this.count < 1) {
+        this.$toast.open({
+          message: 'Veuillez saisir un entier ≥ 1',
+          duration: 3000,
+          type: 'is-danger'
+        })
+        return false
       } else {
         return true
       }
