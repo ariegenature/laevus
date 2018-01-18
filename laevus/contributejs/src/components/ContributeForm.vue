@@ -91,6 +91,9 @@
               </b-field>
             </tab-content>
             <tab-content title="Coordonnées">
+              <b-message title="Erreur" type="is-danger" :active.sync="hasServerErrors">
+                {{ errorMsg }}
+              </b-message>
               <b-field grouped group-multiline>
                 <b-field label="Votre prénom" expanded>
                   <b-input expanded :value="firstName" @input="updateFirstName"
@@ -138,7 +141,8 @@ export default {
       inputSpecies: '',
       species: [],
       parentGroupId: null,
-      hasParent: false
+      hasParent: false,
+      errorMsg: ''
     }
   },
   computed: {
@@ -149,6 +153,9 @@ export default {
     },
     aliveString () {
       return this.isAlive ? 'Vivant' : 'Mort'
+    },
+    hasServerErrors () {
+      return Boolean(this.errorMsg)
     },
     hasOneSpecies () {
       return this.species.length === 1
@@ -292,11 +299,15 @@ export default {
       contributeData.append('first_name', this.firstName ? this.firstName : '')
       contributeData.append('surname', this.surname ? this.surname : '')
       contributeData.append('email', this.email ? this.email : '')
-      await axios.post('', contributeData, {
-        headers: {
-          'X-CSRFToken': '«« csrf_token() »»'
-        }
-      })
+      try {
+        await axios.post('', contributeData, {
+          headers: {
+            'X-CSRFToken': '«« csrf_token() »»'
+          }
+        })
+      } catch (e) {
+        this.errorMsg = e.response.data.message
+      }
       try {
         const response = await axios.get('api/contribution')
         this.setContributions(response.data)
