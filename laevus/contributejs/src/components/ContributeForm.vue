@@ -305,6 +305,7 @@ export default {
             'X-CSRFToken': '«« csrf_token() »»'
           }
         })
+        this.resetGroups()
         this.$parent.close()
       } catch (e) {
         this.errorMsg = e.response.data.message
