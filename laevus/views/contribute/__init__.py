@@ -19,6 +19,7 @@ import mimetypes
 
 from flask import Blueprint, jsonify, make_response, render_template
 from flask_wtf import FlaskForm
+from six import text_type
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
 from wtforms.validators import DataRequired, Email
@@ -56,6 +57,15 @@ def index():
         db.session.add(contribution)
         db.session.commit()
         return jsonify({'id': contribution.id}), 201
+    errors = ['{field}: {msg}'.format(
+        field=field.label.text,
+        msg=', '.join(map(lambda err: text_type(err), field.errors))
+    ) for field in form if field.errors]
+    if errors:
+        msg = u'After checking, the following problem(s) were found: {0}.'.format(
+            u'; '.join('({i}) {msg}'.format(i=i, msg=msg) for i, msg in enumerate(errors, 1))
+        )
+        return jsonify({'message': msg}), 409
     return render_template('vue/index.html')
 
 
