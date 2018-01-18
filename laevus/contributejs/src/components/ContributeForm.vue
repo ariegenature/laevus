@@ -291,7 +291,9 @@ export default {
       contributeData.append('geometry', `SRID=4326;POINT(${this.latLng.lng} ${this.latLng.lat})`)
       contributeData.append('date_time', this.date.toISOString())
       contributeData.append('group_id', this.groupId ? this.groupId : '')
-      contributeData.append('specie_id', this.specieId ? this.specieId : '')
+      if (this.specieId) {
+        contributeData.append('specie_id', this.specieId)
+      }
       contributeData.append('count_accuracy_id', this.countAccuracyId)
       contributeData.append('count', this.count)
       contributeData.append('is_alive', this.isAlive)
