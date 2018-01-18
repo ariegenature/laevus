@@ -308,6 +308,7 @@ export default {
           }
         })
         this.resetGroups()
+        this.updateLatLng(null)
         this.$parent.close()
       } catch (e) {
         this.errorMsg = e.response.data.message
@@ -320,6 +321,7 @@ export default {
       }
     },
     ...mapActions('contribution', [
+      'updateLatLng',
       'updateDateTimeDate',
       'updateDateTimeTime',
       'updateGroupId',

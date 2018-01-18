@@ -3,6 +3,7 @@
          @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
+    <v-marker :lat-lng="latLng" v-if="hasLatLng"></v-marker>
     <v-geojson-layer ref="contribution" :geojson="contributions"
                      :options="contributionOptions"></v-geojson-layer>
     <v-geojson-layer ref="perimeter" :geojson="perimeter"
@@ -68,6 +69,12 @@ export default {
     }
   },
   computed: {
+    hasLatLng () {
+      return this.latLng !== null
+    },
+    ...mapGetters('contribution', [
+      'latLng'
+    ]),
     ...mapGetters('map', [
       'center',
       'zoom'
