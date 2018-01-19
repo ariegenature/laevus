@@ -7,6 +7,7 @@ export default {
       groupId: null,
       groupHasParent: false,
       specieId: null,
+      canTellSpecies: false,
       countAccuracyId: '=',
       count: 1,
       isAlive: false,
@@ -23,6 +24,7 @@ export default {
     groupId: state => state.groupId,
     groupHasParent: state => state.groupHasParent,
     specieId: state => state.specieId,
+    canTellSpecies: state => state.canTellSpecies,
     countAccuracyId: state => state.countAccuracyId,
     count: state => state.count,
     isAlive: state => state.isAlive,
@@ -46,6 +48,9 @@ export default {
     },
     specieId: (state, specieId) => {
       state.specieId = specieId
+    },
+    canTellSpecies: (state, canTellSpecies) => {
+      state.canTellSpecies = canTellSpecies
     },
     countAccuracyId: (state, accuracyId) => {
       state.countAccuracyId = accuracyId
@@ -99,6 +104,9 @@ export default {
     },
     updateSpecieId: ({ commit }, specieId) => {
       commit('specieId', specieId)
+    },
+    updateCanTellSpecies: ({ commit }, canTellSpecies) => {
+      commit('canTellSpecies', canTellSpecies)
     },
     updateCountAccuracyId: ({ commit }, accuracyId) => {
       commit('countAccuracyId', accuracyId)

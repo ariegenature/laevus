@@ -58,7 +58,12 @@
                   <input class="input is-static" :value="oneSpecies" readonly></input>
                 </div>
               </b-field>
-              <b-field label="Espèce" v-if="hasMultipleSpecies">
+              <b-field v-if="hasMultipleSpecies">
+                <b-switch :value="canTellSpecies" @input="updateCanTellSpecies">
+                  {{ canTellSpeciesString }}
+                </b-switch>
+              </b-field>
+              <b-field label="Espèce" v-if="hasMultipleSpecies && canTellSpecies">
                 <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
                                 placeholder="Commencer à écrire pour chercher" keep-first
                                 v-model="inputSpecies" :data="filteredSpecies" field="name"
@@ -153,6 +158,9 @@ export default {
     aliveString () {
       return this.isAlive ? 'Vivant' : 'Mort'
     },
+    canTellSpeciesString () {
+      return this.canTellSpecies ? "Je peux identifier l'espèce précise" : "Je ne sais pas identifier l'espèce précise"
+    },
     hasServerErrors () {
       return Boolean(this.errorMsg)
     },
@@ -172,6 +180,7 @@ export default {
       'groupId',
       'groupHasParent',
       'specieId',
+      'canTellSpecies',
       'countAccuracyId',
       'count',
       'isAlive',
@@ -367,6 +376,7 @@ export default {
       'updateGroupId',
       'updateGroupHasParent',
       'updateSpecieId',
+      'updateCanTellSpecies',
       'updateCountAccuracyId',
       'updateCount',
       'toggleAlive',
@@ -391,6 +401,12 @@ export default {
     },
     selectedAlive: function (value) {
       this.toggleAlive()
+    },
+    canTellSpecies: function (value) {
+      if (!value) {
+        this.updateSpecieId(null)
+        this.updateInputSpecies('')
+      }
     }
   },
   mounted () {
