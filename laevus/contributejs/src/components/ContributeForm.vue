@@ -313,7 +313,7 @@ export default {
     updateInputSpecies (specieId) {
       if (specieId) {
         var species = this.species.filter(obj => obj.taxrefId === specieId)
-        this.inputSpecies = species ? species[0].name : ''
+        this.inputSpecies = species.length ? species[0].name : ''
       } else {
         this.inputSpecies = ''
       }
