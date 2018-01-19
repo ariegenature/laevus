@@ -3,7 +3,7 @@
     <div id="hero-map" class="hero-body">
       <div id="container-map" class="container">
         <div id="columns-map" class="columns">
-          <div  id="column-map"class="column is-four-fifths">
+          <div  id="column-map"class="column is-three-fifths">
             <div id="map">
               <contribute-map @perimeter-click="handleMapClick"></contribute-map>
             </div>
