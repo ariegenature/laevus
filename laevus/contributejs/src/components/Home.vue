@@ -101,7 +101,7 @@ export default {
   height: 100%;
 }
 #map {
-  height: 90%;
+  height: 80vh;
 }
 .modal {
   z-index: 1000 !important;
