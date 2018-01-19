@@ -81,10 +81,16 @@ export default {
     handleMapClick (ev) {
       this.isFormActive = true
     },
-    ...mapActions(['setGroups', 'setPageLoading', 'setPageReady'])
+    ...mapActions(['setGroups', 'setPageLoading', 'setPageReady', 'setContributions'])
   },
   async created () {
     this.setPageLoading()
+    try {
+      const response = await axios.get('api/contribution')
+      this.setContributions(response.data)
+    } catch (e) {
+      console.log(e)
+    }
     try {
       const response = await axios.get('api/child-group')
       this.setGroups(response.data)

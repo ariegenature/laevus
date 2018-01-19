@@ -113,9 +113,6 @@ export default {
     updateZoomFromMap (ev) {
       this.updateZoom(this.$refs.map.mapObject.getZoom())
     },
-    ...mapActions([
-      'setContributions'
-    ]),
     ...mapActions('contribution', [
       'updateLatLng'
     ]),
@@ -127,12 +124,6 @@ export default {
     try {
       const response = await axios.get(this.perimeterUrl)
       this.perimeter = response.data
-    } catch (e) {
-      console.log(e)
-    }
-    try {
-      const response = await axios.get('api/contribution')
-      this.setContributions(response.data)
     } catch (e) {
       console.log(e)
     }
