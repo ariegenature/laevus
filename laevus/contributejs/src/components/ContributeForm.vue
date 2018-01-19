@@ -301,7 +301,7 @@ export default {
         this.setPageLoading()
         try {
           const species = await axios.get(`api/taxon/${groupId}`)
-          this.species = species.data.species ? species.data.species : []
+          this.species = species.data.species
         } catch (e) {
           console.log(e)
         }
