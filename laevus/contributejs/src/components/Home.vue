@@ -33,6 +33,8 @@
                 <b-tag class="is-dark">niveau de zoom</b-tag>
                 <b-tag :class="[tagClass]">{{ tagText }}</b-tag>
               </b-taglist>
+              <p class="title is-6">Observations récentes</p>
+              <contribution-table></contribution-table>
             </div>
           </div>
         </div>
@@ -51,12 +53,14 @@ import { mapActions, mapGetters } from 'vuex'
 
 import ContributeForm from './ContributeForm'
 import ContributeMap from './ContributeMap'
+import ContributionTable from './ContributionTable'
 
 export default {
   name: 'Home',
   components: {
     ContributeForm,
-    ContributeMap
+    ContributeMap,
+    ContributionTable
   },
   data () {
     return {
