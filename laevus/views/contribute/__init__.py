@@ -24,7 +24,7 @@ from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
 from wtforms.validators import DataRequired, Email, NumberRange
 
-from laevus.model import Contribution, db
+from laevus.model import Contribution, User, db
 
 
 contribute_bp = Blueprint('contribute', __name__, static_folder='templates/static',
@@ -48,6 +48,23 @@ class ContributeForm(FlaskForm):
     geometry = StringField('Point', validators=[DataRequired()])
 
 
+class LoginForm(FlaskForm):
+    """Laevus login form."""
+
+    username = StringField('Username', validators=[DataRequired()])
+    password = StringField('Password', validators=[DataRequired()])
+
+    def validate(self):
+        validity = super().validate()
+        if not validity:
+            return False
+        user = User.query.get(self.username.data)
+        if not user or not user.check_password(self.password.data):
+            self.username.errors.append('Invalid username or password')
+            return False
+        return True
+
+
 @contribute_bp.route('/contribute', methods=['GET', 'POST'])
 def index():
     form = ContributeForm()
@@ -69,8 +86,11 @@ def index():
     return render_template('vue/index.html')
 
 
-@contribute_bp.route('/login')
+@contribute_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return 'OK', 200
     return render_template('vue/index.html')
 
 

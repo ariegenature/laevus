@@ -13,7 +13,7 @@
               </div>
               <div class="card-content">
                 <form id="login-form" method="POST" accept-charset="UTF-8"
-                      v-on:submit.prevent>
+                      v-on:submit.prevent="submitForm">
                   <b-field label="Nom d'utilisateur">
                     <b-input icon="user" autofocus required v-model="username">
                     </b-input>
@@ -27,6 +27,10 @@
                     <button type="submit" class="button is-primary">C'est parti&nbsp;!</button>
                     </p>
                   </b-field>
+                  <b-field>
+                    <b-input type="hidden" name="csrf_token" value="«« csrf_token() »»">
+                    </b-input>
+                  </b-field>
                 </form>
               </div>
             </div>
@@ -38,12 +42,30 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Login',
   data () {
     return {
       username: '',
       password: ''
+    }
+  },
+  methods: {
+    async submitForm (ev) {
+      var loginData = new FormData()
+      loginData.append('username', this.username)
+      loginData.append('password', this.password)
+      try {
+        await axios.post('', loginData, {
+          headers: {
+            'X-CSRFToken': '«« csrf_token() »»'
+          }
+        })
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 }
