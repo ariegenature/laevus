@@ -28,7 +28,7 @@ import os
 import click
 
 from laevus import create_app, read_config
-from laevus.model import WildLifeGroup, db
+from laevus.model import User, WildLifeGroup, db
 
 
 config = read_config()
@@ -54,6 +54,10 @@ def sqla_raw_conn():
 def initdb():
     click.echo('-> Initializing database...')
     db.create_all()
+    admin_user = User(username='admin', name='Administrator')
+    admin_user.set_password('laevus')
+    db.session.add(admin_user)
+    db.session.commit()
     click.echo('-> Database initialized.')
 
 
