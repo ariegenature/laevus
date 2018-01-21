@@ -69,7 +69,7 @@ class ContributionAPI(Resource):
                                  Contribution.is_alive,
                                  func.ST_AsGeoJSON(Contribution.geometry).label('geojson')).
                 join('group').
-                order_by(Contribution.date_time).
+                order_by(Contribution.date_time.desc()).
                 all())
         for row in rows:
             features.append({
