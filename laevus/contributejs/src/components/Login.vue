@@ -15,11 +15,11 @@
                 <form id="login-form" method="POST" accept-charset="UTF-8"
                       v-on:submit.prevent>
                   <b-field label="Nom d'utilisateur">
-                    <b-input icon="user" autofocus required>
+                    <b-input icon="user" autofocus required v-model="username">
                     </b-input>
                   </b-field>
                   <b-field label="Mot de passe">
-                    <b-input type="password" icon="user-secret" required>
+                    <b-input type="password" icon="user-secret" required v-model="password">
                     </b-input>
                   </b-field>
                   <b-field grouped position="is-right">
@@ -39,6 +39,12 @@
 
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      username: '',
+      password: ''
+    }
+  }
 }
 </script>
