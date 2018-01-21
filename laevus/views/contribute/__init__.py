@@ -69,6 +69,11 @@ def index():
     return render_template('vue/index.html')
 
 
+@contribute_bp.route('/login')
+def login():
+    return render_template('vue/index.html')
+
+
 @contribute_bp.route('/contribute/static/<path:fpath>')
 def sign_static(fpath):
     resp = make_response(render_template('static/{0}'.format(fpath)))

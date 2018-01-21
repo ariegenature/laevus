@@ -3,7 +3,7 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="#">Connexion</a>
+      <router-link :to="{ name: 'login' }" class="navbar-item">Connexion</router-link>
     </div>
   </div>
 </template>
