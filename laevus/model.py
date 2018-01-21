@@ -75,3 +75,19 @@ class CommonName(db.Model):
     value = db.Column(db.Text, nullable=False, index=True)
     taxon_id = db.Column(db.Integer, db.ForeignKey('taxon.id'), nullable=False)
     taxon = db.relationship('Taxon', backref='common_names', foreign_keys=[taxon_id])
+
+
+class User(db.Model):
+    """A user of the application, with an email address."""
+
+    __tablename = 'user'
+
+    username = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False, index=True)
+    email = db.Column(db.String)
+    password = db.Column(db.String, nullable=False)
+
+    def __init__(self, username, name, email=None):
+        self.username = username
+        self.name = name
+        self.email = email
