@@ -1,3 +1,6 @@
+from crypt import METHOD_SHA512, crypt, mksalt
+from hmac import compare_digest as compare_hash
+
 from geoalchemy2 import types as geo_types
 from sqlalchemy import CheckConstraint
 
@@ -91,3 +94,13 @@ class User(db.Model):
         self.username = username
         self.name = name
         self.email = email
+
+    def set_password(self, value):
+        """Encrypt and set the person's password."""
+        if not value:
+            raise ValueError('Password cannot be empty')
+        self.password = crypt(value, mksalt(METHOD_SHA512))
+
+    def check_password(self, value):
+        """Return ``True`` if the given value match the person's password."""
+        return compare_hash(self.password, crypt(value, mksalt(METHOD_SHA512)))
