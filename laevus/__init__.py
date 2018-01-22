@@ -17,7 +17,8 @@ from laevus.views import (
     blueprints,
     home as home_view,
 )
-from laevus.views.api import ChildGroupAPI, TaxonAPI, ContributionAPI, CurrentUserAPI
+from laevus.views.api import (ChildGroupAPI, TaxonAPI, ContributionAPI, CurrentUserAPI,
+                              FullContributionAPI)
 
 
 _DEFAULT_CONFIG = {
@@ -121,5 +122,7 @@ def create_app(config):
                           '/api/contribution')
     rest_api.add_resource(CurrentUserAPI,
                           '/api/current-user')
+    rest_api.add_resource(FullContributionAPI,
+                          '/api/full-contribution')
     rest_api.init_app(app)
     return app

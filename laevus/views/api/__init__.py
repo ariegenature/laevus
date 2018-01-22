@@ -3,9 +3,9 @@
 import json
 
 from flask import Blueprint
-from flask_login import current_user
+from flask_login import current_user, login_required
 from flask_restful import Resource, fields, marshal_with
-from sqlalchemy import func
+from sqlalchemy import func, text
 
 from laevus.model import CommonName, Contribution, ScientificName, Taxon, WildLifeGroup, db
 
@@ -84,6 +84,33 @@ class ContributionAPI(Resource):
                     'is_alive': row.is_alive,
                 },
                 'geometry': json.loads(row.geojson)
+            })
+        return res
+
+
+class FullContributionAPI(Resource):
+
+    @login_required
+    def get(self):
+        res = []
+        query = text('select * from full_report')
+        rows = db.engine.execute(query)
+        for row in rows:
+            res.append({
+                'id': row.id,
+                'dateTime': row.date_time.strftime('%Y-%m-%d %H:%M'),
+                'groupName': row.group_name,
+                'taxrefId': row.taxref_id,
+                'scientificName': row.scientific_name,
+                'commonNames': ('<br>'.join(row.common_names.split(';')) if row.common_names
+                                else None),
+                'countAccuracy': row.count_accuracy,
+                'count': row.count,
+                'isAlive': row.is_alive,
+                'comments': row.comments,
+                'firstName': row.first_name,
+                'surname': row.surname,
+                'email': row.email,
             })
         return res
 
