@@ -1,6 +1,9 @@
 <template>
   <div class="navbar-menu">
     <div class="navbar-start">
+      <router-link :to="{ name: 'full-contribution' }" class="navbar-item" v-if="isAuthenticated">
+        Tableau détaillé&nbsp;<b-icon icon="lock"></b-icon>
+      </router-link>
     </div>
     <div class="navbar-end">
       <router-link :to="{ name: 'login' }" class="navbar-item" v-if="!isAuthenticated">

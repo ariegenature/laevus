@@ -96,6 +96,12 @@ def index():
     return render_template('vue/index.html')
 
 
+@contribute_bp.route('/full-contribution')
+@login_required
+def full_contribution():
+    return render_template('vue/index.html')
+
+
 @contribute_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
