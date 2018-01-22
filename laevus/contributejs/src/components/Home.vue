@@ -85,7 +85,12 @@ export default {
     handleMapClick (ev) {
       this.isFormActive = true
     },
-    ...mapActions(['setGroups', 'setPageLoading', 'setPageReady', 'setContributions'])
+    ...mapActions([
+      'setContributions',
+      'setGroups',
+      'setPageLoading',
+      'setPageReady'
+    ])
   },
   async created () {
     this.setPageLoading()
