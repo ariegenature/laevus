@@ -3,6 +3,7 @@
 import json
 
 from flask import Blueprint
+from flask_login import current_user
 from flask_restful import Resource, fields, marshal_with
 from sqlalchemy import func
 
@@ -85,3 +86,12 @@ class ContributionAPI(Resource):
                 'geometry': json.loads(row.geojson)
             })
         return res
+
+
+class CurrentUserAPI(Resource):
+
+    def get(self):
+        if current_user.is_authenticated:
+            return {'username': current_user.username, 'name': current_user.name}
+        else:
+            return None
