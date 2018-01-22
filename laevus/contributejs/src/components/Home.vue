@@ -87,6 +87,7 @@ export default {
     },
     ...mapActions([
       'setContributions',
+      'syncCurrentUser',
       'setGroups',
       'setPageLoading',
       'setPageReady'
@@ -106,6 +107,7 @@ export default {
     } catch (e) {
       console.log(e)
     }
+    this.syncCurrentUser()
     this.setPageReady()
   }
 }

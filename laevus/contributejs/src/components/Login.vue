@@ -43,6 +43,7 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -63,6 +64,7 @@ export default {
             'X-CSRFToken': '«« csrf_token() »»'
           }
         })
+        this.syncCurrentUser()
         this.$router.push({ name: 'home' })
       } catch (e) {
         this.$toast.open({
@@ -71,7 +73,10 @@ export default {
           type: 'is-danger'
         })
       }
-    }
+    },
+    ...mapActions([
+      'syncCurrentUser'
+    ])
   }
 }
 </script>

@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -27,7 +28,8 @@ export default new Vuex.Store({
       groups: null,
       speciesGroups: null,
       contributions: null,
-      isLoading: false
+      isLoading: false,
+      currentUser: null
     }
   },
   getters: {
@@ -36,7 +38,9 @@ export default new Vuex.Store({
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies,
     contributions: (state) => state.contributions,
-    isLoading: (state) => state.isLoading
+    isLoading: (state) => state.isLoading,
+    currentUser: (state) => state.currentUser,
+    isAuthenticated: (state) => state.currentUser !== null
   },
   mutations: {
     groups: (state, groups) => {
@@ -50,6 +54,9 @@ export default new Vuex.Store({
     },
     ready: (state) => {
       state.isLoading = false
+    },
+    currentUser: (state, user) => {
+      state.currentUser = user
     }
   },
   actions: {
@@ -64,6 +71,14 @@ export default new Vuex.Store({
     },
     setPageReady: ({ commit }) => {
       commit('ready')
+    },
+    syncCurrentUser: async ({ commit }, user) => {
+      try {
+        const response = await axios.get('api/current-user')
+        commit('currentUser', response.data)
+      } catch (e) {
+        console.log(e)
+      }
     }
   },
   modules: {
