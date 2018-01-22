@@ -104,6 +104,10 @@ def login():
         user = User.query.get(username)
         login_user(user)
         return jsonify({'id': username}), 200
+    if form.username.errors:
+        msg = u'{0}. '.format('Login failed')
+        msg += u', '.join(map(lambda err: text_type(err), form.username.errors))
+        return jsonify({'message': msg}), 401
     return render_template('vue/index.html')
 
 

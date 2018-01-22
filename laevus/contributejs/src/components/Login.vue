@@ -64,7 +64,11 @@ export default {
           }
         })
       } catch (e) {
-        console.log(e)
+        this.$toast.open({
+          message: e.response.data.message,
+          duration: 3000,
+          type: 'is-danger'
+        })
       }
     }
   }
