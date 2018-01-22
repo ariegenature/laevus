@@ -7,6 +7,9 @@
         Connexion&nbsp;<b-icon icon="sign-in"></b-icon>
       </router-link>
       <span class="navbar-item" v-if="isAuthenticated">{{ displayName }}</span>
+      <a  href="/logout" class="navbar-item" v-if="isAuthenticated">
+        Déconnexion&nbsp;<b-icon icon="sign-out"></b-icon>
+      </a>
     </div>
   </div>
 </template>

@@ -17,8 +17,8 @@
 
 import mimetypes
 
-from flask import Blueprint, jsonify, make_response, render_template
-from flask_login import login_user
+from flask import Blueprint, jsonify, make_response, redirect, render_template, url_for
+from flask_login import login_required, login_user, logout_user
 from flask_wtf import FlaskForm
 from six import text_type
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
@@ -109,6 +109,13 @@ def login():
         msg += u', '.join(map(lambda err: text_type(err), form.username.errors))
         return jsonify({'message': msg}), 401
     return render_template('vue/index.html')
+
+
+@contribute_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('contribute.index'))
 
 
 @contribute_bp.route('/contribute/static/<path:fpath>')
