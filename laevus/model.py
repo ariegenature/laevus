@@ -1,10 +1,14 @@
 from crypt import METHOD_SHA512, crypt, mksalt
 from hmac import compare_digest as compare_hash
+import re
 
 from geoalchemy2 import types as geo_types
 from sqlalchemy import CheckConstraint
 
 from laevus.extensions import db
+
+
+CRYPT_REGEXP = re.compile(r'(\$\d\$[^$]+\$)')
 
 
 class Contribution(db.Model):
@@ -103,4 +107,5 @@ class User(db.Model):
 
     def check_password(self, value):
         """Return ``True`` if the given value match the person's password."""
-        return compare_hash(self.password, crypt(value, mksalt(METHOD_SHA512)))
+        salt = CRYPT_REGEXP.match(self.password).group(1)
+        return compare_hash(self.password, crypt(value, salt))
