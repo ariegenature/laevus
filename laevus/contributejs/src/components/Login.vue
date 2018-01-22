@@ -63,6 +63,7 @@ export default {
             'X-CSRFToken': '«« csrf_token() »»'
           }
         })
+        this.$router.push({ name: 'home' })
       } catch (e) {
         this.$toast.open({
           message: e.response.data.message,
