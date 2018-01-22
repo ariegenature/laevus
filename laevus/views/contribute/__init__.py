@@ -18,17 +18,27 @@
 import mimetypes
 
 from flask import Blueprint, jsonify, make_response, render_template
+from flask_login import login_user
 from flask_wtf import FlaskForm
 from six import text_type
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
 from wtforms.validators import DataRequired, Email, NumberRange
 
+from laevus.extensions import login_manager
 from laevus.model import Contribution, User, db
 
 
 contribute_bp = Blueprint('contribute', __name__, static_folder='templates/static',
                           template_folder='templates')
+
+
+@login_manager.user_loader
+def load_user(username):
+    try:
+        return User.query.get(username)
+    except Exception:
+        return None
 
 
 class ContributeForm(FlaskForm):
@@ -89,8 +99,11 @@ def index():
 @contribute_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    username = form.username.data
     if form.validate_on_submit():
-        return 'OK', 200
+        user = User.query.get(username)
+        login_user(user)
+        return jsonify({'id': username}), 200
     return render_template('vue/index.html')
 
 

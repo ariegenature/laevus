@@ -2,6 +2,7 @@ from crypt import METHOD_SHA512, crypt, mksalt
 from hmac import compare_digest as compare_hash
 import re
 
+from flask_login import AnonymousUserMixin
 from geoalchemy2 import types as geo_types
 from sqlalchemy import CheckConstraint
 
@@ -109,3 +110,21 @@ class User(db.Model):
         """Return ``True`` if the given value match the person's password."""
         salt = CRYPT_REGEXP.match(self.password).group(1)
         return compare_hash(self.password, crypt(value, salt))
+
+    @property
+    def is_active(self):
+        return self.is_authenticated
+
+    @property
+    def is_authenticated(self):
+        """Return ``True`` if this person is authenticated."""
+        return not isinstance(self, AnonymousUserMixin)
+
+    @property
+    def is_anonymous(self):
+        """Return ``True`` if this person is anonymous."""
+        return isinstance(self, AnonymousUserMixin)
+
+    def get_id(self):
+        """Return the username of the person."""
+        return self.username
