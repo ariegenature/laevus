@@ -43,7 +43,6 @@
     <b-modal :active.sync="isFormActive">
         <contribute-form></contribute-form>
     </b-modal>
-    <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
   </section>
 </template>
 
@@ -78,8 +77,7 @@ export default {
     tagText () {
       return this.zoom >= 14 ? 'suffisant' : `insuffisant (${this.zoom - 14})`
     },
-    ...mapGetters('map', ['zoom']),
-    ...mapGetters(['isLoading'])
+    ...mapGetters('map', ['zoom'])
   },
   methods: {
     handleMapClick (ev) {

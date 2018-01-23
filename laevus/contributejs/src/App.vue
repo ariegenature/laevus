@@ -2,11 +2,12 @@
   <div id="app">
     <navbar></navbar>
     <router-view/>
+    <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import Navbar from './components/Navbar'
 
@@ -15,6 +16,9 @@ export default {
   components: {
     Navbar
   },
+  computed: mapGetters([
+    'isLoading'
+  ]),
   methods: mapActions([
     'syncCurrentUser'
   ]),
