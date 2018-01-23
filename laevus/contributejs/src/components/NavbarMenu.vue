@@ -1,6 +1,9 @@
 <template>
   <div class="navbar-menu">
     <div class="navbar-start">
+      <router-link :to="{ name: 'home' }" class="navbar-item">
+        Les contributions&nbsp;<b-icon icon="map-marker"></b-icon>
+      </router-link>
       <router-link :to="{ name: 'full-contribution' }" class="navbar-item" v-if="isAuthenticated">
         Tableau détaillé&nbsp;<b-icon icon="lock"></b-icon>
       </router-link>
