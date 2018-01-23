@@ -59,12 +59,14 @@ export default {
       loginData.append('username', this.username)
       loginData.append('password', this.password)
       try {
+        this.setPageLoading()
         await axios.post('', loginData, {
           headers: {
             'X-CSRFToken': '«« csrf_token() »»'
           }
         })
         this.syncCurrentUser()
+        this.setPageReady()
         this.$router.push({ name: 'home' })
       } catch (e) {
         this.$toast.open({
@@ -75,7 +77,9 @@ export default {
       }
     },
     ...mapActions([
-      'syncCurrentUser'
+      'syncCurrentUser',
+      'setPageLoading',
+      'setPageReady'
     ])
   }
 }

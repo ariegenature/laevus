@@ -43,6 +43,7 @@
 
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'FullContributionTable',
@@ -69,12 +70,18 @@ export default {
     },
     boolClass (bool) {
       return bool ? 'is-success' : 'is-danger'
-    }
+    },
+    ...mapActions([
+      'setPageLoading',
+      'setPageReady'
+    ])
   },
   async created () {
     try {
+      this.setPageLoading()
       const response = await axios.get('/api/full-contribution')
       this.contributions = response.data
+      this.setPageReady()
     } catch (e) {
       console.log(e)
     }
