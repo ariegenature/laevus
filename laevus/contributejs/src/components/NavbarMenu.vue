@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-menu">
+  <div class="navbar-menu" :class="{ 'is-active': menuActive }">
     <div class="navbar-start">
       <router-link :to="{ name: 'home' }" class="navbar-item">
         Les contributions&nbsp;<b-icon icon="map-marker"></b-icon>
@@ -24,6 +24,7 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'NavbarMenu',
+  props: ['menuActive'],
   computed: {
     displayName () {
       return this.currentUser.name
