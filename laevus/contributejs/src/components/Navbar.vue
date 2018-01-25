@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <navbar-brand :menu-active="menuActive" @burger-click="toggleBurger"></navbar-brand>
-    <navbar-menu :menu-active="menuActive"></navbar-menu>
+    <navbar-menu :menu-active="menuActive" @menu-click="closeMenu"></navbar-menu>
   </nav>
 </template>
 
@@ -24,6 +24,9 @@ export default {
     toggleBurger () {
       console.log(this.menuActive)
       this.menuActive = !this.menuActive
+    },
+    closeMenu () {
+      this.menuActive = false
     }
   }
 }
