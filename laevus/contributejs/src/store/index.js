@@ -29,7 +29,8 @@ export default new Vuex.Store({
       speciesGroups: null,
       contributions: null,
       isLoading: false,
-      currentUser: null
+      currentUser: null,
+      isHelpShown: false
     }
   },
   getters: {
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     contributions: (state) => state.contributions,
     isLoading: (state) => state.isLoading,
     currentUser: (state) => state.currentUser,
-    isAuthenticated: (state) => state.currentUser !== null
+    isAuthenticated: (state) => state.currentUser !== null,
+    isHelpShown: (state) => state.isHelpShown
   },
   mutations: {
     groups: (state, groups) => {
@@ -57,6 +59,9 @@ export default new Vuex.Store({
     },
     currentUser: (state, user) => {
       state.currentUser = user
+    },
+    isHelpShown: (state, bool) => {
+      state.isHelpShown = bool
     }
   },
   actions: {
@@ -79,6 +84,9 @@ export default new Vuex.Store({
       } catch (e) {
         console.log(e)
       }
+    },
+    toggleHelp: ({ commit, state }) => {
+      commit('isHelpShown', !state.isHelpShown)
     }
   },
   modules: {

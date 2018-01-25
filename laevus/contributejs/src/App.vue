@@ -3,24 +3,31 @@
     <navbar></navbar>
     <router-view/>
     <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
+    <b-modal :active.sync="isHelpShown" :onCancel="toggleHelp" has-modal-card>
+      <help></help>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
+import Help from './components/Help'
 import Navbar from './components/Navbar'
 
 export default {
   name: 'app',
   components: {
+    Help,
     Navbar
   },
   computed: mapGetters([
+    'isHelpShown',
     'isLoading'
   ]),
   methods: mapActions([
-    'syncCurrentUser'
+    'syncCurrentUser',
+    'toggleHelp'
   ]),
   created () {
     this.syncCurrentUser()

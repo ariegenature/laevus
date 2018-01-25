@@ -11,20 +11,23 @@
       </router-link>
     </div>
     <div class="navbar-end">
+      <a href="#" class="navbar-item" @click="clickHelp">
+        <b-icon icon="question-circle"></b-icon>&nbsp;Aide
+      </a>
       <router-link :to="{ name: 'login' }" class="navbar-item" v-if="!isAuthenticated"
                    @click.native="emitMenuClick">
         <b-icon icon="sign-in"></b-icon>&nbsp;Connexion
       </router-link>
-      <span class="navbar-item" v-if="isAuthenticated">{{ displayName }}</span>
-      <a  href="/logout" class="navbar-item" v-if="isAuthenticated" @click.native="emitMenuClick">
-        <b-icon icon="sign-out"></b-icon>&nbsp;Déconnexion
+      <a href="/logout" class="navbar-item" title="Déconnexion" v-if="isAuthenticated"
+         @click.native="emitMenuClick">
+        <b-icon icon="sign-out"></b-icon>&nbsp;{{ displayName }}
       </a>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'NavbarMenu',
   props: ['menuActive'],
@@ -40,7 +43,14 @@ export default {
   methods: {
     emitMenuClick (ev) {
       this.$emit('menu-click')
-    }
+    },
+    clickHelp (ev) {
+      this.$emit('menu-click')
+      this.toggleHelp()
+    },
+    ...mapActions([
+      'toggleHelp'
+    ])
   }
 }
 </script>
