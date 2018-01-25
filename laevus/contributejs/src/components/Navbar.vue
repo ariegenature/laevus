@@ -22,7 +22,6 @@ export default {
   },
   methods: {
     toggleBurger () {
-      console.log(this.menuActive)
       this.menuActive = !this.menuActive
     },
     closeMenu () {
