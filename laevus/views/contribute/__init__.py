@@ -15,15 +15,23 @@
 
 """Laevus blueprint to allow contributions about wild life collisions."""
 
+import glob
 import mimetypes
+import os
+import tempfile
+import zipfile
 
-from flask import Blueprint, jsonify, make_response, redirect, render_template, url_for
+from fiona.crs import from_epsg
+from flask import Blueprint, abort, jsonify, make_response, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 from flask_wtf import FlaskForm
+from shapely.geometry import mapping
+from shapely.wkt import loads as geom_from_wkt
 from six import text_type
 from wtforms import (BooleanField, DateTimeField, IntegerField, StringField,
                      TextField)
 from wtforms.validators import DataRequired, Email, NumberRange
+import fiona
 
 from laevus.extensions import login_manager
 from laevus.model import Contribution, User, db
@@ -100,6 +108,66 @@ def index():
 @login_required
 def full_contribution():
     return render_template('vue/index.html')
+
+
+@contribute_bp.route('/full-contribution/download/<file_format>')
+@login_required
+def download_contributions(file_format='shp'):
+    if file_format != 'shp':
+        abort(404)
+    txt_accuracy_map = {'=': '=', '&cong;': '~', '&ge;': '>'}
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        bname = 'laevus'
+        shpname = os.path.join(tmpdirname, '{0}.shp'.format(bname))
+        zipname = os.path.join(tmpdirname, '{0}.zip'.format(bname))
+        schema = {'geometry': 'Point',
+                  'properties': {
+                      'id': 'int',
+                      'date': 'date',
+                      'time': 'str',
+                      'group_name': 'str',
+                      'taxref_id': 'int',
+                      'sci_name': 'str',
+                      'cnames': 'str',
+                      'accuracy': 'str',
+                      'count': 'int',
+                      'is_alive': 'str:1',
+                      'comments': 'str',
+                      'first_name': 'str',
+                      'surname': 'str',
+                      'email': 'str',
+                  }}
+        rows = db.engine.execute('select * from full_report')
+        with fiona.open(shpname, 'w', driver='ESRI Shapefile', encoding='utf-8', schema=schema,
+                        crs=from_epsg(2154)) as shp:
+            for row in rows:
+                shp.write({'geometry': mapping(geom_from_wkt(row.geometry)),
+                           'properties': {
+                               'id': row.id,
+                               'date': row.date_time.strftime('%Y-%m-%d'),
+                               'time': row.date_time.strftime('%H:%M'),
+                               'group_name': row.group_name,
+                               'taxref_id': row.taxref_id,
+                               'sci_name': row.scientific_name,
+                               'cnames': row.common_names,
+                               'accuracy': txt_accuracy_map[row.count_accuracy],
+                               'count': row.count,
+                               'is_alive': row.is_alive,
+                               'comments': row.comments,
+                               'first_name': row.first_name,
+                               'surname': row.surname,
+                               'email': row.email,
+                           }})
+        with zipfile.ZipFile(zipname, 'w') as shpzip:
+            for fname in glob.glob('{0}.*'.format(os.path.join(tmpdirname, bname))):
+                if not fname.endswith('.zip'):
+                    shpzip.write(fname, arcname=os.path.basename(fname))
+        with open(zipname, 'rb') as shpzip:
+            resp = make_response(shpzip.read())
+    resp.headers['Content-Type'], resp.headers['Content-Encoding'] = mimetypes.guess_type(zipname)
+    resp.headers['Content-Disposition'] = ('attachment; '
+                                           'filename={0}'.format(os.path.basename(zipname)))
+    return resp
 
 
 @contribute_bp.route('/login', methods=['GET', 'POST'])
