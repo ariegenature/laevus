@@ -4,10 +4,12 @@
       <div class="container is-fluid">
         <div class="columns">
           <div class="column is-centered">
-            <div class="has-text-right">
-              <a class="button is-primary" href="/full-contribution/download/shp">
-                Télécharger au format ESRI Shapefile
-              </a>
+            <div class="content">
+              <div class="has-text-right">
+                <a class="button is-primary" href="/full-contribution/download/shp">
+                  Télécharger au format ESRI Shapefile
+                </a>
+              </div>
             </div>
             <full-contribution-table></full-contribution-table>
           </div>
