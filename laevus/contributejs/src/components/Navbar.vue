@@ -28,3 +28,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app a.navbar-item.is-active {
+  color: #714dd2;
+}
+</style>

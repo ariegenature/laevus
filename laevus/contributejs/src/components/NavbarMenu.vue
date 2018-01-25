@@ -1,10 +1,12 @@
 <template>
   <div class="navbar-menu" :class="{ 'is-active': menuActive }">
     <div class="navbar-start">
-      <router-link :to="{ name: 'home' }" class="navbar-item" v-if="isAuthenticated">
+      <router-link :to="{ name: 'home' }" class="navbar-item" active-class="is-active"
+                   v-if="isAuthenticated">
         Les contributions&nbsp;<b-icon icon="map-marker"></b-icon>
       </router-link>
-      <router-link :to="{ name: 'full-contribution' }" class="navbar-item" v-if="isAuthenticated">
+      <router-link :to="{ name: 'full-contribution' }" class="navbar-item" active-class="is-active"
+                   v-if="isAuthenticated">
         Tableau détaillé&nbsp;<b-icon icon="lock"></b-icon>
       </router-link>
     </div>
