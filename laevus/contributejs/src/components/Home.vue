@@ -2,8 +2,8 @@
   <section class="hero is-fullheight">
     <div id="hero-map" class="hero-body">
       <div id="container-map" class="container is-fluid">
-        <div id="columns-map" class="columns">
-          <div  id="column-map"class="column is-three-fifths">
+        <div class="columns">
+          <div class="column is-three-fifths">
             <div id="map">
               <contribute-map @perimeter-click="handleMapClick"></contribute-map>
             </div>
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style>
-#hero-map, #container-map, #columns-map, #column-map {
+#hero-map, #container-map {
   height: 100%;
 }
 #map {
