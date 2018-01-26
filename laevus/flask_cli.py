@@ -25,6 +25,7 @@ import csv
 import io
 import os
 
+import anosql
 import click
 
 from laevus import create_app, read_config
@@ -58,6 +59,11 @@ def initdb():
     admin_user.set_password('laevus')
     db.session.add(admin_user)
     db.session.commit()
+    sql_queries = anosql.load_queries('postgres', os.path.join(
+        os.path.abspath(os.path.dirname(__file__)), 'initial_data', 'initial_data.sql'
+    ))
+    with sqla_raw_conn() as cnx:
+        sql_queries.create_views(cnx)
     click.echo('-> Database initialized.')
 
 
