@@ -70,6 +70,7 @@ setup(
         'Flask-WTF',
         'GeoAlchemy2',
         'Shapely',
+        'anosql',
         'chaussette',
         'circus',
         'flask',
