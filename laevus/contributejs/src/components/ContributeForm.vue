@@ -22,7 +22,7 @@
                 </b-field>
               </b-field>
             </tab-content>
-            <tab-content title="Identification grossière" :before-change="checkGroupNotNull">
+            <tab-content title="Identification" :before-change="checkGroupNotNull">
               <b-field v-if="groupHasParent">
                 <div class="control">
                   <button class="button is-small" @click="resetGroups">
@@ -52,7 +52,7 @@
                 </div>
               </div>
             </tab-content>
-            <tab-content title="Identification précise" :before-change="checkCount">
+            <tab-content title="Détails" :before-change="checkCount">
               <b-field label="Espèce" v-if="hasOneSpecies">
                 <div class="control">
                   <input class="input is-static" :value="oneSpecies" readonly></input>
