@@ -428,11 +428,11 @@ export default {
   margin-right: auto;
 }
 @media screen and (max-width: 767px) {
-  .vue-form-wizard .wizard-nav-pills li,
+  #contribute-form .vue-form-wizard .wizard-nav > li,
   .wizard-progress-with-circle {
     display: none
   }
-  .vue-form-wizard .wizard-nav-pills li.active {
+  #contribute-form .vue-form-wizard .wizard-nav > li.active {
     display: block
   }
 }
