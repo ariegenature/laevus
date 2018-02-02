@@ -26,6 +26,7 @@ include laevus/contributejs/config/test.env.js
 include laevus/contributejs/static/.gitkeep
 include laevus/contributejs/test/unit/.eslintrc
 recursive-include atests *.robot *.rst *.html *.txt
+recursive-include laevus/static *.png *.geojson
 recursive-include laevus/contributejs/src *.vue *.js *.png
 recursive-include laevus/contributejs/test *.js
 prune laevus/contributejs/test/unit/coverage
