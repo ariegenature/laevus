@@ -115,6 +115,9 @@ setup(
             'laevus.ini.example',
             'circus.ini.example',
         ]),
+        ('data', [
+            os.path.join('data', 'schema.sql'),
+        ]),
     ],
     entry_points={
         'console_scripts': ['laevus=laevus.__main__:main']

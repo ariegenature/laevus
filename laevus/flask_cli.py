@@ -52,16 +52,16 @@ def sqla_raw_conn():
 
 
 @app.cli.command()
-def initdb():
+@click.option('--data', prompt='Data folder',
+              help=('Path to the folder containing SQL files with schema and initial data'))
+def initdb(data):
     click.echo('-> Initializing database...')
     db.create_all()
     admin_user = User(username='admin', name='Administrator')
     admin_user.set_password('laevus')
     db.session.add(admin_user)
     db.session.commit()
-    sql_queries = anosql.load_queries('postgres', os.path.join(
-        os.path.abspath(os.path.dirname(__file__)), 'initial_data', 'initial_data.sql'
-    ))
+    sql_queries = anosql.load_queries('postgres', os.path.join(data, 'schema.sql'))
     with sqla_raw_conn() as cnx:
         sql_queries.create_views(cnx)
     click.echo('-> Database initialized.')
