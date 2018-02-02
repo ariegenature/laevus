@@ -119,4 +119,5 @@ setup(
     entry_points={
         'console_scripts': ['laevus=laevus.__main__:main']
     },
+    scripts=['laevus/flask_cli.py'],
 )
