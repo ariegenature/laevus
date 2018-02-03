@@ -3,7 +3,7 @@
     <navbar></navbar>
     <router-view/>
     <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
-    <b-modal :active.sync="isHelpShown" :onCancel="toggleHelp" has-modal-card>
+    <b-modal :active.sync="isHelpShown" :onCancel="closeHelp" has-modal-card>
       <help></help>
     </b-modal>
   </div>
@@ -25,10 +25,17 @@ export default {
     'isHelpShown',
     'isLoading'
   ]),
-  methods: mapActions([
-    'syncCurrentUser',
-    'toggleHelp'
-  ]),
+  methods: {
+    closeHelp () {
+      if (this.isHelpShown) {
+        this.toggleHelp()
+      }
+    },
+    ...mapActions([
+      'syncCurrentUser',
+      'toggleHelp'
+    ])
+  },
   created () {
     this.syncCurrentUser()
   }
