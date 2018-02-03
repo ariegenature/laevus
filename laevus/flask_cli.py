@@ -69,7 +69,7 @@ def initdb(data):
     click.echo('-> Database initialized.')
 
 
-@app.cli.command()
+@app.cli.command(name='import-groups')
 @click.option('--src', prompt='Groups CSV file',
               help=('Path to the CSV file containing groups, their identifiers, their order, '
                     'and their relationships'))
@@ -84,7 +84,7 @@ def import_groups(src):
     click.echo('-> Groups imported.')
 
 
-@app.cli.command()
+@app.cli.command(name='import-taxons')
 @click.option('--src', prompt='Taxons CSV file',
               help=('Path to the CSV file containing taxons, their identifiers, their groups, '
                     'and their names'))
@@ -132,7 +132,7 @@ def import_taxons(src):
     click.echo('-> Taxons successfully imported.')
 
 
-@app.cli.command()
+@app.cli.command(name='install-js-deps')
 def install_js_deps():
     """Run ``npm install`` for the vue.js client in order to install its JavaScript dependencies."""
     click.echo('-> Installing JavaScript dependencies for the Vue.js client...')
@@ -143,7 +143,7 @@ def install_js_deps():
     click.echo('-> JavaScript dependencies succesfully installed.')
 
 
-@app.cli.command()
+@app.cli.command(name='build-js-client')
 def build_js_client():
     """Execute ``npm run build`` for the vue.js client to build it so that it can be served."""
     click.echo('-> Building the Vue.js client...')
