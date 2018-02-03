@@ -97,16 +97,17 @@
         </b-message>
         <b-field grouped group-multiline>
           <b-field label="Votre prénom" expanded>
-            <b-input expanded :value="firstName" @input="updateFirstName"
-                   ref="firstFieldInTab3"></b-input>
+            <b-input expanded :value="firstName" @input="updateFirstName" ref="firstFieldInTab3"
+                     @keyup.native.enter="giveFocusToField('surname')"></b-input>
           </b-field>
           <b-field label="Votre nom" expanded>
-            <b-input expanded :value="surname" @input="updateSurname"></b-input>
+            <b-input expanded :value="surname" @input="updateSurname" ref="surname"
+                     @keyup.native.enter="giveFocusToField('email')"></b-input>
           </b-field>
         </b-field>
         <b-field label="Votre adresse électronique" expanded>
           <b-input type="email" placeholder="prenom.nom@example.org"
-                                :value="email" @input="updateEmail"></b-input>
+                   ref="email" :value="email" @input="updateEmail"></b-input>
         </b-field>
         <div class="field">
           <div class="control">
@@ -288,6 +289,12 @@ export default {
       var firstField = this.$refs[`firstFieldInTab${tabIndex}`]
       if (firstField && firstField.hasOwnProperty('focus')) {
         firstField.focus()
+      }
+    },
+    giveFocusToField (ref) {
+      var field = this.$refs[ref]
+      if (field && field.hasOwnProperty('focus')) {
+        field.focus()
       }
     },
     async updateSpeciesList (groupId) {
