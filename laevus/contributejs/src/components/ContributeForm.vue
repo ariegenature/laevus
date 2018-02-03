@@ -1,127 +1,121 @@
 <template>
-  <div class="hero">
-    <div class="hero-body">
-      <div class="container">
-        <form id="contribute-form" method="POST" accept-charset="UTF-8"
-              v-on:submit.prevent>
-          <form-wizard ref="wizard" @on-change="handleStepChange"
-                       title="" subtitle="" step-size="xs"
-                       next-button-text="Suivant" back-button-text="Retour"
-                       finish-button-text="Terminer" @on-complete="submitForm">
-            <tab-content title="Date et heure">
-              <b-field grouped group-multiline>
-                <b-field label="Date">
-                  <b-datepicker ref="firstFieldInTab0" placeholder="Cliquer pour choisir une date"
-                                icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
-                                v-model="selectedDate"></b-datepicker>
-                </b-field>
-                <b-field label="Heure">
-                  <b-timepicker placeholder="Cliquer pour indiquer un horaire"
-                                icon="clock-o" :readonly="false"
-                                v-model="selectedTime"></b-timepicker>
-                </b-field>
-              </b-field>
-            </tab-content>
-            <tab-content title="Identification" :before-change="checkGroupNotNull">
-              <b-field v-if="groupHasParent">
-                <div class="control">
-                  <button class="button is-small" @click="resetGroups">
-                    <b-icon icon="level-up"></b-icon>
-                    <span>Remonter</span>
-                  </button>
-                </div>
-              </b-field>
-              <div class="columns is-multiline is-centered">
-                <div class="column is-one-third has-text-centered" v-for="group in groups">
-                  <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
-                           size="is-small" :native-value="group.id">
-                    <figure class="image is-64x64 block-center">
-                      <img :alt="group.name" :src="group.icon">
-                    </figure>
-                    <p class="is-size-7">{{ group.name }}</p>
-                  </b-radio>
-                </div>
-                <div class="column is-one-third has-text-centered" v-if="groupHasParent">
-                  <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
-                           native-value="unknown">
-                    <figure class="image is-64x64 block-center">
-                      <img alt="Intérrogation" src="static/question.png">
-                    </figure>
-                    <p class="is-size-7">Je ne sais pas</p>
-                  </b-radio>
-                </div>
-              </div>
-            </tab-content>
-            <tab-content title="Détails" :before-change="checkCount">
-              <b-field label="Espèce" v-if="hasOneSpecies">
-                <div class="control">
-                  <input class="input is-static" :value="oneSpecies" readonly></input>
-                </div>
-              </b-field>
-              <b-field v-if="hasMultipleSpecies">
-                <b-switch :value="canTellSpecies" @input="updateCanTellSpecies">
-                  {{ canTellSpeciesString }}
-                </b-switch>
-              </b-field>
-              <b-field label="Espèce" v-if="hasMultipleSpecies && canTellSpecies">
-                <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
-                                placeholder="Commencer à écrire pour chercher" keep-first
-                                v-model="inputSpecies" :data="filteredSpecies" field="name"
-                                @select="selectSpecies"></b-autocomplete>
-              </b-field>
-              <b-field grouped group-multiline>
-                <b-field label="Nombre d'individus" :message="selectedAccuracy" expanded>
-                  <b-field>
-                    <b-select :value="countAccuracyId" @input="updateCountAccuracy">
-                      <option v-for="accuracy in accuracies"
-                              :value="accuracy.id" :key="accuracy.id"
-                              v-html="accuracy.id">
-                      </option>
-                    </b-select>
-                    <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"
-                      :value="count" @input="updateCount" min="1"></b-input>
-                  </b-field>
-                </b-field>
-                <b-field label="Vivant ou mort ?">
-                  <b-switch true-value="Vivant" false-value="Mort" v-model="selectedAlive">
-                    {{ aliveString }}
-                  </b-switch>
-                </b-field>
-              </b-field>
-              <b-field label="Commentaires">
-                <b-input type="textarea"
-                         placeholder="Vous pouvez apporter des précisions ou des remarques"
-                         :value="comments" @input="updateComments"></b-input>
-              </b-field>
-            </tab-content>
-            <tab-content title="Coordonnées" :before-change="checkCompleteContact">
-              <b-message title="Erreur" type="is-danger" :active.sync="hasServerErrors">
-                {{ errorMsg }}
-              </b-message>
-              <b-field grouped group-multiline>
-                <b-field label="Votre prénom" expanded>
-                  <b-input expanded :value="firstName" @input="updateFirstName"
-                    ref="firstFieldInTab3"></b-input>
-                </b-field>
-                <b-field label="Votre nom" expanded>
-                  <b-input expanded :value="surname" @input="updateSurname"></b-input>
-                </b-field>
-              </b-field>
-              <b-field label="Votre adresse électronique" expanded>
-                <b-input type="email" placeholder="prenom.nom@example.org"
-                         :value="email" @input="updateEmail"></b-input>
-              </b-field>
-              <div class="field">
-                <div class="control">
-                  <input type="hidden" name="csrf_token" value="«« csrf_token() »»">
-                </div>
-              </div>
-            </tab-content>
-          </form-wizard>
-        </form>
-      </div>
-    </div>
-  </div>
+  <form id="contribute-form" method="POST" accept-charset="UTF-8"
+        v-on:submit.prevent>
+    <form-wizard ref="wizard" @on-change="handleStepChange"
+                 title="" subtitle="" step-size="xs"
+                 next-button-text="Suivant" back-button-text="Retour"
+                 finish-button-text="Terminer" @on-complete="submitForm">
+      <tab-content title="Date et heure">
+        <b-field grouped group-multiline>
+          <b-field label="Date">
+            <b-datepicker ref="firstFieldInTab0" placeholder="Cliquer pour choisir une date"
+                          icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
+                          v-model="selectedDate"></b-datepicker>
+          </b-field>
+          <b-field label="Heure">
+            <b-timepicker placeholder="Cliquer pour indiquer un horaire"
+                          icon="clock-o" :readonly="false"
+                          v-model="selectedTime"></b-timepicker>
+          </b-field>
+        </b-field>
+      </tab-content>
+      <tab-content title="Identification" :before-change="checkGroupNotNull">
+        <b-field v-if="groupHasParent">
+          <div class="control">
+            <button class="button is-small" @click="resetGroups">
+              <b-icon icon="level-up"></b-icon>
+              <span>Remonter</span>
+            </button>
+          </div>
+        </b-field>
+        <div class="columns is-multiline is-centered">
+          <div class="column is-one-third has-text-centered" v-for="group in groups">
+            <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
+                     size="is-small" :native-value="group.id">
+              <figure class="image is-64x64 block-center">
+                <img :alt="group.name" :src="group.icon">
+              </figure>
+              <p class="is-size-7">{{ group.name }}</p>
+            </b-radio>
+          </div>
+          <div class="column is-one-third has-text-centered" v-if="groupHasParent">
+            <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
+                     native-value="unknown">
+              <figure class="image is-64x64 block-center">
+                <img alt="Intérrogation" src="static/question.png">
+              </figure>
+              <p class="is-size-7">Je ne sais pas</p>
+            </b-radio>
+          </div>
+        </div>
+      </tab-content>
+      <tab-content title="Détails" :before-change="checkCount">
+        <b-field label="Espèce" v-if="hasOneSpecies">
+          <div class="control">
+            <input class="input is-static" :value="oneSpecies" readonly></input>
+          </div>
+        </b-field>
+        <b-field v-if="hasMultipleSpecies">
+          <b-switch :value="canTellSpecies" @input="updateCanTellSpecies">
+            {{ canTellSpeciesString }}
+          </b-switch>
+        </b-field>
+        <b-field label="Espèce" v-if="hasMultipleSpecies && canTellSpecies">
+          <b-autocomplete expanded icon="magnify" ref="firstFieldInTab2"
+                          placeholder="Commencer à écrire pour chercher" keep-first
+                          v-model="inputSpecies" :data="filteredSpecies" field="name"
+                          @select="selectSpecies"></b-autocomplete>
+        </b-field>
+        <b-field grouped group-multiline>
+          <b-field label="Nombre d'individus" :message="selectedAccuracy" expanded>
+            <b-field>
+              <b-select :value="countAccuracyId" @input="updateCountAccuracy">
+                <option v-for="accuracy in accuracies"
+                        :value="accuracy.id" :key="accuracy.id"
+                        v-html="accuracy.id">
+                </option>
+              </b-select>
+              <b-input icon="magnify" type="number" placeholder="Combien d'individus ?"
+                       :value="count" @input="updateCount" min="1"></b-input>
+            </b-field>
+          </b-field>
+          <b-field label="Vivant ou mort ?">
+            <b-switch true-value="Vivant" false-value="Mort" v-model="selectedAlive">
+              {{ aliveString }}
+            </b-switch>
+          </b-field>
+        </b-field>
+        <b-field label="Commentaires">
+          <b-input type="textarea"
+                   placeholder="Vous pouvez apporter des précisions ou des remarques"
+                   :value="comments" @input="updateComments"></b-input>
+        </b-field>
+      </tab-content>
+      <tab-content title="Coordonnées" :before-change="checkCompleteContact">
+        <b-message title="Erreur" type="is-danger" :active.sync="hasServerErrors">
+          {{ errorMsg }}
+        </b-message>
+        <b-field grouped group-multiline>
+          <b-field label="Votre prénom" expanded>
+            <b-input expanded :value="firstName" @input="updateFirstName"
+                   ref="firstFieldInTab3"></b-input>
+          </b-field>
+          <b-field label="Votre nom" expanded>
+            <b-input expanded :value="surname" @input="updateSurname"></b-input>
+          </b-field>
+        </b-field>
+        <b-field label="Votre adresse électronique" expanded>
+          <b-input type="email" placeholder="prenom.nom@example.org"
+                                :value="email" @input="updateEmail"></b-input>
+        </b-field>
+        <div class="field">
+          <div class="control">
+            <input type="hidden" name="csrf_token" value="«« csrf_token() »»">
+          </div>
+        </div>
+      </tab-content>
+    </form-wizard>
+  </form>
 </template>
 
 <script>
