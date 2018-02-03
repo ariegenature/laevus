@@ -24,12 +24,14 @@ from contextlib import contextmanager
 import csv
 import io
 import os
+import subprocess
 
 import anosql
 import click
 
 from laevus import create_app, read_config
 from laevus.model import User, WildLifeGroup, db
+import laevus
 
 
 config = read_config()
@@ -128,3 +130,26 @@ def import_taxons(src):
                           columns=('value', 'is_preferred', 'taxon_id'))
             cur.copy_from(common_names_csv, 'public.common_name', columns=('value', 'taxon_id'))
     click.echo('-> Taxons successfully imported.')
+
+
+@app.cli.command()
+def install_js_deps():
+    """Run ``npm install`` for the vue.js client in order to install its JavaScript dependencies."""
+    click.echo('-> Installing JavaScript dependencies for the Vue.js client...')
+    subprocess.check_call(['npm',
+                           '--prefix={0}'.format(os.path.join(os.path.dirname(laevus.__file__),
+                                                              'contributejs')),
+                           'install'])
+    click.echo('-> JavaScript dependencies succesfully installed.')
+
+
+@app.cli.command()
+def build_js_client():
+    """Execute ``npm run build`` for the vue.js client to build it so that it can be served."""
+    click.echo('-> Building the Vue.js client...')
+    subprocess.check_call(['npm',
+                           '--prefix={0}'.format(os.path.join(os.path.dirname(laevus.__file__),
+                                                              'contributejs')),
+                           'run',
+                           'build'])
+    click.echo('-> Vue.js client succesfully built.')
