@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <b-modal :active.sync="isFormActive">
+    <b-modal id="modal-form" :active.sync="isFormActive">
         <contribute-form></contribute-form>
     </b-modal>
   </section>
@@ -107,5 +107,8 @@ export default {
 }
 .leaflet-container.locate {
   cursor: crosshair;
+}
+#modal-form .modal-content {
+  max-height: calc(100vh - 40px);
 }
 </style>
