@@ -97,17 +97,19 @@
         </b-message>
         <b-field grouped group-multiline>
           <b-field label="Votre prénom" expanded>
-            <b-input expanded :value="firstName" @input="updateFirstName" ref="firstFieldInTab3"
+            <b-input expanded id="first-name" :value="firstName" @input="updateFirstName"
+                     ref="firstFieldInTab3" autocomplete="given-name"
                      @keyup.native.enter="giveFocusToField('surname')"></b-input>
           </b-field>
           <b-field label="Votre nom" expanded>
-            <b-input expanded :value="surname" @input="updateSurname" ref="surname"
+            <b-input expanded id="surname" :value="surname" @input="updateSurname"
+                     ref="surname" autocomplete="family-name"
                      @keyup.native.enter="giveFocusToField('email')"></b-input>
           </b-field>
         </b-field>
         <b-field label="Votre adresse électronique" expanded>
-          <b-input type="email" placeholder="prenom.nom@example.org"
-                   ref="email" :value="email" @input="updateEmail"></b-input>
+          <b-input type="email" id="email" placeholder="prenom.nom@example.org"
+                   ref="email" autocomplete="email" :value="email" @input="updateEmail"></b-input>
         </b-field>
         <div class="field">
           <div class="control">
