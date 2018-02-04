@@ -1,7 +1,7 @@
 <template>
   <v-map ref="map" :zoom="zoom" :center="center" @l-contextmenu="transmitClick"
          @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
-    <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+    <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>
     <v-marker :lat-lng="latLng" v-if="hasLatLng" @l-click="reEmitClick"></v-marker>
     <v-geojson-layer ref="contribution" :geojson="contributions"
