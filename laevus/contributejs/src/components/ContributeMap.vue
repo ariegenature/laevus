@@ -1,5 +1,5 @@
 <template>
-  <v-map ref="map" :zoom="zoom" :center="center" @l-click="transmitClick"
+  <v-map ref="map" :zoom="zoom" :center="center" @l-contextmenu="transmitClick"
          @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></v-tilelayer>

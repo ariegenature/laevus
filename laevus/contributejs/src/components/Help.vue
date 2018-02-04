@@ -6,8 +6,8 @@
     <section class="modal-card-body">
       <div class="content">
         <h2>Ajouter une observation</h2>
-        <p>Pour saisir une nouvelle observation, il suffit de cliquer à l'endroit où vous avez
-        observé un animal.</p>
+        <p>Pour saisir une nouvelle observation, il suffit de faire un <em>clic droit</em> à
+        l'endroit où vous avez observé un animal.</p>
         <p>Afin de garantir un minimum de précision, le niveau de zoom de la carte doit être
         suffisant.</p>
         <h2>Voir les observations</h2>
