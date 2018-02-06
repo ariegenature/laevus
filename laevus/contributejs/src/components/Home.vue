@@ -105,9 +105,6 @@ export default {
 .modal-content {
   background-color: rgba(245, 245, 245, 1);
 }
-.leaflet-container.locate {
-  cursor: crosshair;
-}
 #modal-form .modal-content {
   max-height: calc(100vh - 40px);
 }

@@ -136,12 +136,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.leaflet-container.locate {
-  cursor: not-allowed;
-}
-.perimeter {
-  cursor: crosshair;
-}
-</style>
