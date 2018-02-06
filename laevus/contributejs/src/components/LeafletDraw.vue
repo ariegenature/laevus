@@ -9,6 +9,27 @@ import L from 'leaflet'
 import 'leaflet-draw'
 import 'leaflet-draw/dist/leaflet.draw.css'
 
+const mapEvents = [
+  L.Draw.Event.CREATED,
+  L.Draw.Event.EDITED,
+  L.Draw.Event.DELETED,
+  L.Draw.Event.DRAWSTART,
+  L.Draw.Event.DRAWSTOP,
+  L.Draw.Event.DRAWVERTEX,
+  L.Draw.Event.EDITSTART,
+  L.Draw.Event.EDITMOVE,
+  L.Draw.Event.EDITRESIZE,
+  L.Draw.Event.EDITVERTEX,
+  L.Draw.Event.EDITSTOP,
+  L.Draw.Event.DELETESTART,
+  L.Draw.Event.DELETESTOP
+]
+
+const toolbarEvents = [
+  L.Draw.Event.TOOLBAROPENED,
+  L.Draw.Event.TOOLBARCLOSED
+]
+
 const props = {
   position: {
     type: String,
@@ -90,6 +111,16 @@ export default {
     deferredMountedTo (parent) {
       this.parent = parent
       parent.addControl(this.mapObject)
+      for (var drawEvent of mapEvents) {
+        parent.on(drawEvent, (ev) => {
+          this.$parent.$emit(`l-${ev.type.replace(/:/g, '-')}`, ev)
+        })
+      }
+      for (drawEvent of toolbarEvents) {
+        parent.on(drawEvent, (ev) => {
+          this.$emit(`l-${ev.type.replace(/:/g, '-')}`, ev)
+        })
+      }
     }
   }
 }
