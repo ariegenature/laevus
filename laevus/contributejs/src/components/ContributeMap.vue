@@ -8,7 +8,8 @@
                      :options="contributionOptions"></v-geojson-layer>
     <v-geojson-layer ref="perimeter" :geojson="perimeter"
                      :options="perimeterOptions"></v-geojson-layer>
-    <leaflet-draw></leaflet-draw>
+    <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
+                  :circle="false" :circle-marker="false"></leaflet-draw>
   </v-map>
 </template>
 
