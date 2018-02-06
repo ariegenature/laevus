@@ -8,6 +8,7 @@
                      :options="contributionOptions"></v-geojson-layer>
     <v-geojson-layer ref="perimeter" :geojson="perimeter"
                      :options="perimeterOptions"></v-geojson-layer>
+    <leaflet-draw></leaflet-draw>
   </v-map>
 </template>
 
@@ -16,8 +17,13 @@ import L from 'leaflet'
 import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
 
+import LeafletDraw from './LeafletDraw'
+
 export default {
   name: 'ContributeMap',
+  components: {
+    LeafletDraw
+  },
   data () {
     return {
       isReady: false,
