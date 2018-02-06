@@ -2,8 +2,8 @@
   <div id="app">
     <navbar></navbar>
     <router-view/>
-    <b-loading :active.sync="isLoading" :canCancel="false"></b-loading>
-    <b-modal :active.sync="isHelpShown" :onCancel="closeHelp" has-modal-card>
+    <b-loading :active="isLoading" :canCancel="false"></b-loading>
+    <b-modal :active="isHelpShown" :onCancel="closeHelp" has-modal-card>
       <help></help>
     </b-modal>
   </div>
