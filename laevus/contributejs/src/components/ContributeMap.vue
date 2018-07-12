@@ -1,6 +1,7 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
-         @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter" class="locate">
+         @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
+         @locationfound="updateMarker" class="locate">
     <leaflet-locate-control :show-popup="false"></leaflet-locate-control>
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></l-tile-layer>
@@ -103,6 +104,9 @@ export default {
           type: 'is-danger'
         })
       }
+    },
+    updateMarker (ev) {
+      this.updateLatLng(ev.latlng)
     },
     reEmitClick (ev) {
       this.$emit('perimeter-click')
