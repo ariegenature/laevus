@@ -1,7 +1,7 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter" class="locate">
-    <leaflet-locate-control></leaflet-locate-control>
+    <leaflet-locate-control :show-popup="false"></leaflet-locate-control>
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></l-tile-layer>
     <l-geojson ref="perimeter" :geojson="perimeter"
