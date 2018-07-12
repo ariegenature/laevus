@@ -1,14 +1,14 @@
 <template>
-  <v-map ref="map" :zoom="zoom" :center="center" @l-contextmenu="transmitClick"
-         @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
-    <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                 attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-marker :lat-lng="latLng" v-if="hasLatLng" @l-click="reEmitClick"></v-marker>
-    <v-geojson-layer ref="contribution" :geojson="contributions"
-                     :options="contributionOptions"></v-geojson-layer>
-    <v-geojson-layer ref="perimeter" :geojson="perimeter"
-                     :options="perimeterOptions"></v-geojson-layer>
-  </v-map>
+  <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
+         @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter" class="locate">
+    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                 attribution="OpenStreetMap contributors"></l-tile-layer>
+    <l-geojson ref="perimeter" :geojson="perimeter"
+               :options="perimeterOptions"></l-geojson>
+    <l-geojson ref="contribution" :geojson="contributions"
+               :options="contributionOptions"></l-geojson>
+    <l-marker :lat-lng="latLng" v-if="hasLatLng" @click="reEmitClick"></l-marker>
+  </l-map>
 </template>
 
 <script>

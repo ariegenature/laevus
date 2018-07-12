@@ -11,10 +11,10 @@ import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
 
-Vue.component('v-map', Vue2Leaflet.Map)
-Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
-Vue.component('v-marker', Vue2Leaflet.Marker)
-Vue.component('v-geojson-layer', Vue2Leaflet.GeoJSON)
+Vue.component('l-map', Vue2Leaflet.LMap)
+Vue.component('l-tile-layer', Vue2Leaflet.LTileLayer)
+Vue.component('l-marker', Vue2Leaflet.LMarker)
+Vue.component('l-geojson', Vue2Leaflet.LGeoJson)
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa'
