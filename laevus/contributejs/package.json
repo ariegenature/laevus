@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "buefy": "^0.6.6",
+    "leaflet.locatecontrol": "^0.62.0",
     "vue": "^2.5.16",
     "vue-form-wizard": "^0.8.4",
     "vue-router": "^3.0.1",
