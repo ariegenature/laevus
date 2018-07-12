@@ -104,6 +104,7 @@ export default {
     },
     zoomOnPerimeter (ev) {
       if (this.isReady) return
+      if (!this.$refs.perimeter.mapObject) return
       const perimeterBounds = this.$refs.perimeter.getBounds()
       if (perimeterBounds.hasOwnProperty('_southWest')) {
         this.$refs.map.fitBounds(perimeterBounds)
