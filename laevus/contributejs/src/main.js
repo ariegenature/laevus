@@ -12,6 +12,7 @@ import 'buefy/lib/buefy.css'
 Vue.config.productionTip = false
 
 Vue.component('l-map', Vue2Leaflet.LMap)
+Vue.component('l-control-layers', Vue2Leaflet.LControlLayers)
 Vue.component('l-tile-layer', Vue2Leaflet.LTileLayer)
 Vue.component('l-marker', Vue2Leaflet.LMarker)
 Vue.component('l-geojson', Vue2Leaflet.LGeoJson)
