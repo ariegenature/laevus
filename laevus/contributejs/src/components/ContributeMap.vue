@@ -1,5 +1,5 @@
 <template>
-  <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
+  <l-map ref="map" :zoom="zoom" :center="center" @l-draw-created="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
          @locationfound="updateMarker">
     <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
@@ -97,12 +97,10 @@ export default {
   },
   methods: {
     transmitClick (ev) {
-      if (ev.originalEvent.target.classList.contains('perimeter') &&
-        this.zoom >= 14) {
-        this.updateLatLng(ev.latlng)
+      if (this.zoom >= 14) {
+        this.updateLatLng(ev.layer._latlng)
         this.$emit('perimeter-click')
-      } else if (ev.originalEvent.target.classList.contains('perimeter') &&
-        this.zoom < 14) {
+      } else {
         this.$toast.open({
           duration: 3000,
           message: 'Zoom insuffisant',
