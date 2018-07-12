@@ -5,7 +5,8 @@
     <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
                   :circle="false" :circle-marker="false" :edit="false"
                   :remove="false"></leaflet-draw>
-    <leaflet-locate-control :show-popup="false"></leaflet-locate-control>
+    <leaflet-locate-control ref="geolocation"
+                            :show-popup="false"></leaflet-locate-control>
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></l-tile-layer>
     <l-geojson ref="perimeter" :geojson="perimeter"
@@ -98,6 +99,7 @@ export default {
   methods: {
     transmitClick (ev) {
       if (this.zoom >= 14) {
+        this.$refs.geolocation.mapObject.stop()
         this.updateLatLng(ev.layer._latlng)
         this.$emit('perimeter-click')
       } else {
