@@ -2,6 +2,9 @@
   <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
          @locationfound="updateMarker">
+    <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
+                  :circle="false" :circle-marker="false" :edit="false"
+                  :remove="false"></leaflet-draw>
     <leaflet-locate-control :show-popup="false"></leaflet-locate-control>
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></l-tile-layer>
@@ -17,11 +20,13 @@
 import L from 'leaflet'
 import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
+import LeafletDraw from './LeafletDraw'
 import LeafletLocateControl from './LeafletLocateControl'
 
 export default {
   name: 'ContributeMap',
   components: {
+    LeafletDraw,
     LeafletLocateControl
   },
   data () {
