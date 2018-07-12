@@ -1,6 +1,7 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" @contextmenu="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter" class="locate">
+    <leaflet-locate-control></leaflet-locate-control>
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution="OpenStreetMap contributors"></l-tile-layer>
     <l-geojson ref="perimeter" :geojson="perimeter"
@@ -15,9 +16,13 @@
 import L from 'leaflet'
 import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
+import LeafletLocateControl from './LeafletLocateControl'
 
 export default {
   name: 'ContributeMap',
+  components: {
+    LeafletLocateControl
+  },
   data () {
     return {
       isReady: false,
