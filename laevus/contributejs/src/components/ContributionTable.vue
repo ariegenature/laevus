@@ -103,6 +103,5 @@ export default {
 <style>
 #species {
   height: 70vh;
-  overflow: scroll;
 }
 </style>
