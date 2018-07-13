@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state () {
     return {
-      perimeterUrl: window.location.origin + '/static/perimetre_pnr.geojson',
+      perimeterUrl: window.location.origin + '/static/perimeter.geojson',
       accuracies: [
         {
           id: '=',
