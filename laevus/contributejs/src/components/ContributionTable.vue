@@ -102,6 +102,6 @@ export default {
 
 <style>
 #species {
-  height: 70vh;
+  height: 75vh;
 }
 </style>
