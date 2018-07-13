@@ -1,6 +1,7 @@
 <template>
   <b-table id="species" :data="data" :bordered="false" :striped="false" :narrowed="true"
-           :hoverable="true" :mobile-cards="true">
+           :hoverable="true" :mobile-cards="true" paginated :per-page="10" :current-page.sync="currentPage"
+           pagination-size="is-small">
     <template slot-scope="props">
       <b-table-column label="id" :visible="false">
         {{ props.row.id }}
@@ -26,6 +27,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ContributionTable',
+  data () {
+    return {
+      currentPage: 1
+    }
+  },
   computed: {
     data () {
       if (!this.contributions || !this.contributions.features) {
