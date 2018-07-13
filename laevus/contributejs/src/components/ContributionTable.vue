@@ -1,6 +1,6 @@
 <template>
   <b-table id="species" :data="data" :bordered="false" :striped="false" :narrowed="true"
-           :hoverable="false" :mobile-cards="true">
+           :hoverable="true" :mobile-cards="true">
     <template slot-scope="props">
       <b-table-column label="id" :visible="false">
         {{ props.row.id }}
