@@ -1,7 +1,7 @@
 <template>
   <b-table id="species" :data="data" :bordered="false" :striped="false" :narrowed="true"
            :hoverable="true" :mobile-cards="true" paginated :per-page="10" :current-page.sync="currentPage"
-           pagination-size="is-small">
+           pagination-size="is-small" :selected.sync="selectedFeature" focusable>
     <template slot-scope="props">
       <b-table-column label="id" :visible="false">
         {{ props.row.id }}
@@ -32,7 +32,8 @@ export default {
   name: 'ContributionTable',
   data () {
     return {
-      currentPage: 1
+      currentPage: 1,
+      selectedFeature: null
     }
   },
   computed: {
