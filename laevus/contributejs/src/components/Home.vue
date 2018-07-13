@@ -14,9 +14,8 @@
                 <b-tag class="is-dark">niveau de zoom</b-tag>
                 <b-tag :class="[tagClass]">{{ tagText }}</b-tag>
               </b-taglist>
-              <p class="title is-6">Observations récentes</p>
-              <contribution-table></contribution-table>
             </div>
+            <contribution-table></contribution-table>
           </div>
         </div>
       </div>

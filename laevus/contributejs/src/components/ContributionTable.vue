@@ -19,6 +19,9 @@
         <b-icon :icon="boolIcon(props.row.isAlive)" :type="boolClass(props.row.isAlive)"></b-icon>
       </b-table-column>
     </template>
+    <template slot="bottom-left">
+        <h6 class="title is-6">Observations récentes</h6>
+    </template>
   </b-table>
 </template>
 
