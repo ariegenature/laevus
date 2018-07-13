@@ -2,6 +2,7 @@
   <div id="app">
     <navbar></navbar>
     <router-view/>
+    <site-footer></site-footer>
     <b-loading :active="isLoading" :canCancel="false"></b-loading>
     <b-modal :active="isHelpShown" :onCancel="closeHelp" has-modal-card>
       <help></help>
@@ -11,6 +12,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import SiteFooter from './components/SiteFooter'
 
 import Help from './components/Help'
 import Navbar from './components/Navbar'
@@ -19,7 +21,8 @@ export default {
   name: 'app',
   components: {
     Help,
-    Navbar
+    Navbar,
+    SiteFooter
   },
   computed: mapGetters([
     'isHelpShown',
