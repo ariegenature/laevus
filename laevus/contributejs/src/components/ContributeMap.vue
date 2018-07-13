@@ -2,6 +2,11 @@
   <l-map ref="map" :zoom="zoom" :center="center" @l-draw-created="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
          @locationfound="updateMarker">
+    <l-marker :lat-lng="latLng" v-if="hasLatLng" @click="reEmitClick"></l-marker>
+    <l-geojson ref="contribution" :geojson="contributions"
+               :options="contributionOptions"></l-geojson>
+    <l-geojson ref="perimeter" :geojson="perimeter"
+               :options="perimeterOptions"></l-geojson>
     <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
                   :circle="false" :circle-marker="false" :edit="false"
                   :remove="false"></leaflet-draw>
@@ -11,11 +16,6 @@
     <l-tile-layer v-for="tileProvider in tileProviders" :key="tileProvider.name" layerType="base"
                   :name="tileProvider.name" :visible="tileProvider.visible" :url="tileProvider.url"
                   :attribution="tileProvider.attribution"></l-tile-layer>
-    <l-geojson ref="perimeter" :geojson="perimeter"
-               :options="perimeterOptions"></l-geojson>
-    <l-geojson ref="contribution" :geojson="contributions"
-               :options="contributionOptions"></l-geojson>
-    <l-marker :lat-lng="latLng" v-if="hasLatLng" @click="reEmitClick"></l-marker>
   </l-map>
 </template>
 
