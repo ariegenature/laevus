@@ -8,7 +8,7 @@
     <leaflet-locate-control ref="geolocation"
                             :show-popup="false"></leaflet-locate-control>
     <l-control-layers></l-control-layers>
-    <l-tile-layer v-for="tileProvider in tileProviders" layerType="base"
+    <l-tile-layer v-for="tileProvider in tileProviders" :key="tileProvider.name" layerType="base"
                   :name="tileProvider.name" :visible="tileProvider.visible" :url="tileProvider.url"
                   :attribution="tileProvider.attribution"></l-tile-layer>
     <l-geojson ref="perimeter" :geojson="perimeter"
