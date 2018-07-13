@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav id="navigation" class="navbar" role="navigation" aria-label="main navigation">
     <navbar-brand :menu-active="menuActive" @burger-click="toggleBurger"></navbar-brand>
     <navbar-menu :menu-active="menuActive" @menu-click="closeMenu"></navbar-menu>
   </nav>
@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style>
+#navigation {
+  background-color: #e9e5ff;
+}
 #app a.navbar-item.is-active {
   color: #714dd2;
 }
