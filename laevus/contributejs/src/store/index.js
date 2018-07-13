@@ -25,6 +25,7 @@ export default new Vuex.Store({
           title: 'au moins'
         }
       ],
+      mapReady: false,
       groups: null,
       speciesGroups: null,
       contributions: null,
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies,
+    mapReady: (state) => state.mapReady,
     contributions: (state) => state.contributions,
     isLoading: (state) => state.isLoading,
     currentUser: (state) => state.currentUser,
@@ -55,6 +57,9 @@ export default new Vuex.Store({
     },
     loading: (state) => {
       state.isLoading = true
+    },
+    mapReady: (state) => {
+      state.mapReady = true
     },
     ready: (state) => {
       state.isLoading = false
@@ -78,6 +83,9 @@ export default new Vuex.Store({
     },
     setPageLoading: ({ commit }) => {
       commit('loading')
+    },
+    setMapReady: ({ commit }) => {
+      commit('mapReady')
     },
     setPageReady: ({ commit }) => {
       commit('ready')
