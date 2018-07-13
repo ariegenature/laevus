@@ -1,14 +1,14 @@
 <template>
   <section class="hero is-fullheight">
     <div id="hero-map" class="hero-body">
-      <div id="container-map" class="container is-fluid">
+      <div id="container-map" class="container is-fluid is-marginless">
         <div class="columns">
-          <div class="column is-three-fifths">
+          <div class="column is-three-fifths is-paddingless">
             <div id="map">
               <contribute-map @perimeter-click="handleMapClick"></contribute-map>
             </div>
           </div>
-          <div class="column">
+          <div class="column is-paddingless">
             <div class="content">
               <p class="is-size-7"><b-taglist attached>
                 <b-tag class="is-dark">niveau de zoom</b-tag>
