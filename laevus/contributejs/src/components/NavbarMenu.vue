@@ -2,7 +2,7 @@
   <div class="navbar-menu" :class="{ 'is-active': menuActive }">
     <div class="navbar-start">
       <router-link :to="{ name: 'home' }" class="navbar-item" active-class="is-active"
-                   v-if="isAuthenticated" @click.native="emitMenuClick">
+                   @click.native="emitMenuClick">
         <b-icon icon="map-marker"></b-icon>&nbsp;Les contributions
       </router-link>
       <router-link :to="{ name: 'presentation' }" class="navbar-item" active-class="is-active"
