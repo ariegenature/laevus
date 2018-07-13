@@ -30,7 +30,8 @@ export default new Vuex.Store({
       contributions: null,
       isLoading: false,
       currentUser: null,
-      isHelpShown: false
+      isHelpShown: false,
+      selectedFeatureId: null
     }
   },
   getters: {
@@ -42,7 +43,8 @@ export default new Vuex.Store({
     isLoading: (state) => state.isLoading,
     currentUser: (state) => state.currentUser,
     isAuthenticated: (state) => state.currentUser !== null,
-    isHelpShown: (state) => state.isHelpShown
+    isHelpShown: (state) => state.isHelpShown,
+    selectedFeatureId: (state) => state.selectedFeatureId
   },
   mutations: {
     groups: (state, groups) => {
@@ -62,6 +64,9 @@ export default new Vuex.Store({
     },
     isHelpShown: (state, bool) => {
       state.isHelpShown = bool
+    },
+    selectedFeatureId: (state, id) => {
+      state.selectedFeatureId = id
     }
   },
   actions: {
@@ -87,6 +92,9 @@ export default new Vuex.Store({
     },
     toggleHelp: ({ commit, state }) => {
       commit('isHelpShown', !state.isHelpShown)
+    },
+    updateSelectedFeatureId: ({ commit }, id) => {
+      commit('selectedFeatureId', id)
     }
   },
   modules: {
