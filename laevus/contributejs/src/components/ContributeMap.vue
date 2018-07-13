@@ -1,7 +1,7 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" @l-draw-created="transmitClick"
          @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
-         @locationfound="updateMarker">
+         @locationfound="updateMarker" @popupopen="selectFeature" @popupclose="unselectFeature">
     <l-marker :lat-lng="latLng" v-if="hasLatLng" @click="reEmitClick"></l-marker>
     <l-geojson ref="contribution" :geojson="contributions"
                :options="contributionOptions"></l-geojson>
@@ -96,7 +96,8 @@ export default {
     ]),
     ...mapGetters([
       'perimeterUrl',
-      'contributions'
+      'contributions',
+      'selectedFeatureId'
     ])
   },
   methods: {
@@ -119,6 +120,16 @@ export default {
     reEmitClick (ev) {
       this.$emit('perimeter-click')
     },
+    selectFeature (ev) {
+      this.$refs.contribution.mapObject.eachLayer((layer) => {
+        if (layer.isPopupOpen()) {
+          this.updateSelectedFeatureId(layer.feature.id)
+        }
+      })
+    },
+    unselectFeature (ev) {
+      this.updateSelectedFeatureId(null)
+    },
     zoomOnPerimeter (ev) {
       if (this.isReady) return
       if (!this.$refs.perimeter.mapObject) return
@@ -136,6 +147,9 @@ export default {
     ]),
     ...mapActions('map', [
       'updateZoom'
+    ]),
+    ...mapActions([
+      'updateSelectedFeatureId'
     ])
   },
   async created () {
@@ -144,6 +158,17 @@ export default {
       this.perimeter = response.data
     } catch (e) {
       console.log(e)
+    }
+  },
+  watch: {
+    selectedFeatureId: {
+      handler (val, oldVal) {
+        this.$refs.contribution.mapObject.eachLayer((layer) => {
+          if (layer.feature.id === val) {
+            layer.openPopup()
+          }
+        })
+      }
     }
   }
 }

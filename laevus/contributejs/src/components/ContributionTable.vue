@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ContributionTable',
@@ -55,7 +55,8 @@ export default {
       return res
     },
     ...mapGetters([
-      'contributions'
+      'contributions',
+      'selectedFeatureId'
     ])
   },
   methods: {
@@ -71,6 +72,29 @@ export default {
     },
     boolClass (bool) {
       return bool ? 'is-success' : 'is-danger'
+    },
+    ...mapActions([
+      'updateSelectedFeatureId'
+    ])
+  },
+  watch: {
+    selectedFeature: {
+      handler (val, oldVal) {
+        if (val === null) {
+          this.updateSelectedFeatureId(null)
+        } else {
+          this.updateSelectedFeatureId(val.id)
+        }
+      }
+    },
+    selectedFeatureId: {
+      handler (val, oldVal) {
+        if (val === null) {
+          this.selectedFeature = null
+        } else {
+          this.selectedFeature = this.data.find((feature) => feature.id === val)
+        }
+      }
     }
   }
 }
