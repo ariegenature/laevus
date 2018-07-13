@@ -160,6 +160,12 @@ export default {
       console.log(e)
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      this.$refs.contribution.mapObject.setZIndex(11)
+      this.$refs.perimeter.mapObject.setZIndex(1)
+    })
+  },
   watch: {
     selectedFeatureId: {
       handler (val, oldVal) {
