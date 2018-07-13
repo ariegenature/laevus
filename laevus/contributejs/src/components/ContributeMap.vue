@@ -34,7 +34,6 @@ export default {
   },
   data () {
     return {
-      isReady: false,
       perimeter: null,
       perimeterOptions: {
         style: function () {
@@ -97,6 +96,7 @@ export default {
     ...mapGetters([
       'perimeterUrl',
       'contributions',
+      'mapReady',
       'selectedFeatureId'
     ])
   },
@@ -130,13 +130,13 @@ export default {
     unselectFeature (ev) {
       this.updateSelectedFeatureId(null)
     },
-    zoomOnPerimeter (ev) {
-      if (this.isReady) return
+    zoomOnPerimeter () {
+      if (this.mapReady) return
       if (!this.$refs.perimeter.mapObject) return
       const perimeterBounds = this.$refs.perimeter.getBounds()
       if (perimeterBounds.hasOwnProperty('_southWest')) {
         this.$refs.map.fitBounds(perimeterBounds)
-        this.isReady = true
+        this.setMapReady()
       }
     },
     updateZoomFromMap (ev) {
@@ -149,6 +149,7 @@ export default {
       'updateZoom'
     ]),
     ...mapActions([
+      'setMapReady',
       'updateSelectedFeatureId'
     ])
   },
