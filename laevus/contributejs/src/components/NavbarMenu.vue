@@ -5,6 +5,10 @@
                    v-if="isAuthenticated" @click.native="emitMenuClick">
         <b-icon icon="map-marker"></b-icon>&nbsp;Les contributions
       </router-link>
+      <router-link :to="{ name: 'presentation' }" class="navbar-item" active-class="is-active"
+                   @click.native="emitMenuClick">
+        <b-icon icon="info-circle"></b-icon>&nbsp;Présentation
+      </router-link>
       <router-link :to="{ name: 'full-contribution' }" class="navbar-item" active-class="is-active"
                    v-if="isAuthenticated" @click.native="emitMenuClick">
         <b-icon icon="table"></b-icon>&nbsp;Tableau détaillé
