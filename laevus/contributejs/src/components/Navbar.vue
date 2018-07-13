@@ -1,5 +1,5 @@
 <template>
-  <nav id="navigation" class="navbar" role="navigation" aria-label="main navigation">
+  <nav id="navigation" class="navbar has-shadow" role="navigation" aria-label="main navigation">
     <navbar-brand :menu-active="menuActive" @burger-click="toggleBurger"></navbar-brand>
     <navbar-menu :menu-active="menuActive" @menu-click="closeMenu"></navbar-menu>
   </nav>
