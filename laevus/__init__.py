@@ -18,7 +18,7 @@ from laevus.views import (
     home as home_view,
 )
 from laevus.views.api import (ChildGroupAPI, TaxonAPI, ContributionAPI, CurrentUserAPI,
-                              FullContributionAPI)
+                              FullContributionAPI, MapLayerAPI)
 
 
 _DEFAULT_CONFIG = {
@@ -125,5 +125,7 @@ def create_app(config):
                           '/api/current-user')
     rest_api.add_resource(FullContributionAPI,
                           '/api/full-contribution')
+    rest_api.add_resource(MapLayerAPI,
+                          '/api/map-layer')
     rest_api.init_app(app)
     return app
