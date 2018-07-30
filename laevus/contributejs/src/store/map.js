@@ -12,18 +12,6 @@ export default {
           visible: true,
           attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
           url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        },
-        {
-          name: 'Cartes IGN',
-          visible: false,
-          attribution: '&copy; <a target="_blank" href="http://ign.fr/">IGN</a>',
-          url: 'http://mapproxy.priv.ariegenature.fr/mapproxy/service/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ign_maps_3857&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GLOBAL_WEBMERCATOR&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}'
-        },
-        {
-          name: 'Orthophoto IGN',
-          visible: false,
-          attribution: '&copy; <a target="_blank" href="http://ign.fr/">IGN</a>',
-          url: 'http://mapproxy.priv.ariegenature.fr/mapproxy/service/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=bdortho_3857&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GLOBAL_WEBMERCATOR&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}'
         }
       ],
       zoom: 1
