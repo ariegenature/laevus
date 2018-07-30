@@ -100,6 +100,7 @@ def create_app(config):
     local_configs = []
     if config:
         local_configs.append(config.get_map('laevus'))
+        local_configs.append(config.get_map('map-layers'))
     app = VueFlask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.update(_DEFAULT_CONFIG)

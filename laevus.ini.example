@@ -6,3 +6,11 @@ LOG_FILENAME =
 SECRET_KEY = <random string for CSRF protection>
 SQLALCHEMY_DATABASE_URI = <uri of PostgreSQL w/ Postgis database>
 SQLALCHEMY_TRACK_MODIFICATIONS = false
+
+[map-layers]
+LAYER1_NAME = First Layer
+LAYER1_URL = https://...
+LAYER1_ATTRIB = &copy; <a target="_blank" href="https://example.org">Provider 1</a>
+LAYER2_NAME = Second Layer
+LAYER2_URL = https://...
+LAYER2_ATTRIB = &copy; <a target="_blank" href="http://example.org/">Provider 2</a>
