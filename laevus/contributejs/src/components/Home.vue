@@ -67,6 +67,9 @@ export default {
       'setGroups',
       'setPageLoading',
       'setPageReady'
+    ]),
+    ...mapActions('map', [
+      'loadTileProviders'
     ])
   },
   async created () {
@@ -83,6 +86,7 @@ export default {
     } catch (e) {
       console.log(e)
     }
+    this.loadTileProviders()
     this.setPageReady()
   }
 }
