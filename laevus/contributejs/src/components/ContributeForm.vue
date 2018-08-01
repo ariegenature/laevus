@@ -338,6 +338,9 @@ export default {
       }
     },
     async submitForm (ev) {
+      const firstName = this.firstName ? this.firstName : ''
+      const surname = this.surname ? this.surname : ''
+      const email = this.email ? this.email : ''
       var contributeData = new FormData()
       contributeData.append('geometry', `SRID=4326;POINT(${this.latLng.lng} ${this.latLng.lat})`)
       contributeData.append('date_time', this.date.toISOString())
@@ -349,9 +352,9 @@ export default {
       contributeData.append('count', this.count)
       contributeData.append('is_alive', this.isAlive)
       contributeData.append('comments', this.comments ? this.comments : '')
-      contributeData.append('first_name', this.firstName ? this.firstName : '')
-      contributeData.append('surname', this.surname ? this.surname : '')
-      contributeData.append('email', this.email ? this.email : '')
+      contributeData.append('first_name', firstName)
+      contributeData.append('surname', surname)
+      contributeData.append('email', email)
       this.setPageLoading()
       try {
         await axios.post('', contributeData, {
