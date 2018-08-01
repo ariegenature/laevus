@@ -10,7 +10,7 @@
           </div>
           <div class="column is-paddingless">
             <div class="content">
-              <p class="is-size-7"><b-taglist attached>
+              <p id="tag" class="is-size-7"><b-taglist attached>
                 <b-tag class="is-dark">niveau de zoom</b-tag>
                 <b-tag :class="[tagClass]">{{ tagText }}</b-tag>
               </b-taglist>

@@ -15,7 +15,7 @@
       </router-link>
     </div>
     <div class="navbar-end">
-      <a href="#" class="navbar-item" @click="clickHelp">
+      <a id="help" href="#" class="navbar-item" @click="clickHelp">
         <b-icon icon="question-circle"></b-icon>&nbsp;Aide
       </a>
       <router-link :to="{ name: 'login' }" class="navbar-item" v-if="!isAuthenticated"
