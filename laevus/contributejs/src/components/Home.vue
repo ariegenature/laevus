@@ -13,7 +13,7 @@
               <p id="tag" class="is-size-7"><b-taglist attached>
                 <b-tag class="is-dark">niveau de zoom</b-tag>
                 <b-tag :class="[tagClass]">{{ tagText }}</b-tag>
-              </b-taglist>
+              </b-taglist></p>
             </div>
             <contribution-table></contribution-table>
           </div>
