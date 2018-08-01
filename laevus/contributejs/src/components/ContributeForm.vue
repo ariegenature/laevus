@@ -6,18 +6,21 @@
                  next-button-text="Suivant" back-button-text="Retour"
                  finish-button-text="Terminer" @on-complete="submitForm">
       <tab-content title="Date et heure">
-        <b-field grouped group-multiline>
-          <b-field label="Date">
-            <b-datepicker ref="firstFieldInTab0" placeholder="Cliquer pour choisir une date"
-                          icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
-                          v-model="selectedDate"></b-datepicker>
-          </b-field>
-          <b-field label="Heure">
-            <b-timepicker placeholder="Cliquer pour indiquer un horaire"
-                          icon="clock-o" :readonly="false"
-                          v-model="selectedTime"></b-timepicker>
-          </b-field>
-        </b-field>
+        <div class="columns is-centered">
+          <div class="column is-narrow has-text-centered">
+            <b-field grouped group-multiline>
+              <b-field label="Date">
+                <b-datepicker ref="firstFieldInTab0" inline size="is-small"
+                              :readonly="false" :date-parser="parseFrenchDate"
+                              v-model="selectedDate"></b-datepicker>
+              </b-field>
+              <b-field label="Heure">
+                <b-timepicker inline size="is-small" :readonly="false"
+                              v-model="selectedTime"></b-timepicker>
+              </b-field>
+            </b-field>
+          </div>
+        </div>
       </tab-content>
       <tab-content title="Identification" :before-change="checkGroupNotNull">
         <b-field v-if="groupHasParent">
