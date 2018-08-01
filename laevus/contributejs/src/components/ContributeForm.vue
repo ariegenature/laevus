@@ -424,6 +424,9 @@ export default {
   mounted () {
     this.selectedDate = this.date ? this.date : new Date()
     this.selectedTime = this.time ? this.time : new Date()
+    this.updateFirstName(localStorage.getItem('firstName') || '')
+    this.updateSurname(localStorage.getItem('surname') || '')
+    this.updateEmail(localStorage.getItem('email') || '')
     this.updateSpeciesList(this.groupId)
     this.updateInputSpecies(this.specieId)
     this.updateSelectedAccuracy(this.countAccuracyId)
