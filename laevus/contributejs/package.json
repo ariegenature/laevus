@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "buefy": "^0.6.6",
+    "intro.js": "^2.9.3",
     "leaflet-draw": "^1.0.2",
     "leaflet.locatecontrol": "^0.62.0",
     "vue": "^2.5.16",
