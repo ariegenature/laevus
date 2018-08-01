@@ -32,7 +32,7 @@
           </div>
         </b-field>
         <div class="columns is-multiline is-centered">
-          <div class="column is-one-third has-text-centered" v-for="group in groups">
+          <div class="column is-one-third has-text-centered" v-for="group in groups" :key="group.id">
             <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
                      size="is-small" :native-value="group.id">
               <figure class="image is-64x64 block-center">
