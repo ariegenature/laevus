@@ -1,4 +1,5 @@
 import axios from 'axios'
+import introJs from 'intro.js'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -31,6 +32,7 @@ export default new Vuex.Store({
       contributions: null,
       isLoading: false,
       currentUser: null,
+      intro: introJs(),
       isHelpShown: false,
       selectedFeatureId: null
     }
@@ -44,6 +46,7 @@ export default new Vuex.Store({
     contributions: (state) => state.contributions,
     isLoading: (state) => state.isLoading,
     currentUser: (state) => state.currentUser,
+    intro: (state) => state.intro,
     isAuthenticated: (state) => state.currentUser !== null,
     isHelpShown: (state) => state.isHelpShown,
     selectedFeatureId: (state) => state.selectedFeatureId
