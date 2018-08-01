@@ -355,6 +355,9 @@ export default {
       contributeData.append('first_name', firstName)
       contributeData.append('surname', surname)
       contributeData.append('email', email)
+      localStorage.setItem('firstName', firstName)
+      localStorage.setItem('surname', surname)
+      localStorage.setItem('email', email)
       this.setPageLoading()
       try {
         await axios.post('', contributeData, {
