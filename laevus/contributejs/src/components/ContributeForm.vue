@@ -55,7 +55,7 @@
       <tab-content title="Détails" :before-change="checkCount">
         <b-field label="Espèce" v-if="hasOneSpecies">
           <div class="control">
-            <input class="input is-static" :value="oneSpecies" readonly></input>
+            <input class="input is-static" :value="oneSpecies" readonly>
           </div>
         </b-field>
         <b-field v-if="hasMultipleSpecies">
