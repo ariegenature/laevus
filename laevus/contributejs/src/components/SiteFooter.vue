@@ -22,7 +22,7 @@
               <div class="column is-one-third vcenter">
                 <div class="image" style="display: inline-block;">
                   <a href="https://ariegenature.fr" target="_blank">
-                    <img src="static/logo-ana.jpg"
+                    <img src="static/logo-ana.png"
                          border="0" alt="Logo ANA" title="Association des naturalistes de l'Ariège"
                          style="height: 64px; width: auto;">
                   </a>
