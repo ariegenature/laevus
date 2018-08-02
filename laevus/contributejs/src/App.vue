@@ -114,6 +114,12 @@ export default {
           }
         ]
       })
+      var firstTime = localStorage.getItem('firstTime')
+      firstTime = firstTime === null ? true : firstTime
+      if (firstTime === true) {
+        this.intro.start()
+        localStorage.setItem('firstTime', false)
+      }
     })
   }
 }
