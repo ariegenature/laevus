@@ -80,7 +80,7 @@ def import_groups(src):
         dialect = csv.Sniffer().sniff(f.readline())
         with sqla_raw_conn() as cnx:
             with cnx.cursor() as cur:
-                cur.copy_from(f, 'public.group', sep=dialect.delimiter, null='')
+                cur.copy_from(f, 'public.group', sep=dialect.delimiter, null='\\N')
     click.echo('-> Groups imported.')
 
 
