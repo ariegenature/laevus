@@ -30,7 +30,7 @@ import anosql
 import click
 
 from laevus import create_app, read_config
-from laevus.model import User, WildLifeGroup, db
+from laevus.model import User, db
 import laevus
 
 
@@ -91,10 +91,6 @@ def import_groups(src):
 def import_taxons(src):
     srcpath = os.path.abspath(os.path.expanduser(src))
     click.echo('-> Importing taxons from file {0}...'.format(srcpath))
-    group_name2id = dict((group.name, group.id) for group in WildLifeGroup.query.all())
-    if not group_name2id:
-        raise RuntimeError('Empty group table. Please import groups first using the '
-                           '`import_groups` command')
     with open(srcpath) as f:
         dialect = csv.Sniffer().sniff(f.readline())
     # First pass reading file to import only taxon table
@@ -103,7 +99,7 @@ def import_taxons(src):
     with open(srcpath) as f:
         dict_reader = csv.DictReader(f, dialect=dialect)
         for row_dict in dict_reader:
-            taxons_writer.writerow([row_dict['taxref_id'], group_name2id[row_dict['group']]])
+            taxons_writer.writerow([row_dict['taxref_id'], row_dict['group']])
     # Second pass reading file to import names
     scientific_names_csv = io.StringIO()
     common_names_csv = io.StringIO()
