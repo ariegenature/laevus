@@ -77,7 +77,7 @@ setup(
         'flask',
         'konfig',
         'six',
-        'psycopg2',
+        'psycopg2-binary',
         'xdg<2.0',
         'html5lib==1.0b10',
     ],
