@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import App from './App'
 import Buefy from 'buefy'
+import VTooltip from 'v-tooltip'
 import Vue from 'vue'
 import Vue2Leaflet from 'vue2-leaflet'
 import VueFormWizard from 'vue-form-wizard'
@@ -21,6 +22,7 @@ Vue.use(Buefy, {
   defaultIconPack: 'fa'
 })
 Vue.use(VueFormWizard)
+Vue.use(VTooltip)
 
 /* eslint-disable no-new */
 new Vue({
