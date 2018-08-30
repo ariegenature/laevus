@@ -38,7 +38,9 @@
               <figure class="image is-64x64 block-center">
                 <img :alt="group.name" :src="group.icon">
               </figure>
-              <p class="is-size-7">{{ group.name }}</p>
+              <p class="is-size-7">
+              {{ group.name }}
+              </p>
             </b-radio>
           </div>
           <div class="column is-one-third has-text-centered" v-if="groupHasParent">
