@@ -31,7 +31,7 @@
             </button>
           </div>
         </b-field>
-        <div class="columns is-multiline is-centered">
+        <div id="groups" class="columns is-multiline is-centered">
           <div class="column is-one-third has-text-centered" v-for="group in groups" :key="group.id">
             <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
                      size="is-small" :native-value="group.id">
@@ -42,6 +42,13 @@
               {{ group.name }}
               </p>
             </b-radio>
+            <v-popover container="#groups" popover-base-class="v-tooltip popover"
+                       popover-class="column is-one-third" v-if="group.html_description">
+              <b-icon icon="question-circle" custom-class="tooltip-target" size="is-small"></b-icon>
+              <template slot="popover">
+                <span v-html="group.html_description" class="is-size-7"></span>
+              </template>
+            </v-popover>
           </div>
           <div class="column is-one-third has-text-centered" v-if="groupHasParent">
             <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
@@ -452,5 +459,18 @@ export default {
   #contribute-form .vue-form-wizard .wizard-nav > li.active {
     display: block
   }
+}
+.popover-inner {
+  background: #0f77ea;
+  color: white;
+  padding: 6px;
+  border-radius: 3px;
+  box-shadow: 0 5px 30px rgba(black, .1);
+}
+.popover-arrow {
+  border-color: #0f77ea;
+}
+.popover-inner ul {
+  list-style: '- ' inside;
 }
 </style>
