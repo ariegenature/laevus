@@ -23,6 +23,7 @@ class StaticPath(fields.Raw):
 group_fields = {
     'id': fields.String,
     'name': fields.String,
+    'html_description': fields.String,
     'icon': StaticPath(attribute='icon_fname'),
 }
 
