@@ -290,7 +290,7 @@ export default {
         return false
       } else if (this.canTellSpecies && this.specieId === null) {
         this.$toast.open({
-          message: "Veuillez saisir une espèce ou indiquer que vous savez pas l'identifier",
+          message: "Veuillez saisir une espèce ou indiquer que vous ne savez pas l'identifier.",
           duration: 3000,
           type: 'is-danger'
         })
