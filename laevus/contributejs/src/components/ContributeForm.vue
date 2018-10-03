@@ -61,7 +61,7 @@
           </div>
         </div>
       </tab-content>
-      <tab-content title="Détails" :before-change="checkCount">
+      <tab-content title="Détails" :before-change="checkCountAndSpecies">
         <b-field label="Espèce" v-if="hasOneSpecies">
           <div class="control">
             <input class="input is-static" :value="oneSpecies" readonly>
@@ -280,10 +280,17 @@ export default {
         return true
       }
     },
-    checkCount () {
+    checkCountAndSpecies () {
       if (this.count < 1) {
         this.$toast.open({
           message: 'Veuillez saisir un entier ≥ 1',
+          duration: 3000,
+          type: 'is-danger'
+        })
+        return false
+      } else if (this.canTellSpecies && this.specieId === null) {
+        this.$toast.open({
+          message: "Veuillez saisir une espèce ou indiquer que vous savez pas l'identifier",
           duration: 3000,
           type: 'is-danger'
         })
