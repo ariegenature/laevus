@@ -8,7 +8,7 @@ import Vue2Leaflet from 'vue2-leaflet'
 import VueFormWizard from 'vue-form-wizard'
 import router from './router'
 import store from './store'
-import 'buefy/lib/buefy.css'
+import 'buefy/dist/buefy.css'
 
 Vue.config.productionTip = false
 
