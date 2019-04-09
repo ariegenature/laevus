@@ -1,4 +1,4 @@
--- name: !create-views
+-- name: create-views!
 -- Create the views for reporting
 create view full_report as (
   select obs.id as id,

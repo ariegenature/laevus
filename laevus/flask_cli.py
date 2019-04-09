@@ -63,7 +63,7 @@ def initdb(data):
     admin_user.set_password('laevus')
     db.session.add(admin_user)
     db.session.commit()
-    sql_queries = anosql.load_queries('postgres', os.path.join(data, 'schema.sql'))
+    sql_queries = anosql.from_path(os.path.join(data, 'schema.sql'), 'psycopg2')
     with sqla_raw_conn() as cnx:
         sql_queries.create_views(cnx)
     click.echo('-> Database initialized.')
