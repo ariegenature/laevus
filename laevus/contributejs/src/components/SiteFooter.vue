@@ -5,9 +5,22 @@
         <div class="column is-two-third vcenter">
           <div class="content">
             <p>Observatoire participatif réalisé dans le cadre du contrat de restauration de la biodiversité (CRB).</p>
-            <img src="static/logo-region-europeen-feder.jpg"
-                 border="0" alt="Logo FEDER" title="Fond européen de développement régional"
-                 style="height: 116px; width: auto;">
+            <div class="columns is-centered is-multiline">
+              <div class="column is-one-third vcenter">
+                <div class="image" style="display: inline-block;">
+                  <img src="static/logo-region-europeen-feder.jpg"
+                       border="0" alt="Logo FEDER" title="Fond européen de développement régional"
+                       style="height: 116px; width: auto;">
+                </div>
+              </div>
+              <div class="column is-one-third vcenter">
+                <div class="image" style="display: inline-block;">
+                  <img src="static/logo-tvb.jpg"
+                       border="0" alt="Logo Trame verte et bleue" title="Trame verte et bleue"
+                       style="height: 116px; width: auto;">
+                </div>
+              </div>
+            </div>
             <h6 class="title is-6">Partenaires</h6>
             <div class="columns is-centered is-multiline">
               <div class="column is-one-third vcenter">
