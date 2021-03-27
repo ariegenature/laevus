@@ -2,23 +2,21 @@
   <b-table id="species" :data="data" :bordered="false" :striped="false" :narrowed="true"
            :hoverable="true" :mobile-cards="true" paginated :per-page="10" :current-page.sync="currentPage"
            pagination-size="is-small" :selected.sync="selectedFeature" focusable>
-    <template slot-scope="props">
-      <b-table-column label="id" :visible="false">
-        {{ props.row.id }}
-      </b-table-column>
-      <b-table-column label="Date" numeric>
-        {{ new Date(props.row.date).toLocaleDateString() }}
-      </b-table-column>
-      <b-table-column label="Groupe">
-        {{ props.row.group }}
-      </b-table-column>
-      <b-table-column label="Nb." v-html="displayCount(props.row.accuracy, props.row.count)"
-                      numeric>
-      </b-table-column>
-      <b-table-column label="Vivant ?" centered>
-        <b-icon :icon="boolIcon(props.row.isAlive)" :type="boolClass(props.row.isAlive)"></b-icon>
-      </b-table-column>
-    </template>
+    <b-table-column label="id" :visible="false" v-slot="props">
+      {{ props.row.id }}
+    </b-table-column>
+    <b-table-column label="Date" numeric v-slot="props">
+      {{ new Date(props.row.date).toLocaleDateString() }}
+    </b-table-column>
+    <b-table-column label="Groupe" v-slot="props">
+      {{ props.row.group }}
+    </b-table-column>
+    <b-table-column label="Nb." numeric v-slot="props">
+      <span v-html="displayCount(props.row.accuracy, props.row.count)"></span>
+    </b-table-column>
+    <b-table-column label="Vivant ?" centered v-slot="props">
+      <b-icon :icon="boolIcon(props.row.isAlive)" :type="boolClass(props.row.isAlive)"></b-icon>
+    </b-table-column>
     <template slot="bottom-left">
         <h6 class="title is-6">Observations récentes</h6>
     </template>
