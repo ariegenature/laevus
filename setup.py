@@ -74,6 +74,7 @@ setup(
         'anosql',
         'chaussette',
         'circus',
+        'email_validator',
         'flask',
         'konfig',
         'six',
