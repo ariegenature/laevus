@@ -1,31 +1,39 @@
 <template>
   <b-table id="species" :data="data" :bordered="false" :striped="false" :narrowed="true"
-           :hoverable="false" :mobile-cards="true">
-    <template slot-scope="props">
-      <b-table-column label="id" :visible="false">
-        {{ props.row.id }}
-      </b-table-column>
-      <b-table-column label="Date" numeric>
-        {{ new Date(props.row.date).toLocaleDateString() }}
-      </b-table-column>
-      <b-table-column label="Groupe">
-        {{ props.row.group }}
-      </b-table-column>
-      <b-table-column label="Nb." v-html="displayCount(props.row.accuracy, props.row.count)"
-                      numeric>
-      </b-table-column>
-      <b-table-column label="Vivant ?" centered>
-        <b-icon :icon="boolIcon(props.row.isAlive)" :type="boolClass(props.row.isAlive)"></b-icon>
-      </b-table-column>
+           :hoverable="true" :mobile-cards="true" paginated :per-page="10" :current-page.sync="currentPage"
+           pagination-size="is-small" :selected.sync="selectedFeature" focusable>
+    <b-table-column label="id" :visible="false" v-slot="props">
+      {{ props.row.id }}
+    </b-table-column>
+    <b-table-column label="Date" numeric v-slot="props">
+      {{ new Date(props.row.date).toLocaleDateString() }}
+    </b-table-column>
+    <b-table-column label="Groupe" v-slot="props">
+      {{ props.row.group }}
+    </b-table-column>
+    <b-table-column label="Nb." numeric v-slot="props">
+      <span v-html="displayCount(props.row.accuracy, props.row.count)"></span>
+    </b-table-column>
+    <b-table-column label="Vivant ?" centered v-slot="props">
+      <b-icon :icon="boolIcon(props.row.isAlive)" :type="boolClass(props.row.isAlive)"></b-icon>
+    </b-table-column>
+    <template slot="bottom-left">
+        <h6 class="title is-6">Observations récentes</h6>
     </template>
   </b-table>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ContributionTable',
+  data () {
+    return {
+      currentPage: 1,
+      selectedFeature: null
+    }
+  },
   computed: {
     data () {
       if (!this.contributions || !this.contributions.features) {
@@ -45,7 +53,8 @@ export default {
       return res
     },
     ...mapGetters([
-      'contributions'
+      'contributions',
+      'selectedFeatureId'
     ])
   },
   methods: {
@@ -61,6 +70,29 @@ export default {
     },
     boolClass (bool) {
       return bool ? 'is-success' : 'is-danger'
+    },
+    ...mapActions([
+      'updateSelectedFeatureId'
+    ])
+  },
+  watch: {
+    selectedFeature: {
+      handler (val, oldVal) {
+        if (val === null) {
+          this.updateSelectedFeatureId(null)
+        } else {
+          this.updateSelectedFeatureId(val.id)
+        }
+      }
+    },
+    selectedFeatureId: {
+      handler (val, oldVal) {
+        if (val === null) {
+          this.selectedFeature = null
+        } else {
+          this.selectedFeature = this.data.find((feature) => feature.id === val)
+        }
+      }
     }
   }
 }
@@ -68,7 +100,6 @@ export default {
 
 <style>
 #species {
-  height: 70vh;
-  overflow: scroll;
+  height: 75vh;
 }
 </style>

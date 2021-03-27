@@ -1,4 +1,5 @@
 import axios from 'axios'
+import introJs from 'intro.js'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -10,7 +11,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state () {
     return {
-      perimeterUrl: window.location.origin + '/static/perimetre_pnr.geojson',
+      perimeterUrl: window.location.origin + '/static/perimeter.geojson',
       accuracies: [
         {
           id: '=',
@@ -25,12 +26,15 @@ export default new Vuex.Store({
           title: 'au moins'
         }
       ],
+      mapReady: false,
       groups: null,
       speciesGroups: null,
       contributions: null,
       isLoading: false,
       currentUser: null,
-      isHelpShown: false
+      intro: introJs(),
+      isHelpShown: false,
+      selectedFeatureId: null
     }
   },
   getters: {
@@ -38,11 +42,14 @@ export default new Vuex.Store({
     groups: (state) => state.groups,
     speciesGroups: (state) => state.speciesGroups,
     accuracies: (state) => state.accuracies,
+    mapReady: (state) => state.mapReady,
     contributions: (state) => state.contributions,
     isLoading: (state) => state.isLoading,
     currentUser: (state) => state.currentUser,
+    intro: (state) => state.intro,
     isAuthenticated: (state) => state.currentUser !== null,
-    isHelpShown: (state) => state.isHelpShown
+    isHelpShown: (state) => state.isHelpShown,
+    selectedFeatureId: (state) => state.selectedFeatureId
   },
   mutations: {
     groups: (state, groups) => {
@@ -54,6 +61,9 @@ export default new Vuex.Store({
     loading: (state) => {
       state.isLoading = true
     },
+    mapReady: (state) => {
+      state.mapReady = true
+    },
     ready: (state) => {
       state.isLoading = false
     },
@@ -62,6 +72,9 @@ export default new Vuex.Store({
     },
     isHelpShown: (state, bool) => {
       state.isHelpShown = bool
+    },
+    selectedFeatureId: (state, id) => {
+      state.selectedFeatureId = id
     }
   },
   actions: {
@@ -73,6 +86,9 @@ export default new Vuex.Store({
     },
     setPageLoading: ({ commit }) => {
       commit('loading')
+    },
+    setMapReady: ({ commit }) => {
+      commit('mapReady')
     },
     setPageReady: ({ commit }) => {
       commit('ready')
@@ -87,6 +103,9 @@ export default new Vuex.Store({
     },
     toggleHelp: ({ commit, state }) => {
       commit('isHelpShown', !state.isHelpShown)
+    },
+    updateSelectedFeatureId: ({ commit }, id) => {
+      commit('selectedFeatureId', id)
     }
   },
   modules: {

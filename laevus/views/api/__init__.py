@@ -2,7 +2,7 @@
 
 import json
 
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask_login import current_user, login_required
 from flask_restful import Resource, fields, marshal_with
 from sqlalchemy import func, text
@@ -23,6 +23,7 @@ class StaticPath(fields.Raw):
 group_fields = {
     'id': fields.String,
     'name': fields.String,
+    'html_description': fields.String,
     'icon': StaticPath(attribute='icon_fname'),
 }
 
@@ -122,3 +123,21 @@ class CurrentUserAPI(Resource):
             return {'username': current_user.username, 'name': current_user.name}
         else:
             return None
+
+
+class MapLayerAPI(Resource):
+
+    def get(self):
+        res = {'layers': []}
+        i = 1
+        layer_name = current_app.config.get('LAYER{0}_NAME'.format(i))
+        while layer_name is not None:
+            res['layers'].append({
+                'order': i,
+                'name': layer_name,
+                'url': current_app.config['LAYER{0}_URL'.format(i)],
+                'attribution': current_app.config['LAYER{0}_ATTRIB'.format(i)],
+            })
+            i += 1
+            layer_name = current_app.config.get('LAYER{0}_NAME'.format(i))
+        return res

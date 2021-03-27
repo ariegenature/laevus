@@ -9,7 +9,7 @@ import logging
 from flask import Flask
 from konfig import Config
 from six import PY2, integer_types
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 from xdg import XDG_CONFIG_HOME
 
 from laevus.extensions import db, csrf, login_manager, rest_api
@@ -18,7 +18,7 @@ from laevus.views import (
     home as home_view,
 )
 from laevus.views.api import (ChildGroupAPI, TaxonAPI, ContributionAPI, CurrentUserAPI,
-                              FullContributionAPI)
+                              FullContributionAPI, MapLayerAPI)
 
 
 _DEFAULT_CONFIG = {
@@ -100,6 +100,7 @@ def create_app(config):
     local_configs = []
     if config:
         local_configs.append(config.get_map('laevus'))
+        local_configs.append(config.get_map('map-layers'))
     app = VueFlask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.update(_DEFAULT_CONFIG)
@@ -124,5 +125,7 @@ def create_app(config):
                           '/api/current-user')
     rest_api.add_resource(FullContributionAPI,
                           '/api/full-contribution')
+    rest_api.add_resource(MapLayerAPI,
+                          '/api/map-layer')
     rest_api.init_app(app)
     return app

@@ -6,18 +6,21 @@
                  next-button-text="Suivant" back-button-text="Retour"
                  finish-button-text="Terminer" @on-complete="submitForm">
       <tab-content title="Date et heure">
-        <b-field grouped group-multiline>
-          <b-field label="Date">
-            <b-datepicker ref="firstFieldInTab0" placeholder="Cliquer pour choisir une date"
-                          icon="calendar" :readonly="false" :date-parser="parseFrenchDate"
-                          v-model="selectedDate"></b-datepicker>
-          </b-field>
-          <b-field label="Heure">
-            <b-timepicker placeholder="Cliquer pour indiquer un horaire"
-                          icon="clock-o" :readonly="false"
-                          v-model="selectedTime"></b-timepicker>
-          </b-field>
-        </b-field>
+        <div class="columns is-centered">
+          <div class="column is-narrow has-text-centered">
+            <b-field grouped group-multiline>
+              <b-field label="Date">
+                <b-datepicker ref="firstFieldInTab0" inline size="is-small"
+                              :readonly="false" :date-parser="parseFrenchDate"
+                              v-model="selectedDate"></b-datepicker>
+              </b-field>
+              <b-field label="Heure">
+                <b-timepicker inline size="is-small" :readonly="false"
+                              v-model="selectedTime"></b-timepicker>
+              </b-field>
+            </b-field>
+          </div>
+        </div>
       </tab-content>
       <tab-content title="Identification" :before-change="checkGroupNotNull">
         <b-field v-if="groupHasParent">
@@ -28,15 +31,24 @@
             </button>
           </div>
         </b-field>
-        <div class="columns is-multiline is-centered">
-          <div class="column is-one-third has-text-centered" v-for="group in groups">
+        <div id="groups" class="columns is-multiline is-centered">
+          <div class="column is-one-third has-text-centered" v-for="group in groups" :key="group.id">
             <b-radio href="#" :value="groupId" @input="browseGroups(group.id)"
                      size="is-small" :native-value="group.id">
               <figure class="image is-64x64 block-center">
                 <img :alt="group.name" :src="group.icon">
               </figure>
-              <p class="is-size-7">{{ group.name }}</p>
+              <p class="is-size-7">
+              {{ group.name }}
+              </p>
             </b-radio>
+            <v-popover container="#groups" popover-base-class="v-tooltip popover"
+                       popover-class="column is-one-third" v-if="group.html_description">
+              <b-icon icon="question-circle" custom-class="tooltip-target" size="is-small"></b-icon>
+              <template slot="popover">
+                <span v-html="group.html_description" class="is-size-7"></span>
+              </template>
+            </v-popover>
           </div>
           <div class="column is-one-third has-text-centered" v-if="groupHasParent">
             <b-radio href="#" :value="groupId" @input="browseGroups(null)" size="is-small"
@@ -49,10 +61,10 @@
           </div>
         </div>
       </tab-content>
-      <tab-content title="Détails" :before-change="checkCount">
+      <tab-content title="Détails" :before-change="checkCountAndSpecies">
         <b-field label="Espèce" v-if="hasOneSpecies">
           <div class="control">
-            <input class="input is-static" :value="oneSpecies" readonly></input>
+            <input class="input is-static" :value="oneSpecies" readonly>
           </div>
         </b-field>
         <b-field v-if="hasMultipleSpecies">
@@ -268,10 +280,17 @@ export default {
         return true
       }
     },
-    checkCount () {
+    checkCountAndSpecies () {
       if (this.count < 1) {
         this.$toast.open({
           message: 'Veuillez saisir un entier ≥ 1',
+          duration: 3000,
+          type: 'is-danger'
+        })
+        return false
+      } else if (this.canTellSpecies && this.specieId === null) {
+        this.$toast.open({
+          message: "Veuillez saisir une espèce ou indiquer que vous ne savez pas l'identifier.",
           duration: 3000,
           type: 'is-danger'
         })
@@ -335,6 +354,9 @@ export default {
       }
     },
     async submitForm (ev) {
+      const firstName = this.firstName ? this.firstName : ''
+      const surname = this.surname ? this.surname : ''
+      const email = this.email ? this.email : ''
       var contributeData = new FormData()
       contributeData.append('geometry', `SRID=4326;POINT(${this.latLng.lng} ${this.latLng.lat})`)
       contributeData.append('date_time', this.date.toISOString())
@@ -346,9 +368,12 @@ export default {
       contributeData.append('count', this.count)
       contributeData.append('is_alive', this.isAlive)
       contributeData.append('comments', this.comments ? this.comments : '')
-      contributeData.append('first_name', this.firstName ? this.firstName : '')
-      contributeData.append('surname', this.surname ? this.surname : '')
-      contributeData.append('email', this.email ? this.email : '')
+      contributeData.append('first_name', firstName)
+      contributeData.append('surname', surname)
+      contributeData.append('email', email)
+      localStorage.setItem('firstName', firstName)
+      localStorage.setItem('surname', surname)
+      localStorage.setItem('email', email)
       this.setPageLoading()
       try {
         await axios.post('', contributeData, {
@@ -415,6 +440,9 @@ export default {
   mounted () {
     this.selectedDate = this.date ? this.date : new Date()
     this.selectedTime = this.time ? this.time : new Date()
+    this.updateFirstName(localStorage.getItem('firstName') || '')
+    this.updateSurname(localStorage.getItem('surname') || '')
+    this.updateEmail(localStorage.getItem('email') || '')
     this.updateSpeciesList(this.groupId)
     this.updateInputSpecies(this.specieId)
     this.updateSelectedAccuracy(this.countAccuracyId)
@@ -438,5 +466,18 @@ export default {
   #contribute-form .vue-form-wizard .wizard-nav > li.active {
     display: block
   }
+}
+.popover-inner {
+  background: #0f77ea;
+  color: white;
+  padding: 6px;
+  border-radius: 3px;
+  box-shadow: 0 5px 30px rgba(black, .1);
+}
+.popover-arrow {
+  border-color: #0f77ea;
+}
+.popover-inner ul {
+  list-style: '- ' inside;
 }
 </style>

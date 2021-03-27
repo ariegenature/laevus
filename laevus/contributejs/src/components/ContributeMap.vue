@@ -1,26 +1,39 @@
 <template>
-  <v-map ref="map" :zoom="zoom" :center="center" @l-contextmenu="transmitClick"
-         @l-zoom="updateZoomFromMap" @l-layeradd="zoomOnPerimeter" class="locate">
-    <v-tilelayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                 attribution="OpenStreetMap contributors"></v-tilelayer>
-    <v-marker :lat-lng="latLng" v-if="hasLatLng" @l-click="reEmitClick"></v-marker>
-    <v-geojson-layer ref="contribution" :geojson="contributions"
-                     :options="contributionOptions"></v-geojson-layer>
-    <v-geojson-layer ref="perimeter" :geojson="perimeter"
-                     :options="perimeterOptions"></v-geojson-layer>
-  </v-map>
+  <l-map ref="map" :zoom="zoom" :center="center" @l-draw-created="transmitClick"
+         @zoom="updateZoomFromMap" @layeradd="zoomOnPerimeter"
+         @locationfound="updateMarker" @popupopen="selectFeature" @popupclose="unselectFeature">
+    <l-marker :lat-lng="latLng" v-if="hasLatLng" @click="reEmitClick"></l-marker>
+    <l-geojson ref="contribution" :geojson="contributions"
+               :options="contributionOptions"></l-geojson>
+    <l-geojson ref="perimeter" :geojson="perimeter"
+               :options="perimeterOptions"></l-geojson>
+    <leaflet-draw :marker="true" :polyline="false" :polygon="false" :rectangle="false"
+                  :circle="false" :circle-marker="false" :edit="false"
+                  :remove="false"></leaflet-draw>
+    <leaflet-locate-control ref="geolocation"
+                            :show-popup="false"></leaflet-locate-control>
+    <l-control-layers></l-control-layers>
+    <l-tile-layer v-for="tileProvider in tileProviders" :key="tileProvider.name" layerType="base"
+                  :name="tileProvider.name" :visible="tileProvider.visible" :url="tileProvider.url"
+                  :attribution="tileProvider.attribution"></l-tile-layer>
+  </l-map>
 </template>
 
 <script>
 import L from 'leaflet'
 import axios from 'axios'
 import {mapActions, mapGetters} from 'vuex'
+import LeafletDraw from './LeafletDraw'
+import LeafletLocateControl from './LeafletLocateControl'
 
 export default {
   name: 'ContributeMap',
+  components: {
+    LeafletDraw,
+    LeafletLocateControl
+  },
   data () {
     return {
-      isReady: false,
       perimeter: null,
       perimeterOptions: {
         style: function () {
@@ -77,21 +90,23 @@ export default {
     ]),
     ...mapGetters('map', [
       'center',
+      'tileProviders',
       'zoom'
     ]),
     ...mapGetters([
       'perimeterUrl',
-      'contributions'
+      'contributions',
+      'mapReady',
+      'selectedFeatureId'
     ])
   },
   methods: {
     transmitClick (ev) {
-      if (ev.originalEvent.target.classList.contains('perimeter') &&
-        this.zoom >= 14) {
-        this.updateLatLng(ev.latlng)
+      if (this.zoom >= 14) {
+        this.$refs.geolocation.mapObject.stop()
+        this.updateLatLng(ev.layer._latlng)
         this.$emit('perimeter-click')
-      } else if (ev.originalEvent.target.classList.contains('perimeter') &&
-        this.zoom < 14) {
+      } else {
         this.$toast.open({
           duration: 3000,
           message: 'Zoom insuffisant',
@@ -99,15 +114,29 @@ export default {
         })
       }
     },
+    updateMarker (ev) {
+      this.updateLatLng(ev.latlng)
+    },
     reEmitClick (ev) {
       this.$emit('perimeter-click')
     },
-    zoomOnPerimeter (ev) {
-      if (this.isReady) return
+    selectFeature (ev) {
+      this.$refs.contribution.mapObject.eachLayer((layer) => {
+        if (layer.isPopupOpen()) {
+          this.updateSelectedFeatureId(layer.feature.id)
+        }
+      })
+    },
+    unselectFeature (ev) {
+      this.updateSelectedFeatureId(null)
+    },
+    zoomOnPerimeter () {
+      if (this.mapReady) return
+      if (!this.$refs.perimeter.mapObject) return
       const perimeterBounds = this.$refs.perimeter.getBounds()
       if (perimeterBounds.hasOwnProperty('_southWest')) {
         this.$refs.map.fitBounds(perimeterBounds)
-        this.isReady = true
+        this.setMapReady()
       }
     },
     updateZoomFromMap (ev) {
@@ -118,6 +147,10 @@ export default {
     ]),
     ...mapActions('map', [
       'updateZoom'
+    ]),
+    ...mapActions([
+      'setMapReady',
+      'updateSelectedFeatureId'
     ])
   },
   async created () {
@@ -127,15 +160,29 @@ export default {
     } catch (e) {
       console.log(e)
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.$refs.contribution.mapObject.setZIndex(11)
+      this.$refs.perimeter.mapObject.setZIndex(1)
+    })
+  },
+  watch: {
+    selectedFeatureId: {
+      handler (val, oldVal) {
+        this.$refs.contribution.mapObject.eachLayer((layer) => {
+          if (layer.feature.id === val) {
+            layer.openPopup()
+          }
+        })
+      }
+    }
   }
 }
 </script>
 
 <style>
-.leaflet-container.locate {
-  cursor: not-allowed;
-}
 .perimeter {
-  cursor: crosshair;
+  cursor: grab;
 }
 </style>
