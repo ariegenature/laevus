@@ -7,7 +7,7 @@ export default {
       groupId: null,
       groupHasParent: false,
       specieId: null,
-      canTellSpecies: true,
+      canTellSpecies: false,
       countAccuracyId: '=',
       count: 1,
       isAlive: false,
