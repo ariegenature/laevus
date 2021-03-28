@@ -107,7 +107,7 @@ export default {
         this.updateLatLng(ev.layer._latlng)
         this.$emit('perimeter-click')
       } else {
-        this.$toast.open({
+        this.$buefy.toast.open({
           duration: 3000,
           message: 'Zoom insuffisant',
           type: 'is-danger'
