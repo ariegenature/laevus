@@ -69,7 +69,7 @@ export default {
         this.setPageReady()
         this.$router.push({ name: 'home' })
       } catch (e) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: e.response.data.message,
           duration: 3000,
           type: 'is-danger'

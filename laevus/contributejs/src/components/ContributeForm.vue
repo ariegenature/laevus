@@ -252,7 +252,7 @@ export default {
     },
     checkGroupNotNull () {
       if (this.groupId === null) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: 'Veuillez choisir une catégorie',
           duration: 3000,
           type: 'is-danger'
@@ -264,14 +264,14 @@ export default {
     },
     checkCompleteContact () {
       if (!this.firstName || !this.surname || !this.email) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: 'Veuillez saisir tous les champs',
           duration: 3000,
           type: 'is-danger'
         })
         return false
       } else if (!this.email.match(this.emailRegExp)) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: 'Veuillez saisir une adresse électronique valide',
           duration: 3000,
           type: 'is-danger'
@@ -282,14 +282,14 @@ export default {
     },
     checkCountAndSpecies () {
       if (this.count < 1) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: 'Veuillez saisir un entier ≥ 1',
           duration: 3000,
           type: 'is-danger'
         })
         return false
       } else if (this.canTellSpecies && this.specieId === null) {
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: "Veuillez saisir une espèce ou indiquer que vous ne savez pas l'identifier.",
           duration: 3000,
           type: 'is-danger'
